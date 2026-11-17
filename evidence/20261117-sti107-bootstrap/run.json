@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "run_id": "20261117-sti107-bootstrap",
+  "issue": "STI-107",
+  "status": "passed",
+  "scope": "Bootstrap metadata, dependency resolution and clean-checkout checks only",
+  "started_at": "2026-11-17T20:59:10.027963+00:00",
+  "finished_at": "2026-11-17T21:18:00.230547+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "source_commit": "9ed539c1d22931c0eafa2a2cb503658525b3b690",
+    "configuration_commit": "99a183a2aa10875a989c32a09dc5461b61ef731c",
+    "test_commit": null,
+    "test_commit_reason": "The target security harness belongs to STI-109 and is not implemented.",
+    "provenance": "The second commit changes only the container ownership helper and its documentation. Configuration, image recipe and layer files are byte-identical to the public clean-checkout revision. The corrected helper was separately checked from a new empty volume.",
+    "source_file_sha256": {
+      "conf/layer.conf": "0db7333de22c5c7a4c55eb3622f93255513d527a8a145ed801f9fa03056f77a3",
+      "kas/baseline.yml": "0da53535fc26b1d77f60ce4702da8d885e7c03ee880620cda7f0ec27d3956652",
+      "kas/builder-image.txt": "724b1461299f361e1b23354d230dc2e463082b12d3abbd104abcd1658bc5e901",
+      "kas/common.yml": "c963dc518cb5243858366dce7b34a0afb8201d8189bc47070f71f9b092ca4dfd",
+      "kas/patched.yml": "8f53d97ae594be6283d5b397a27013c357adcc6cb8d4a9f9d75ff0f3caf15844",
+      "kas/run": "51c77a033e869db2c54982d83d3a4030ba6f6457bb3af81b39d5bf70dc93989d",
+      "meta-firmdura-tests/conf/layer.conf": "061e62a0736fc93214fd4f6dddd40fc4267a734f3f7441df858ebca13945e747",
+      "meta-firmdura-tests/recipes-core/images/firmdura-reference-image.bb": "924221cb4dc5222933149d1aec58bb46ef0c510f737b8cb5f897f3ce668955d9"
+    },
+    "repositories": {
+      "sample": "99a183a2aa10875a989c32a09dc5461b61ef731c",
+      "poky": "93431249a6260da7bd29ee3ca32145d89e5b8259",
+      "meta-openembedded": "ce8539c941f6fcbecaca4d16640ac105c0595589",
+      "meta-lts-collab": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0"
+    },
+    "builder_image": "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+    "builder": {
+      "profile": "firmdura-kirkstone",
+      "docker_context": "colima-firmdura-kirkstone",
+      "architecture": "aarch64",
+      "virtual_cpus": 4,
+      "memory_gib": 8,
+      "data_disk_gib": 55,
+      "root_disk_gib": 10,
+      "vm_os": "Ubuntu 24.04.4 LTS",
+      "kernel": "6.8.0-100-generic",
+      "container_os": "Debian GNU/Linux 12",
+      "colima": "0.10.1",
+      "lima": "2.1.1",
+      "docker_server": "29.2.1",
+      "kas": "4.8",
+      "git": "2.39.5",
+      "python": "3.11.2",
+      "gcc": "12.2.0",
+      "make": "4.3",
+      "tar": "1.34"
+    },
+    "external_repository_cache_reused_for_clean_check": false,
+    "download_or_sstate_cache_reused_for_clean_check": false
+  },
+  "commands": [
+    {
+      "label": "sti-107-final-baseline-dump",
+      "argv": [
+        "sh",
+        "kas/run",
+        "baseline",
+        "dump"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T20:59:10.027963+00:00",
+      "finished_at": "2026-11-17T20:59:10.379101+00:00",
+      "elapsed_seconds": 0.351138,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-baseline-dump.log",
+      "log_sha256": "54faac94cc38e2c4a0a972567b67af0cb9625793475b35880ae17bcace5ce2c0",
+      "log_size": 2736,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-baseline-libenv",
+      "argv": [
+        "sh",
+        "kas/run",
+        "baseline",
+        "shell",
+        "-c",
+        "bitbake -e libwebsockets"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T20:59:10.407163+00:00",
+      "finished_at": "2026-11-17T20:59:33.480838+00:00",
+      "elapsed_seconds": 23.073675,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-baseline-libenv.log",
+      "log_sha256": "8a585d00c327ebffd4c9b4693895b6028cd316b5e34db6316d1aaf18d13781ba",
+      "log_size": 1899537,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-baseline-imageenv",
+      "argv": [
+        "sh",
+        "kas/run",
+        "baseline",
+        "shell",
+        "-c",
+        "bitbake -e firmdura-reference-image"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T20:59:33.508432+00:00",
+      "finished_at": "2026-11-17T20:59:37.498137+00:00",
+      "elapsed_seconds": 3.989705,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-baseline-imageenv.log",
+      "log_sha256": "bb933c79e34c1e13dfa7f5d4b895c0501f624d914853adaa9e571473af5a99a6",
+      "log_size": 2276894,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-patched-dump",
+      "argv": [
+        "sh",
+        "kas/run",
+        "patched",
+        "dump"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T20:59:37.529397+00:00",
+      "finished_at": "2026-11-17T20:59:37.849385+00:00",
+      "elapsed_seconds": 0.319988,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-patched-dump.log",
+      "log_sha256": "f18aa36e7c2576116e08f3b43b6fcf523b2c3bb7c9d283e76356cde7aa401e7a",
+      "log_size": 2750,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-patched-libenv",
+      "argv": [
+        "sh",
+        "kas/run",
+        "patched",
+        "shell",
+        "-c",
+        "bitbake -e libwebsockets"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T20:59:37.879009+00:00",
+      "finished_at": "2026-11-17T21:00:01.734791+00:00",
+      "elapsed_seconds": 23.855782,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-patched-libenv.log",
+      "log_sha256": "62f555969685d94472827c43093d0f360d119b2409514c1ebba314017b4dfea2",
+      "log_size": 1906555,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-patched-imageenv",
+      "argv": [
+        "sh",
+        "kas/run",
+        "patched",
+        "shell",
+        "-c",
+        "bitbake -e firmdura-reference-image"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:00:01.763308+00:00",
+      "finished_at": "2026-11-17T21:00:06.929871+00:00",
+      "elapsed_seconds": 5.166563,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-patched-imageenv.log",
+      "log_sha256": "75b42e3570f7e90544f23758a8d1b049119aa4eedb14bd746d602101d06aaf66",
+      "log_size": 2297021,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-clean-checkout-v2",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--user",
+        "root",
+        "--entrypoint",
+        "/bin/sh",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-replay,target=/work",
+        "--workdir",
+        "/work",
+        "--env",
+        "KAS_WORK_DIR=/work",
+        "--env",
+        "KAS_BUILD_DIR=/work/build-baseline",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "chown builder:builder /work && gosu builder bash -c \"$1\"",
+        "sh",
+        "git clone --no-checkout https://github.com/firmdura/meta-firmdura-kirkstone.git /work/sample &&\ngit -C /work/sample checkout --detach 99a183a2aa10875a989c32a09dc5461b61ef731c &&\nmkdir /work/verification &&\nkas dump /work/sample/kas/baseline.yml > /work/verification/baseline-expanded.yml &&\nkas shell /work/sample/kas/baseline.yml -c 'bitbake -p' &&\nkas shell /work/sample/kas/baseline.yml -c 'bitbake -e libwebsockets' > /work/verification/libwebsockets.env &&\nkas shell /work/sample/kas/baseline.yml -c 'bitbake -e firmdura-reference-image' > /work/verification/image.env &&\nkas shell /work/sample/kas/baseline.yml -c 'bitbake -n firmdura-reference-image' &&\npython3 - <<'CHECK'\nimport json, pathlib, subprocess\nexpected = {'sample': '99a183a2aa10875a989c32a09dc5461b61ef731c', 'poky': '93431249a6260da7bd29ee3ca32145d89e5b8259', 'meta-openembedded': 'ce8539c941f6fcbecaca4d16640ac105c0595589', 'meta-lts-collab': 'e127ed67e74ca6b7e0fdc6cbda572302886c00a0'}\nactual = {}\nfor name, sha in expected.items():\n    actual[name] = subprocess.check_output(['git', '-C', '/work/' + name, 'rev-parse', 'HEAD'], text=True).strip()\n    if actual[name] != sha:\n        raise SystemExit('Unexpected repository revision: ' + name)\n    if subprocess.check_output(['git', '-C', '/work/' + name, 'status', '--porcelain'], text=True).strip():\n        raise SystemExit('Checkout is not clean: ' + name)\nresult = {'status': 'passed', 'repositories': actual, 'external_repository_cache_reused': False, 'download_or_sstate_cache_reused': False, 'scope': 'clean metadata/parse/dry-run only; no image built'}\npathlib.Path('/work/verification/repositories.json').write_text(json.dumps(result, indent=2))\nprint(json.dumps(result, indent=2))\nCHECK"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:05:24.177759+00:00",
+      "finished_at": "2026-11-17T21:08:21.727050+00:00",
+      "elapsed_seconds": 177.549291,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-clean-checkout-v2.log",
+      "log_sha256": "aa7f5cc1e4355d30decf3ec19b5dc8e40cb87bfe8c5f19cb7b0d8a0735678355",
+      "log_size": 658984,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-builder-tools-v2",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "bash",
+        "-c",
+        "cat /etc/os-release && uname -m && kas --version && git --version && python3 --version && dpkg-query -W bash libc6 libssl3 python3 git gcc make tar"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:02:36.756013+00:00",
+      "finished_at": "2026-11-17T21:02:37.000999+00:00",
+      "elapsed_seconds": 0.244986,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-builder-tools-v2.log",
+      "log_sha256": "c5092352a0f296a62605d40467edbb1bafbb5d77690b8406d853397b987fe298",
+      "log_size": 554,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-appends",
+      "argv": [
+        "sh",
+        "kas/run",
+        "baseline",
+        "shell",
+        "-c",
+        "bitbake-layers show-appends"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:13:09.110292+00:00",
+      "finished_at": "2026-11-17T21:13:12.600157+00:00",
+      "elapsed_seconds": 3.489865,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-appends.log",
+      "log_sha256": "211c007ed480ba52319df497a63bfb9ce1dcdea3f0cab13a60f1ca6fbff8cbe8",
+      "log_size": 4610,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-shell-syntax",
+      "argv": [
+        "sh",
+        "-n",
+        "kas/run"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:13:12.627317+00:00",
+      "finished_at": "2026-11-17T21:13:12.632292+00:00",
+      "elapsed_seconds": 0.004975,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-shell-syntax.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-final-argument-checks",
+      "argv": [
+        "python3",
+        "-c",
+        "import json, subprocess; cases=[[], [\"unknown\", \"dump\"], [\"baseline\", \"purge\"]]; results=[]\nfor args in cases:\n r=subprocess.run([\"sh\", \"kas/run\", *args], capture_output=True, text=True)\n if r.returncode != 2 or not r.stderr.strip(): raise SystemExit(\"Expected explicit argument rejection: \" + repr(args))\n results.append({\"arguments\":args,\"exit_code\":r.returncode,\"stderr\":r.stderr.strip()})\nprint(json.dumps({\"status\":\"passed\",\"cases\":results},indent=2))"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:13:12.658662+00:00",
+      "finished_at": "2026-11-17T21:13:12.693973+00:00",
+      "elapsed_seconds": 0.035311,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-final-argument-checks.log",
+      "log_sha256": "8622243c409277ccbd5e49113b778c7560fbcf9b9ad8e38c9c785d65b88fb355",
+      "log_size": 504,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-107-fresh-helper-check",
+      "argv": [
+        "env",
+        "FIRMDURA_WORK_VOLUME=firmdura-kirkstone-helpercheck",
+        "sh",
+        "kas/run",
+        "baseline",
+        "shell",
+        "-c",
+        "id && stat -c \"%u:%g %a %n\" /work && bitbake -p"
+      ],
+      "cwd": "sample checkout on the approved control host",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:14:52.995000+00:00",
+      "finished_at": "2026-11-17T21:15:48.220210+00:00",
+      "elapsed_seconds": 55.22521,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-107-fresh-helper-check.log",
+      "log_sha256": "b4b596cbd87536fd133d1f526d001944e275437ca991eef3c65bdf52a0b0cfde",
+      "log_size": 1420,
+      "expected_exit_code": 0
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "baseline-expanded.yml",
+      "role": "bootstrap-metadata",
+      "variant": "baseline",
+      "size": 1881,
+      "sha256": "4980bb329e9e4a50a30adbc976cdc351a7d37a9b3ddf8cb8946d31b3a91f8405",
+      "location": "local://firmdura-kirkstone/runs/sti-107-clean/baseline-expanded.yml"
+    },
+    {
+      "path": "image.env",
+      "role": "bootstrap-metadata",
+      "variant": "baseline",
+      "size": 2276740,
+      "sha256": "a78c23fb5ee7d78e05bb602deb1d8688a4d13448daee27344669c4c93e5eff5c",
+      "location": "local://firmdura-kirkstone/runs/sti-107-clean/image.env"
+    },
+    {
+      "path": "libwebsockets.env",
+      "role": "bootstrap-metadata",
+      "variant": "baseline",
+      "size": 1899092,
+      "sha256": "f002a53ca3c789ddbd791e8478c0eca61fd0b9153af4d2a724738dce6272e694",
+      "location": "local://firmdura-kirkstone/runs/sti-107-clean/libwebsockets.env"
+    },
+    {
+      "path": "repositories.json",
+      "role": "bootstrap-metadata",
+      "variant": "baseline",
+      "size": 451,
+      "sha256": "442181aeae091fd2386b0e7da84452b71e676a706e69bf6a934eb84f0dd30878",
+      "location": "local://firmdura-kirkstone/runs/sti-107-clean/repositories.json"
+    }
+  ],
+  "results": {
+    "clean_checkout": "passed",
+    "kas_expansion": "passed",
+    "expanded_baseline_sha256": "4980bb329e9e4a50a30adbc976cdc351a7d37a9b3ddf8cb8946d31b3a91f8405",
+    "bitbake_parse": "passed",
+    "clean_parsed_recipe_count": 2427,
+    "image_dependency_dry_run": "passed",
+    "dry_run_task_count": 4921,
+    "dry_run_only": true,
+    "effective_library_values": {
+      "PV": "4.2.2",
+      "PR": "r0",
+      "SRCREV": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+      "SRC_URI": "git://github.com/warmcat/libwebsockets.git;protocol=https;branch=v4.2-stable",
+      "PACKAGECONFIG": "libuv client server http2 ssl",
+      "EXTRA_OECMAKE": "      -DLIB_SUFFIX=   -DLWS_WITHOUT_CLIENT=OFF -DLWS_WITH_HTTP2=ON -DLWS_IPV6=OFF -DLWS_WITH_LIBEV=OFF -DLWS_WITH_LIBEVENT=OFF -DLWS_WITH_LIBUV=ON -DLWS_WITHOUT_SERVER=OFF -DLWS_WITH_SSL=ON -DLWS_WITH_STATIC=OFF -DLWS_LINK_TESTAPPS_DYNAMIC=ON",
+      "MACHINE": "qemuarm64",
+      "TARGET_SYS": "aarch64-poky-linux",
+      "BUILD_SYS": "aarch64-linux",
+      "DISTRO_VERSION": "4.0.35",
+      "DISTRO_FEATURES": "acl alsa argp bluetooth debuginfod ext2 ipv4 ipv6 largefile pcmcia usbgadget usbhost wifi xattr nfs zeroconf pci 3g nfc x11 vfat seccomp largefile opengl ptest multiarch wayland vulkan ptest pulseaudio sysvinit gobject-introspection-data ldconfig",
+      "PACKAGE_CLASSES": "package_ipk",
+      "INHERIT": " rm_work create-spdx archiver poky-sanity uninative package_ipk  debian devshell sstate license remove-libtool sanity",
+      "BB_NUMBER_THREADS": "2",
+      "PARALLEL_MAKE": "-j2",
+      "COPYLEFT_LICENSE_INCLUDE": "*",
+      "COPYLEFT_RECIPE_TYPES": "target",
+      "COPY_LIC_DIRS": "1",
+      "COPY_LIC_MANIFEST": "1"
+    },
+    "image_install": "packagegroup-core-boot  libwebsockets libwebsockets-testapps ptest-runner",
+    "image_basenames": [
+      "firmdura-reference-baseline",
+      "firmdura-reference-patched"
+    ],
+    "libwebsockets_appends": [],
+    "variant_feature_equality": "passed",
+    "fresh_empty_volume_helper": "passed",
+    "image_build": "not_run",
+    "qemu_boot": "not_run",
+    "scanner_preflight": "not_run",
+    "cve_reproduction": "not_run"
+  },
+  "resolved_observations": [
+    {
+      "issue": "The first VM restart stalled before SSH readiness.",
+      "resolution": "Stopped only the new instance and performed a bounded successful restart.",
+      "log": "local://firmdura-kirkstone/logs/sti-107-builder-retry-1.log"
+    },
+    {
+      "issue": "The unused writable host artifact mount did not mount.",
+      "resolution": "Removed it; verified source-only read-only mounts and successfully exported metadata through Docker copy."
+    },
+    {
+      "issue": "kas initially lost the repository root due to Git ownership checks and filtered environment variables.",
+      "resolution": "Trust only /repo in each disposable container's Git configuration; do not change host Git settings.",
+      "log": "local://firmdura-kirkstone/logs/sti-107-baseline-dump-v2.log"
+    },
+    {
+      "issue": "The enabled ptest dependency graph lacked stunnel.",
+      "resolution": "Include meta-networking and its declared meta-python dependency at the existing immutable meta-openembedded pin.",
+      "log": "local://firmdura-kirkstone/logs/sti-107-baseline-libwebsockets-env.log"
+    },
+    {
+      "issue": "A separate empty-volume ownership preparation did not suffice for the native clean-check container.",
+      "resolution": "Initialize ownership in the consuming container; validate the documented helper on another empty volume.",
+      "log": "local://firmdura-kirkstone/logs/sti-107-clean-checkout.log"
+    },
+    {
+      "issue": "CMake and Ninja are absent from the pinned host image inventory.",
+      "resolution": "Do not install unneeded host packages; Yocto supplies native build dependencies. Record the actual required host tools.",
+      "log": "local://firmdura-kirkstone/logs/sti-107-builder-tools.log"
+    }
+  ],
+  "limitations": [
+    "No image or target test result exists; a successful dry-run is not a build.",
+    "The repair layer is empty. The patched configuration name is only an interface reservation.",
+    "CVE applicability and Grype interoperability still require STI-108/109 evidence.",
+    "Raw artifacts are in owner-approved durable local storage, not yet public release assets or off-host backup.",
+    "The constrained local builder has not yet demonstrated sufficient disk capacity for the full image build.",
+    "Original-file MIT approval does not establish third-party binary redistribution completeness.",
+    "Human review of repair evidence and approval of the exact release remain outstanding and mandatory."
+  ],
+  "timing": {
+    "elapsed_image_build_seconds": 0
+  }
+}
