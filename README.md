@@ -2,12 +2,14 @@
 
 A public engineering sample showing the source maintenance layer, integration process, and repair evidence that an embedded Linux engineering team can evaluate.
 
-**Status: bootstrap in progress. Pinned reference configuration and layer scaffolding are being verified. No target build, CVE reproduction, validated repair, or sample release is available yet.**
+**Status: bootstrap metadata verified. Locked inputs resolve from clean checkouts and BitBake parses the reference image configuration. The actual baseline image build and boot are next. No CVE reproduction, validated repair, or sample release is available yet.**
 
 See [the reference build and handoff contract](docs/build.md) for locked inputs,
 isolated builder setup, baseline/patched configuration boundaries, commands,
 evidence storage, and file ownership. The repair layer is still empty: a
 configuration named `patched` is not evidence that a repair has been applied.
+The [bootstrap run record](evidence/20261117-sti107-bootstrap/run.json) indexes
+the actual commands, configuration comparisons, retained logs and hashes.
 
 ## Planned first release
 
