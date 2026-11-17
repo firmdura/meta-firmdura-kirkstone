@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: MIT
+header:
+  version: 14
+
+build_system: openembedded
+machine: qemuarm64
+distro: poky
+target: firmdura-reference-image
+
+repos:
+  meta-firmdura-kirkstone:
+    layers:
+      meta-firmdura-tests:
+  poky:
+    url: https://git.yoctoproject.org/poky
+    commit: 93431249a6260da7bd29ee3ca32145d89e5b8259
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded.git
+    commit: ce8539c941f6fcbecaca4d16640ac105c0595589
+    layers:
+      meta-oe:
+      meta-networking:
+      meta-python:
+  meta-lts-collab:
+    url: https://github.com/garmin/meta-lts-collab.git
+    commit: e127ed67e74ca6b7e0fdc6cbda572302886c00a0
+
+local_conf_header:
+  firmdura-reference: |
+    CONF_VERSION = "2"
+    PACKAGE_CLASSES = "package_ipk"
+    IMAGE_FSTYPES = "ext4 tar.bz2"
+    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+    DISTRO_FEATURES:append = " ptest"
+    PREFERRED_VERSION_libwebsockets = "4.2.2"
+    PACKAGECONFIG:pn-libwebsockets = "libuv client server http2 ssl"
+    BB_NUMBER_THREADS = "2"
+    PARALLEL_MAKE = "-j2"
+    DL_DIR = "${TOPDIR}/../downloads"
+    SSTATE_DIR = "${TOPDIR}/../sstate-cache"
+    BB_DISKMON_DIRS = "STOPTASKS,${TMPDIR},5G,100K STOPTASKS,${DL_DIR},5G,100K STOPTASKS,${SSTATE_DIR},5G,100K HALT,${TMPDIR},2G,50K"
+    INHERIT += "rm_work create-spdx archiver"
+    RM_WORK_EXCLUDE += "libwebsockets"
+    SPDX_PRETTY = "1"
+    ARCHIVER_MODE[src] = "original"
+    ARCHIVER_MODE[recipe] = "1"
+    COPYLEFT_LICENSE_INCLUDE = "*"
+    COPYLEFT_LICENSE_EXCLUDE = "CLOSED Proprietary"
+    COPYLEFT_RECIPE_TYPES = "target"
+    COPY_LIC_MANIFEST = "1"
+    COPY_LIC_DIRS = "1"

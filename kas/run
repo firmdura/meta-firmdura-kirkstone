@@ -1,0 +1,39 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+set -eu
+
+if [ "$#" -lt 2 ]; then
+    printf '%s\n' "Usage: sh kas/run baseline|patched checkout|dump|build|shell|for-all-repos [arguments...]" >&2
+    exit 2
+fi
+
+variant=$1
+command=$2
+shift 2
+case "$variant" in
+    baseline|patched) ;;
+    *) printf 'Unsupported variant: %s\n' "$variant" >&2; exit 2 ;;
+esac
+case "$command" in
+    checkout|dump|build|shell|for-all-repos) ;;
+    *) printf 'Unsupported kas command: %s\n' "$command" >&2; exit 2 ;;
+esac
+if [ "$(id -u)" -eq 0 ]; then
+    printf '%s\n' "Run this helper as a non-root user; BitBake must not build as root." >&2
+    exit 2
+fi
+
+repo=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+image=$(cat "$repo/kas/builder-image.txt")
+volume=${FIRMDURA_WORK_VOLUME:-firmdura-kirkstone-work}
+docker volume inspect "$volume" >/dev/null
+
+# kas filters Git configuration environment variables; trust only this container's mount.
+exec docker run --rm --init --log-driver none --user root --entrypoint /bin/sh \
+    --mount "type=bind,source=$repo,target=/repo,readonly" \
+    --mount "type=volume,source=$volume,target=/work" \
+    --workdir /repo \
+    --env "USER_ID=$(id -u)" --env "GROUP_ID=$(id -g)" \
+    --env KAS_WORK_DIR=/work --env "KAS_BUILD_DIR=/work/build-$variant" \
+    "$image" -c 'git config --system --add safe.directory /repo && exec /container-entrypoint "$@"' \
+    sh "$command" "/repo/kas/$variant.yml" "$@"

@@ -2,7 +2,12 @@
 
 A public engineering sample showing the source maintenance layer, integration process, and repair evidence that an embedded Linux engineering team can evaluate.
 
-**Status: repository initialized. The layer, build configuration, tests, and release workflow are not implemented or validated here yet. No sample release is available.**
+**Status: bootstrap in progress. Pinned reference configuration and layer scaffolding are being verified. No target build, CVE reproduction, validated repair, or sample release is available yet.**
+
+See [the reference build and handoff contract](docs/build.md) for locked inputs,
+isolated builder setup, baseline/patched configuration boundaries, commands,
+evidence storage, and file ownership. The repair layer is still empty: a
+configuration named `patched` is not evidence that a repair has been applied.
 
 ## Planned first release
 
@@ -61,6 +66,12 @@ Customer participation, external replay, physical-board qualification, and commu
 Results will apply only to the stated reference configuration. They will not establish compatibility with every Kirkstone BSP, validate customer firmware, or certify compliance. Customer product builds, hardware tests, approval, signing, and deployment remain under customer control.
 
 The first commitment is one complete sample. Additional cases and a maintenance cadence will be considered after measuring the first cycle.
+
+## Licensing
+
+[MIT](LICENSE) applies to original Firmdura files, with owner approval.
+Third-party layers, patches, sources, and distributed binaries retain their
+own licences and notices; see [the licence boundary](docs/build.md#licence-boundary).
 
 ## References
 
