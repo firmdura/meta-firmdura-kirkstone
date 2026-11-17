@@ -35,5 +35,5 @@ exec docker run --rm --init --log-driver none --user root --entrypoint /bin/sh \
     --workdir /repo \
     --env "USER_ID=$(id -u)" --env "GROUP_ID=$(id -g)" \
     --env KAS_WORK_DIR=/work --env "KAS_BUILD_DIR=/work/build-$variant" \
-    "$image" -c 'git config --system --add safe.directory /repo && exec /container-entrypoint "$@"' \
+    "$image" -c 'chown "$USER_ID:$GROUP_ID" /work && git config --system --add safe.directory /repo && exec /container-entrypoint "$@"' \
     sh "$command" "/repo/kas/$variant.yml" "$@"

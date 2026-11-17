@@ -93,9 +93,6 @@ From the sample checkout, initialize a **new, dedicated** work volume:
 
 ```sh
 docker volume create --label org.firmdura.sample=kirkstone firmdura-kirkstone-work
-docker run --rm --user root --entrypoint chown \
-  --mount type=volume,source=firmdura-kirkstone-work,target=/work \
-  "$(cat kas/builder-image.txt)" "$(id -u):$(id -g)" /work
 sh kas/run baseline dump
 sh kas/run baseline checkout
 sh kas/run baseline shell -c 'bitbake -p'
@@ -105,6 +102,11 @@ sh kas/run baseline shell -c 'bitbake -e libwebsockets'
 sh kas/run baseline shell -c 'bitbake -e firmdura-reference-image'
 ```
 
+The helper initializes the work volume's top-level ownership inside the
+consuming container, then drops to the calling user's non-root identity.
+Do not depend on an earlier disposable container to prepare an empty volume's
+ownership. It does not recursively change existing build files.
+
 Capture stdout **and** stderr and preserve each exit status. Do not let a
 successful `tee`, grep, or summary replace a failed command's result.
 Inspect effective `FILE`, `PV`, `SRCREV`, `SRC_URI`, `PACKAGECONFIG`,
@@ -113,7 +115,7 @@ identities. A kas dump is not a substitute for BitBake parsing.
 
 For the second clean resolution check, use a second clean checkout at the
 same source SHA and a new volume, for example `firmdura-kirkstone-replay`.
-Initialize ownership as above and set
+Create that volume as above and set
 `FIRMDURA_WORK_VOLUME=firmdura-kirkstone-replay` on the helper commands.
 Do not copy the first checkout's repositories or generated configuration into
 that volume. Compare all external repository commits and the expanded kas
