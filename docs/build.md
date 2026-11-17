@@ -5,6 +5,14 @@ reproduction. The repair layer is currently empty. The `patched` configuration
 reserves the comparison interface; its name does **not** mean it contains a
 repair. Only STI-110 can establish that distinction with actual target evidence.
 
+The [bootstrap run record](../evidence/20261117-sti107-bootstrap/run.json)
+records a public-source clean checkout, 2,427 parsed recipes, and an image
+dependency dry-run of 4,921 tasks. Those dry-run tasks did **not** build an
+image. Expanded baseline configuration and relevant effective
+baseline/patched feature settings matched. The ownership correction to the
+container helper was separately verified with another new empty volume;
+it did not change the locked configuration, image recipe or layer files.
+
 ## Locked inputs
 
 Resolved from the public repositories on 2026-11-17:
