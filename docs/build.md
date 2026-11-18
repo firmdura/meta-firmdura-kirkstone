@@ -7,7 +7,7 @@ reproduction and repair may proceed independently; scanner/VEX acceptance
 remains a publication requirement. This is not a CVE reproduction.
 The repair layer is currently empty. The `patched` configuration
 reserves the comparison interface; its name does **not** mean it contains a
-repair. Only STI-110 can establish that distinction with actual target evidence.
+repair. A repair must be established with actual target evidence.
 
 The [bootstrap run record](../evidence/20261117-sti107-bootstrap/run.json)
 records a public-source clean checkout, 2,427 parsed recipes, and an image
@@ -26,7 +26,7 @@ and HTTP/2 support, not a vulnerability or repair. See
 
 ### Historical source identities
 
-An owner-approved commit-message cleanup changed commit IDs without changing
+A commit-message cleanup changed commit IDs without changing
 their file trees. The handoff review verified these bindings:
 
 | Actually built/tested commit | Same-tree commit on current main |
@@ -71,22 +71,20 @@ the HTTP/2 HPACK path-header boundary. The
 adds a bound check in `lws_frag_append`. The selected current community tree has
 no libwebsockets recipe or append, and the public community PR/CVE searches
 returned no matches at bootstrap. These observations are **not** proof that
-the built target is affected. STI-108/109 must check the actual package,
-configuration, scanner result, and runtime failure. Never remove an existing
-fix or select an older community revision to manufacture a vulnerable baseline.
+the built target is affected. Establishing affectedness requires checks of the
+actual package, configuration, scanner result, and runtime failure. Never remove
+an existing fix or select an older community revision to manufacture a vulnerable
+baseline.
 
-## Builder and authorization
+## Builder requirements
 
 Use an isolated, maintained **Linux ARM64** builder. macOS is a control host,
 not the Yocto host filesystem. This container is specifically pinned for
 ARM64; other builder architectures are not validated by this bootstrap.
 
-The owner approved dedicated local Linux environments and durable local
-artifact storage for this sample on 2026-11-17. That standing authorization is
-recorded on STI-106 and STI-107; do not ask for it again within that scope.
-It does not authorize spending, changes to other workloads, or release
-publication. Jabar Asadi is the human engineering/release reviewer. Original
-files are MIT with owner approval; third-party terms remain unchanged.
+Use a dedicated Linux environment and durable artifact storage for this sample.
+Building the sample does not establish release approval. Original files are
+MIT; third-party terms remain unchanged.
 
 The initial dedicated Colima profile is `firmdura-kirkstone`: native ARM64,
 4 virtual CPUs, 8 GiB RAM, a 55 GiB data disk and a 10 GiB root disk. Its VM
@@ -154,7 +152,7 @@ Do not copy the first checkout's repositories or generated configuration into
 that volume. Compare all external repository commits and the expanded kas
 configuration, and record any declared cache/download reuse.
 
-After STI-107 is verified, reviewed and merged, STI-108 runs:
+After the pinned configuration is reviewed and merged, build the baseline:
 
 ```sh
 sh kas/run baseline build
@@ -170,7 +168,7 @@ the test revision must remain equal.
 The build enables Yocto's SPDX inventory, original-source/patch/recipe
 archiving for target recipes, and licence manifests/notices. This starts
 source collection early; it is **not** the complete binary redistribution
-review, which remains a mandatory STI-112 gate.
+review, which remains mandatory before redistribution.
 
 ## Output, boot and artifact storage
 
@@ -210,12 +208,12 @@ The earlier macOS directory export is non-canonical and must not be used as
 the complete licence handoff.
 
 The initial durable locator is `local://firmdura-kirkstone/`, mapped on the
-owner's control host to
+control host to
 `~/Library/Application Support/Firmdura/kirkstone-sample/`.
 Its `artifacts/<run-id>/`, `logs/`, and `runs/` directories persist across
-sessions. The authorized lead/reviewer use the same local account or an
-explicit owner-approved transfer; no world-readable share is created.
-Retain handoffs until the owner explicitly approves removal. This is local,
+sessions. Restrict access to build and review participants; transfer artifacts
+explicitly between accounts rather than creating a world-readable share.
+Retain handoffs until they are explicitly cleared for removal. This is local,
 single-host storage, not off-host backup or a public download service.
 Later release publication must provide durable public assets and corresponding
 source through the separately approved release gate.
@@ -251,21 +249,14 @@ deliberately failing wrong-library control.
 
 ## Ownership and evidence interface
 
-| Area | Owner / purpose |
+| Area | Purpose |
 |---|---|
-| `conf/`, `recipes-*` | Lead: separately consumable repair layer |
-| `kas/` | Lead: shared locks, configuration and narrow container invocation |
-| `meta-firmdura-tests/`, `tests/`, `docs/testing.md` | Lead: image/test-only integration and C tests |
-| `.github/workflows/release.yml`, `scripts/release/`, `docs/signing.md` | STI-111: signing and strict verification |
-| `scripts/bundle/`, `docs/evaluation.md` | STI-112: frozen-payload packaging |
-| `scripts/vex/`, `docs/vex.md` | STI-113: actual SBOM/VEX consumer integration |
-| `evidence/<run-id>/` | Owning ticket: small sanitized run records only |
-| `README.md` | Lead only: integration and truthful public status |
-
-These are reserved owned paths, not a requirement to add empty files or a
-general coordinator. Each worker receives one ticket, a separate branch and
-checkout, exact merged prerequisite SHAs, and explicit file ownership.
-The continuous reproduction/repair trace remains with the lead.
+| `conf/` | Repair-layer configuration; the repair layer is currently empty |
+| `kas/` | Shared locks, configuration and narrow container invocation |
+| `meta-firmdura-tests/`, `tests/`, `docs/testing.md` | Image/test-only integration and C tests |
+| `.github/workflows/release.yml`, `scripts/release/`, `docs/signing.md` | Signing preparation and strict verification |
+| `evidence/<run-id>/` | Small sanitized run records only |
+| `README.md` | Public capabilities and current limitations |
 
 Each run's `run.json` must contain:
 
@@ -290,13 +281,14 @@ The release manifest interface is a versioned JSON object with release/source
 identities and an `artifacts` array. Every entry has a relative `path`, `role`,
 `variant` when applicable, `size`, and `sha256`. It binds **all** deliverable
 payloads but excludes itself and the later signature bundle. Signing consumes
-those frozen bytes without regenerating them. STI-111 must finalize and test
-this interface with the lead before another worker consumes it.
+those frozen bytes without regenerating them. The concrete interface and its
+validation requirements are documented in [the signing guide](signing.md).
 
-STI-110 freezes the tested image pair. Packaging/VEX/replay workers consume it
-read-only and boot only disposable copies. Any relevant source, configuration,
-test or payload change invalidates affected downstream results and requires
-explicit reruns. Human review and exact-release approval remain mandatory.
+Freeze the tested image pair before packaging, VEX integration or replay.
+Consume that pair read-only and boot only disposable copies. Any relevant
+source, configuration, test or payload change invalidates affected downstream
+results and requires explicit reruns. Human review and exact-release approval
+remain mandatory.
 
 ## Licence boundary
 
