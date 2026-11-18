@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti111-oidc-fixture",
+  "issue": "STI-111",
+  "status": "verified",
+  "scope": "Trusted GitHub Actions OIDC kind=fixture signing smoke run under human-protected release-signing environment, durable retention of Sigstore bundle and logs, and local Cosign v3.1.4 positive and negative control verification; not production release evidence.",
+  "started_at": "2026-11-18T13:54:50.447886+00:00",
+  "finished_at": "2026-11-18T14:04:03.333999+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "base_main_commit": "6b1c81f35123bc89c5dd06016206f9805dc94d43",
+    "workflow_dispatch_commit": "b028134144e00abb123d7b2d8d0235f018e3d90b",
+    "actions_run_id": 44306456937,
+    "actions_run_url": "https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44306456937",
+    "actions_artifact_id": 14429512332,
+    "environment": {
+      "id": 27724746813,
+      "name": "release-signing",
+      "can_admins_bypass": false,
+      "required_human_reviewer_user_id": 19530589,
+      "deployment_branch_policy": "main-only"
+    },
+    "cosign": {
+      "version": "v3.1.4",
+      "darwin_arm64_sha256": "9f9b8cd557cf2e5b3df3373a00baa005a86b02391e3e06dd0ce37b3a1533d3a4"
+    }
+  },
+  "command_path_aliases": {
+    "<checkout>": "Isolated STI-111 sample repository worktree",
+    "<store>": "Durable local://firmdura-kirkstone/ storage root on the control host"
+  },
+  "commands": [
+    {
+      "label": "sti-111-fetch-run-metadata",
+      "argv": [
+        "gh",
+        "api",
+        "repos/firmdura/meta-firmdura-kirkstone/actions/runs/44306456937"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:54:57.832087+00:00",
+      "finished_at": "2026-11-18T13:54:58.684174+00:00",
+      "elapsed_seconds": 0.8519260419998318,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-fetch-run-metadata.log",
+      "log_sha256": "a44e0b2df1c2ca78a72bce17736a264b829fc8ad43a34d020fbd15522aa82480",
+      "log_size": 13582,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-fetch-run-approvals",
+      "argv": [
+        "gh",
+        "api",
+        "repos/firmdura/meta-firmdura-kirkstone/actions/runs/44306456937/approvals"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:54:58.718665+00:00",
+      "finished_at": "2026-11-18T13:54:59.209842+00:00",
+      "elapsed_seconds": 0.49102808302268386,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-fetch-run-approvals.log",
+      "log_sha256": "fa137aaef342e95f4ba2fea31f99072dbfe3fbe055c330384d35dde3fe587fbc",
+      "log_size": 1483,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-fetch-run-jobs",
+      "argv": [
+        "gh",
+        "run",
+        "view",
+        "44306456937",
+        "--repo",
+        "firmdura/meta-firmdura-kirkstone",
+        "--log"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:54:59.246493+00:00",
+      "finished_at": "2026-11-18T13:55:02.799536+00:00",
+      "elapsed_seconds": 3.5528793749399483,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-fetch-run-jobs.log",
+      "log_sha256": "dcf264a3a14a17fc1a2c24ede1f2a909b1b492fa831980bec8a3c255ad1116c6",
+      "log_size": 118826,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-local-reverify-oidc-fixture",
+      "argv": [
+        "python3",
+        "tests/release_oidc.py",
+        "--assets",
+        "<store>/artifacts/20261118-sti111-oidc-fixture/candidate",
+        "--cosign",
+        "<store>/artifacts/20261118-sti111-oidc-fixture/cosign-v3.1.4-darwin-arm64",
+        "--manifest-sha256",
+        "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60",
+        "--kind",
+        "fixture",
+        "--release-id",
+        "sti111-keyless-fixture",
+        "--source-commit",
+        "44210974feddea19687ea2d7466f99f45d43588b"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:55:04.288837+00:00",
+      "finished_at": "2026-11-18T13:55:14.749810+00:00",
+      "elapsed_seconds": 10.460706582991406,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-local-reverify-oidc-fixture.log",
+      "log_sha256": "aa7fcf2535b000bf7ff61ca135fda5acff093277126cf87ea50ded20f17cb8cc",
+      "log_size": 3348,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "signed-fixture-44306456937.zip",
+      "role": "actions-signed-fixture-archive",
+      "size": 11980,
+      "sha256": "385c068fb81b71b341f6dc133ba6aa170b3aa04737a5ac4ad134bd4a2b7d79ae",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti111-oidc-fixture/signed-fixture-44306456937.zip"
+    },
+    {
+      "path": "candidate/manifest.json",
+      "role": "fixture-manifest",
+      "size": 457,
+      "sha256": "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti111-oidc-fixture/candidate/manifest.json"
+    },
+    {
+      "path": "candidate/manifest.sigstore.json",
+      "role": "fixture-sigstore-bundle",
+      "size": 11011,
+      "sha256": "4f85529b613a09ad223ede82644ace7b814d11c8c329d4afb285bd29c7325de6",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti111-oidc-fixture/candidate/manifest.sigstore.json"
+    },
+    {
+      "path": "candidate/payloads/fixture.txt",
+      "role": "fixture-payload",
+      "size": 104,
+      "sha256": "f407fadc99c0d9f88ea9d250132afc02e86bdcd4d180db1b7004e03c246d814d",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti111-oidc-fixture/candidate/payloads/fixture.txt"
+    }
+  ],
+  "results": {
+    "environment_policy_verified": true,
+    "human_deployment_approval_recorded": true,
+    "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+    "certificate_identity": "https://github.com/firmdura/meta-firmdura-kirkstone/.github/workflows/release.yml@refs/heads/main",
+    "certificate_der_sha256": "b71f7a5206b351bf31d48b626baf9b7e1b49ad96d311a30c5a5a0043a480e9c2",
+    "bundle_sha256": "4f85529b613a09ad223ede82644ace7b814d11c8c329d4afb285bd29c7325de6",
+    "manifest_sha256": "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60",
+    "negative_controls_rejected": [
+      "wrong-certificate-identity",
+      "wrong-certificate-oidc-issuer",
+      "changed-manifest",
+      "changed-payload",
+      "missing-payload",
+      "unsigned-extra",
+      "mismatched-asset-set"
+    ],
+    "evidence_kind": "fixture-only-not-a-release",
+    "production_release_published": false
+  },
+  "timing": {
+    "active_assistant_session_seconds": 552.880958458,
+    "explicitly_paused_command_wait_seconds": 0.0,
+    "measured_through": "2026-11-18T14:04:03.333999+00:00",
+    "method": "Prospective, manually bracketed supervised assistant-session wall time; not human labor or CPU time. Explicit command/build/user waits are excluded from active intervals. Historical effort remains unknown."
+  },
+  "limitations": [
+    "Fixture signing validates the protected GitHub Actions OIDC and Cosign verification pipeline only; it is not production release evidence.",
+    "Final kind=release signing over frozen candidate assets, publication, and public-download verification remain mandatory in STI-116."
+  ]
+}
