@@ -1,0 +1,824 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti119-scanner-preflight",
+  "issue": "STI-119",
+  "status": "blocked",
+  "scope": "Bounded STI-119 baseline SPDX 2.2 external-document graph consolidation, reusable Syft/Grype adapter verification across all 39 installed target packages, and single 2026-11-18 consumer/advisory/database preflight pass; no image rebuild, runtime reproduction, repair, VEX suppression, or release claim.",
+  "started_at": "2026-11-18T08:34:26+00:00",
+  "finished_at": "2026-11-18T09:27:03.226486+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "branch": "sti-119-scanner-interoperability",
+    "base_main_commit": "b3479b2ee43aa0efc48898486548cfde09e9c96d",
+    "base_main_tree": "2a197aed95ed40be4b6d8e0c3f042886295ed7d5",
+    "source_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+    "configuration_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+    "test_commit": "b5f1902618e0c23f1be38fac8c690ae91b7aab72",
+    "source_mapping": [
+      {
+        "historical_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+        "current_main_equivalent": "6799585d26caf7048acd555e4d0d2a74abe5b019",
+        "tree": "2b00d9a4ff817c8a455c0e947d8ad2922b27796f"
+      },
+      {
+        "historical_commit": "b5f1902618e0c23f1be38fac8c690ae91b7aab72",
+        "current_main_equivalent": "d6b528ea5b106f1c26f8f0e26b6fec4ea7728839",
+        "tree": "d2f4976e221e58c1eb832d2172ee5f02a4c235cd"
+      }
+    ],
+    "source_file_sha256": {
+      "conf/layer.conf": "0db7333de22c5c7a4c55eb3622f93255513d527a8a145ed801f9fa03056f77a3",
+      "kas/baseline.yml": "0da53535fc26b1d77f60ce4702da8d885e7c03ee880620cda7f0ec27d3956652",
+      "kas/builder-image.txt": "724b1461299f361e1b23354d230dc2e463082b12d3abbd104abcd1658bc5e901",
+      "kas/common.yml": "c963dc518cb5243858366dce7b34a0afb8201d8189bc47070f71f9b092ca4dfd",
+      "kas/patched.yml": "8f53d97ae594be6283d5b397a27013c357adcc6cb8d4a9f9d75ff0f3caf15844",
+      "kas/run": "51c77a033e869db2c54982d83d3a4030ba6f6457bb3af81b39d5bf70dc93989d",
+      "meta-firmdura-tests/conf/layer.conf": "061e62a0736fc93214fd4f6dddd40fc4267a734f3f7441df858ebca13945e747",
+      "meta-firmdura-tests/recipes-core/images/firmdura-reference-image.bb": "924221cb4dc5222933149d1aec58bb46ef0c510f737b8cb5f897f3ce668955d9"
+    },
+    "sti119_owned_file_sha256": {
+      "scripts/vex/normalize_spdx.py": "ee6338f0fae2786a79ff9793a589b85c2700f1af9b10ec5f80da0989fe77eb33",
+      "tests/scanner_test.py": "c862355f7a855f83843f659a8f1f84d7ae736315ef431784041506e59f4b0efe",
+      "docs/scanner.md": "e978fe6b7b6cb91347bb88eff11c3ccc599a3b51bfcb09c2a886e47fa3a78159"
+    },
+    "external_repositories": {
+      "poky": {
+        "url": "https://git.yoctoproject.org/poky",
+        "commit": "93431249a6260da7bd29ee3ca32145d89e5b8259"
+      },
+      "meta-openembedded": {
+        "url": "https://github.com/openembedded/meta-openembedded",
+        "commit": "ce8539c941f6fcbecaca4d16640ac105c0595589"
+      },
+      "meta-lts-collab": {
+        "url": "https://github.com/garmin/meta-lts-collab",
+        "commit": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0"
+      }
+    },
+    "historical_baseline_record": "evidence/20261117-sti108-baseline/run.json",
+    "historical_baseline_record_sha256": "e9dc9d736f1bc7e7b7e67877b8b32cfcafa15518bbe3ea3fc86921545e4fa585",
+    "builder_image": "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+    "builder": {
+      "profile": "firmdura-kirkstone",
+      "docker_context": "colima-firmdura-kirkstone",
+      "architecture": "aarch64",
+      "docker_server": "29.2.1",
+      "colima": "0.10.1",
+      "host_python": "3.15.2"
+    },
+    "scanner": {
+      "version": "0.122.0",
+      "source_commit": "4419483072181b643c3efde0fd15b9113d88887f",
+      "latest_upstream_release_checked": "v0.122.0",
+      "latest_upstream_release_published_at": "2026-11-16T20:41:59Z",
+      "image": "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+      "syft": "1.57.2",
+      "database": {
+        "schemaVersion": "v6.1.10",
+        "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst?checksum=sha256:5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0",
+        "built": "2026-11-18T06:21:08Z",
+        "path": "/cache/db/6/vulnerability.db",
+        "valid": true
+      },
+      "database_vendor_archive_sha256": "5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0",
+      "database_sqlite_sha256": "efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506",
+      "network": "none during DB import and scans",
+      "database_read_only": true,
+      "sbom_mount_read_only": true,
+      "vex_documents": [],
+      "distro_override": null,
+      "automatic_cpe_generation": false,
+      "user_ignore_rules": [],
+      "builtin_kernel_header_ignore_rules": 4
+    }
+  },
+  "command_path_aliases": {
+    "<checkout>": "Isolated STI-119 Git worktree on the approved control host",
+    "<store>": "Owner-approved local://firmdura-kirkstone/ durable storage root"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, shutil, tarfile\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\ndeploy_tar = store / \"artifacts/20261117-sti108-baseline/deploy.tar\"\nsource_hashes = store / \"logs/sti-108-deploy-source-hashes.log\"\nout_dir = store / \"artifacts/20261118-sti119-scanner-preflight/sbom\"\nout_dir.mkdir(parents=True, exist_ok=True)\n\nusage = shutil.disk_usage(store)\nassert usage.free >= 25 * 1024**3, f\"Insufficient host free space: {usage.free}\"\n\nwith deploy_tar.open(\"rb\") as stream:\n    tar_sha256 = hashlib.file_digest(stream, \"sha256\").hexdigest()\nassert tar_sha256 == \"8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43\", tar_sha256\nassert deploy_tar.stat().st_size == 1977942016\n\ninventory = {\n    item[\"path\"]: item\n    for item in map(json.loads, source_hashes.read_text(encoding=\"utf-8\").splitlines())\n}\nrel_root = \"images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.json\"\nexpected_root = inventory[rel_root]\n\nwith tarfile.open(deploy_tar, \"r:\") as archive:\n    raw_root = archive.extractfile(\"deploy/\" + rel_root).read()\n\nraw_root_sha256 = hashlib.sha256(raw_root).hexdigest()\nassert raw_root_sha256 == expected_root[\"sha256\"], (raw_root_sha256, expected_root)\nassert len(raw_root) == expected_root[\"size\"]\n\nraw_out = out_dir / \"baseline-root-raw.spdx.json\"\nraw_out.write_bytes(raw_root)\n\nprint(json.dumps({\n    \"status\": \"verified\",\n    \"host_free_bytes\": usage.free,\n    \"host_floor_bytes\": 25 * 1024**3,\n    \"deploy_tar_sha256\": tar_sha256,\n    \"deploy_tar_size\": deploy_tar.stat().st_size,\n    \"raw_root_spdx_member\": \"deploy/\" + rel_root,\n    \"raw_root_spdx_sha256\": raw_root_sha256,\n    \"raw_root_spdx_size\": len(raw_root),\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.259411,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:02:18.260437+00:00",
+      "label": "sti-119-host-and-baseline-precheck",
+      "log": "local://firmdura-kirkstone/logs/sti-119-host-and-baseline-precheck.log",
+      "log_sha256": "0c66918d4ce6e7e993d33e0d8583ac52e81d7ca96f88f3ca549d53a2fb65b3dd",
+      "log_size": 461,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:02:17.001026+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/vex/normalize_spdx.py",
+        "--deploy-tar",
+        "<store>/artifacts/20261117-sti108-baseline/deploy.tar",
+        "--expected-deploy-tar-sha256",
+        "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+        "--expected-package-count",
+        "39",
+        "--output",
+        "<store>/artifacts/20261118-sti119-scanner-preflight/sbom/baseline-consolidated-normalized.spdx.json",
+        "--manifest-out",
+        "<store>/artifacts/20261118-sti119-scanner-preflight/sbom/baseline-normalization-manifest.json"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.302016,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:02:18.303040+00:00",
+      "label": "sti-119-normalize-baseline-spdx",
+      "log": "local://firmdura-kirkstone/logs/sti-119-normalize-baseline-spdx.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:02:17.001024+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nfrom datetime import datetime, timezone\nimport hashlib, json, urllib.error, urllib.request\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nfeeds_dir = store / \"artifacts/20261118-sti119-scanner-preflight/feeds\"\nfeeds_dir.mkdir(parents=True, exist_ok=True)\n\ndef fetch_json(url, method=\"GET\", body=None, headers=None):\n    hdrs = {\"Accept\": \"application/json\", \"User-Agent\": \"firmdura-sti119-preflight/1.0\"}\n    if headers:\n        hdrs.update(headers)\n    req = urllib.request.Request(url, data=body, headers=hdrs, method=method)\n    try:\n        with urllib.request.urlopen(req, timeout=30) as resp:\n            raw = resp.read()\n            return {\"status_code\": resp.status, \"sha256\": hashlib.sha256(raw).hexdigest(), \"body\": json.loads(raw.decode(\"utf-8\"))}\n    except urllib.error.HTTPError as err:\n        raw = err.read()\n        try:\n            parsed = json.loads(raw.decode(\"utf-8\"))\n        except Exception:\n            parsed = raw.decode(\"utf-8\", errors=\"replace\")\n        return {\"status_code\": err.code, \"sha256\": hashlib.sha256(raw).hexdigest(), \"body\": parsed}\n\ncaptured_at = datetime.now(timezone.utc).isoformat()\ngrype_release = fetch_json(\"https://api.github.com/repos/anchore/grype/releases/latest\")\ngrype_db_latest = fetch_json(\"https://grype.anchore.io/databases/v6/latest.json\")\nnvd_cve = fetch_json(\"https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-19773\")\nosv_cve = fetch_json(\"https://api.osv.dev/v1/vulns/CVE-2026-19773\")\nghsa_cve = fetch_json(\"https://api.github.com/advisories?cve_id=CVE-2026-19773\")\n\nsnapshot = {\n    \"captured_at\": captured_at,\n    \"target_cve\": \"CVE-2026-19773\",\n    \"grype_latest_release\": {\n        \"status_code\": grype_release[\"status_code\"],\n        \"tag_name\": grype_release[\"body\"].get(\"tag_name\") if isinstance(grype_release[\"body\"], dict) else None,\n        \"published_at\": grype_release[\"body\"].get(\"published_at\") if isinstance(grype_release[\"body\"], dict) else None,\n        \"response_sha256\": grype_release[\"sha256\"],\n    },\n    \"grype_db_v6_latest\": grype_db_latest,\n    \"nvd_cve_2026_19773\": nvd_cve,\n    \"osv_cve_2026_19773\": osv_cve,\n    \"github_advisories_cve_2026_19773\": ghsa_cve,\n}\n\nout_path = feeds_dir / \"20261118-feed-check.json\"\nout_bytes = (json.dumps(snapshot, indent=2, sort_keys=True) + \"\\n\").encode(\"utf-8\")\nout_path.write_bytes(out_bytes)\n\nnvd_vulns = (nvd_cve[\"body\"].get(\"vulnerabilities\") or []) if isinstance(nvd_cve[\"body\"], dict) else []\nnvd_cve_obj = nvd_vulns[0][\"cve\"] if nvd_vulns else {}\nprint(json.dumps({\n    \"captured_at\": captured_at,\n    \"snapshot_sha256\": hashlib.sha256(out_bytes).hexdigest(),\n    \"grype_latest_release_tag\": snapshot[\"grype_latest_release\"][\"tag_name\"],\n    \"grype_latest_release_published_at\": snapshot[\"grype_latest_release\"][\"published_at\"],\n    \"grype_db_v6_latest_status_code\": grype_db_latest[\"status_code\"],\n    \"grype_db_v6_latest_body\": grype_db_latest[\"body\"],\n    \"nvd_status_code\": nvd_cve[\"status_code\"],\n    \"nvd_vulnStatus\": nvd_cve_obj.get(\"vulnStatus\"),\n    \"nvd_lastModified\": nvd_cve_obj.get(\"lastModified\"),\n    \"nvd_configurations\": nvd_cve_obj.get(\"configurations\"),\n    \"osv_status_code\": osv_cve[\"status_code\"],\n    \"osv_summary\": osv_cve[\"body\"].get(\"id\") if isinstance(osv_cve[\"body\"], dict) else osv_cve[\"body\"],\n    \"ghsa_status_code\": ghsa_cve[\"status_code\"],\n    \"ghsa_count\": len(ghsa_cve[\"body\"]) if isinstance(ghsa_cve[\"body\"], list) else None,\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 5.180234,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:02:22.181264+00:00",
+      "label": "sti-119-external-advisory-and-consumer-check",
+      "log": "local://firmdura-kirkstone/logs/sti-119-external-advisory-and-consumer-check.log",
+      "log_sha256": "9b62b7ad277e300b133c614ed3da812e615f466f90b69f881e65d266b7c9e2f6",
+      "log_size": 843,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:02:17.001030+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, subprocess, urllib.request\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\ndb_dir = art / \"grype-db\"\ntmp_dir = art / \"grype-tmp\"\ndb_dir.mkdir(parents=True, exist_ok=True)\ntmp_dir.mkdir(parents=True, exist_ok=True)\n\narchive_name = \"vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst\"\nexpected_sha256 = \"5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0\"\nurl = f\"https://grype.anchore.io/databases/v6/{archive_name}?checksum=sha256:{expected_sha256}\"\narchive_path = db_dir / archive_name\n\nreq = urllib.request.Request(url, headers={\"User-Agent\": \"firmdura-sti119-preflight/1.0\"})\nwith urllib.request.urlopen(req, timeout=180) as resp, archive_path.open(\"wb\") as out:\n    while True:\n        chunk = resp.read(1024 * 1024)\n        if not chunk:\n            break\n        out.write(chunk)\n\nwith archive_path.open(\"rb\") as f:\n    actual_sha256 = hashlib.file_digest(f, \"sha256\").hexdigest()\nassert actual_sha256 == expected_sha256, (actual_sha256, expected_sha256)\n\ngrype_img = \"docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4\"\nuid_gid = f\"{subprocess.check_output([\\\"id\\\", \\\"-u\\\"], text=True).strip()}:{subprocess.check_output([\\\"id\\\", \\\"-g\\\"], text=True).strip()}\"\n\nsubprocess.run([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"-e\", \"GRYPE_DB_CACHE_DIR=/work/grype-db\",\n    \"-e\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"-e\", \"TMPDIR=/work/grype-tmp\",\n    \"--mount\", f\"type=bind,source={art},target=/work\",\n    grype_img,\n    \"db\", \"import\", f\"/work/grype-db/{archive_name}\",\n], check=True)\n\nstatus_out = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"-e\", \"GRYPE_DB_CACHE_DIR=/work/grype-db\",\n    \"-e\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"-e\", \"TMPDIR=/work/grype-tmp\",\n    \"--mount\", f\"type=bind,source={art},target=/work,readonly\",\n    grype_img,\n    \"db\", \"status\", \"-o\", \"json\",\n], text=True)\n\nsqlite_path = db_dir / \"6/vulnerability.db\"\nwith sqlite_path.open(\"rb\") as f:\n    sqlite_sha256 = hashlib.file_digest(f, \"sha256\").hexdigest()\n\nprint(json.dumps({\n    \"archive_url\": url,\n    \"archive_size\": archive_path.stat().st_size,\n    \"archive_sha256\": actual_sha256,\n    \"sqlite_size\": sqlite_path.stat().st_size,\n    \"sqlite_sha256\": sqlite_sha256,\n    \"db_status\": json.loads(status_out),\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.031386,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 1,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:03:42.913124+00:00",
+      "label": "sti-119-grype-db-download-and-import",
+      "log": "local://firmdura-kirkstone/logs/sti-119-grype-db-download-and-import.log",
+      "log_sha256": "165f37f32e12286ec130f38b578e659b11c42561e25c4fba4a804279f77ab391",
+      "log_size": 283,
+      "outcome": "failed_attempt",
+      "started_at": "2026-11-18T09:03:42.881738+00:00",
+      "observation": "Escaped quote inside inline Python string failed syntax check; corrected to os.getuid()/os.getgid() in retry."
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, os, subprocess, urllib.request\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\ndb_dir = art / \"grype-db\"\ntmp_dir = art / \"grype-tmp\"\ndb_dir.mkdir(parents=True, exist_ok=True)\ntmp_dir.mkdir(parents=True, exist_ok=True)\n\narchive_name = \"vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst\"\nexpected_sha256 = \"5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0\"\nurl = f\"https://grype.anchore.io/databases/v6/{archive_name}?checksum=sha256:{expected_sha256}\"\narchive_path = db_dir / archive_name\n\nreq = urllib.request.Request(url, headers={\"User-Agent\": \"firmdura-sti119-preflight/1.0\"})\nwith urllib.request.urlopen(req, timeout=180) as resp, archive_path.open(\"wb\") as out:\n    while True:\n        chunk = resp.read(1024 * 1024)\n        if not chunk:\n            break\n        out.write(chunk)\n\nwith archive_path.open(\"rb\") as f:\n    actual_sha256 = hashlib.file_digest(f, \"sha256\").hexdigest()\nassert actual_sha256 == expected_sha256, (actual_sha256, expected_sha256)\n\ngrype_img = \"docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4\"\nuid_gid = f\"{os.getuid()}:{os.getgid()}\"\n\nsubprocess.run([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"-e\", \"GRYPE_DB_CACHE_DIR=/work/grype-db\",\n    \"-e\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"-e\", \"TMPDIR=/work/grype-tmp\",\n    \"--mount\", f\"type=bind,source={art},target=/work\",\n    grype_img,\n    \"db\", \"import\", f\"/work/grype-db/{archive_name}\",\n], check=True)\n\nstatus_out = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"-e\", \"GRYPE_DB_CACHE_DIR=/work/grype-db\",\n    \"-e\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"-e\", \"TMPDIR=/work/grype-tmp\",\n    \"--mount\", f\"type=bind,source={art},target=/work,readonly\",\n    grype_img,\n    \"db\", \"status\", \"-o\", \"json\",\n], text=True)\n\nsqlite_path = db_dir / \"6/vulnerability.db\"\nwith sqlite_path.open(\"rb\") as f:\n    sqlite_sha256 = hashlib.file_digest(f, \"sha256\").hexdigest()\n\nprint(json.dumps({\n    \"archive_url\": url,\n    \"archive_size\": archive_path.stat().st_size,\n    \"archive_sha256\": actual_sha256,\n    \"sqlite_size\": sqlite_path.stat().st_size,\n    \"sqlite_sha256\": sqlite_sha256,\n    \"db_status\": json.loads(status_out),\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 13.704762,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 1,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:05:04.555536+00:00",
+      "label": "sti-119-grype-db-download-and-import-02",
+      "log": "local://firmdura-kirkstone/logs/sti-119-grype-db-download-and-import-02.log",
+      "log_sha256": "ab788c572107a0e2c4eb974c78370bdb765863febaf1876bb40d26324549dc0d",
+      "log_size": 1602,
+      "outcome": "failed_attempt",
+      "started_at": "2026-11-18T09:04:50.850774+00:00",
+      "observation": "Archive downloaded and SHA-256 verified on host, then Colima rejected direct host bind mount of <store> (expected VM isolation); switched to isolated Docker volume staging via docker cp."
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, os, subprocess\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\narchive_name = \"vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst\"\nexpected_sha256 = \"5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0\"\narchive_path = art / \"grype-db\" / archive_name\n\nwith archive_path.open(\"rb\") as f:\n    actual_sha256 = hashlib.file_digest(f, \"sha256\").hexdigest()\nassert actual_sha256 == expected_sha256, (actual_sha256, expected_sha256)\n\nvol = \"sti-119-scanner-preflight-20261118\"\nkas_img = \"ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7\"\ngrype_img = \"docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4\"\nuid = os.getuid()\ngid = os.getgid()\nuid_gid = f\"{uid}:{gid}\"\n\nsubprocess.run([\n    \"docker\", \"volume\", \"create\",\n    \"--label\", \"org.firmdura.sample=kirkstone\",\n    \"--label\", \"org.firmdura.issue=STI-119\",\n    vol,\n], check=True)\n\n# Check Linux disk space and initialize owned directory layout inside the isolated STI-119 volume.\nspace_json = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--network\", \"none\",\n    \"--mount\", f\"type=volume,source={vol},target=/cache\",\n    kas_img,\n    \"python3\", \"-c\",\n    f\"import json, os, pathlib, shutil; \"\n    f\"[pathlib.Path(\\\"/cache/\\\" + d).mkdir(parents=True, exist_ok=True) for d in (\\\"db\\\", \\\"sbom\\\", \\\"outputs\\\", \\\"home\\\", \\\"tmp\\\")]; \"\n    f\"[os.chown(\\\"/cache/\\\" + d, {uid}, {gid}) for d in (\\\"\\\", \\\"db\\\", \\\"sbom\\\", \\\"outputs\\\", \\\"home\\\", \\\"tmp\\\")]; \"\n    f\"u = shutil.disk_usage(\\\"/cache\\\"); \"\n    f\"assert u.free >= 10 * 1024**3, f\\\"Insufficient Colima VM free space: {{u.free}}\\\"; \"\n    f\"print(json.dumps({{\\\"linux_total_bytes\\\": u.total, \\\"linux_free_bytes\\\": u.free}}))\",\n], text=True).strip()\n\nhelper_cid = subprocess.check_output([\n    \"docker\", \"create\", \"--network\", \"none\", \"--user\", uid_gid,\n    \"--mount\", f\"type=volume,source={vol},target=/cache\",\n    kas_img, \"true\",\n], text=True).strip()\ntry:\n    subprocess.run([\"docker\", \"cp\", str(archive_path), f\"{helper_cid}:/cache/tmp/{archive_name}\"], check=True)\n    subprocess.run([\"docker\", \"cp\", str(art / \"sbom/baseline-root-raw.spdx.json\"), f\"{helper_cid}:/cache/sbom/baseline-root-raw.spdx.json\"], check=True)\n    subprocess.run([\"docker\", \"cp\", str(art / \"sbom/baseline-consolidated-normalized.spdx.json\"), f\"{helper_cid}:/cache/sbom/baseline-consolidated-normalized.spdx.json\"], check=True)\nfinally:\n    subprocess.run([\"docker\", \"rm\", \"-f\", helper_cid], check=True, stdout=subprocess.DEVNULL)\n\n# Offline import of the verified 2026-11-18 DB archive.\nsubprocess.run([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"--mount\", f\"type=volume,source={vol},target=/cache\",\n    \"--env\", \"HOME=/cache/home\",\n    \"--env\", \"TMPDIR=/cache/tmp\",\n    \"--env\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_AUTO_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_CACHE_DIR=/cache/db\",\n    grype_img,\n    \"db\", \"import\", f\"/cache/tmp/{archive_name}\",\n], check=True)\n\ndb_status_raw = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"--mount\", f\"type=volume,source={vol},volume-subpath=db,target=/cache/db,readonly\",\n    \"--mount\", f\"type=volume,source={vol},volume-subpath=tmp,target=/cache/tmp\",\n    \"--mount\", f\"type=volume,source={vol},volume-subpath=home,target=/cache/home\",\n    \"--env\", \"HOME=/cache/home\",\n    \"--env\", \"TMPDIR=/cache/tmp\",\n    \"--env\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_AUTO_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_CACHE_DIR=/cache/db\",\n    grype_img,\n    \"db\", \"status\", \"-o\", \"json\",\n], text=True)\n\nversion_raw = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    grype_img,\n    \"version\", \"-o\", \"json\",\n], text=True)\n\nprint(json.dumps({\n    \"volume\": vol,\n    \"space_before\": json.loads(space_json),\n    \"archive_sha256\": actual_sha256,\n    \"archive_size\": archive_path.stat().st_size,\n    \"grype_version\": json.loads(version_raw),\n    \"grype_db_status\": json.loads(db_status_raw),\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.344607,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 1,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:07:41.954789+00:00",
+      "label": "sti-119-scanner-stage-and-db-import",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scanner-stage-and-db-import.log",
+      "log_sha256": "4cde92e5d642d47502a5882bd59bffdc59f3adc3d7d2b1fa40cdcf3e7d124f3f",
+      "log_size": 2191,
+      "outcome": "failed_attempt",
+      "started_at": "2026-11-18T09:07:41.610182+00:00",
+      "observation": "Fresh Docker volume root was owned by 0:0 while kas:4.8 defaults to non-root builder user; initialized directory ownership once as 0:0 before dropping to 501:20 for all staging, DB import, and offline scans."
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, os, subprocess\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\narchive_name = \"vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst\"\nexpected_sha256 = \"5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0\"\narchive_path = art / \"grype-db\" / archive_name\n\nwith archive_path.open(\"rb\") as f:\n    actual_sha256 = hashlib.file_digest(f, \"sha256\").hexdigest()\nassert actual_sha256 == expected_sha256, (actual_sha256, expected_sha256)\n\nvol = \"sti-119-scanner-preflight-20261118\"\nkas_img = \"ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7\"\ngrype_img = \"docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4\"\nuid = os.getuid()\ngid = os.getgid()\nuid_gid = f\"{uid}:{gid}\"\n\nspace_json = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--network\", \"none\",\n    \"--user\", \"0:0\", \"--entrypoint\", \"python3\",\n    \"--mount\", f\"type=volume,source={vol},target=/cache\",\n    kas_img,\n    \"-c\",\n    f\"import json, os, pathlib, shutil; \"\n    f\"[pathlib.Path(\\\"/cache/\\\" + d).mkdir(parents=True, exist_ok=True) for d in (\\\"db\\\", \\\"sbom\\\", \\\"outputs\\\", \\\"home\\\", \\\"tmp\\\")]; \"\n    f\"[os.chown(\\\"/cache\\\" + (\\\"/\\\" + d if d else \\\"\\\"), {uid}, {gid}) for d in (\\\"\\\", \\\"db\\\", \\\"sbom\\\", \\\"outputs\\\", \\\"home\\\", \\\"tmp\\\")]; \"\n    f\"u = shutil.disk_usage(\\\"/cache\\\"); \"\n    f\"assert u.free >= 10 * 1024**3, f\\\"Insufficient Colima VM free space: {{u.free}}\\\"; \"\n    f\"print(json.dumps({{\\\"linux_total_bytes\\\": u.total, \\\"linux_free_bytes\\\": u.free}}))\",\n], text=True).strip()\n\nhelper_cid = subprocess.check_output([\n    \"docker\", \"create\", \"--network\", \"none\", \"--user\", uid_gid,\n    \"--entrypoint\", \"true\",\n    \"--mount\", f\"type=volume,source={vol},target=/cache\",\n    kas_img,\n], text=True).strip()\ntry:\n    subprocess.run([\"docker\", \"cp\", str(archive_path), f\"{helper_cid}:/cache/tmp/{archive_name}\"], check=True)\n    subprocess.run([\"docker\", \"cp\", str(art / \"sbom/baseline-root-raw.spdx.json\"), f\"{helper_cid}:/cache/sbom/baseline-root-raw.spdx.json\"], check=True)\n    subprocess.run([\"docker\", \"cp\", str(art / \"sbom/baseline-consolidated-normalized.spdx.json\"), f\"{helper_cid}:/cache/sbom/baseline-consolidated-normalized.spdx.json\"], check=True)\nfinally:\n    subprocess.run([\"docker\", \"rm\", \"-f\", helper_cid], check=True, stdout=subprocess.DEVNULL)\n\nsubprocess.run([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"--mount\", f\"type=volume,source={vol},target=/cache\",\n    \"--env\", \"HOME=/cache/home\",\n    \"--env\", \"TMPDIR=/cache/tmp\",\n    \"--env\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_AUTO_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_CACHE_DIR=/cache/db\",\n    grype_img,\n    \"db\", \"import\", f\"/cache/tmp/{archive_name}\",\n], check=True)\n\ndb_status_raw = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    \"--mount\", f\"type=volume,source={vol},volume-subpath=db,target=/cache/db,readonly\",\n    \"--mount\", f\"type=volume,source={vol},volume-subpath=tmp,target=/cache/tmp\",\n    \"--mount\", f\"type=volume,source={vol},volume-subpath=home,target=/cache/home\",\n    \"--env\", \"HOME=/cache/home\",\n    \"--env\", \"TMPDIR=/cache/tmp\",\n    \"--env\", \"GRYPE_CHECK_FOR_APP_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_AUTO_UPDATE=false\",\n    \"--env\", \"GRYPE_DB_CACHE_DIR=/cache/db\",\n    grype_img,\n    \"db\", \"status\", \"-o\", \"json\",\n], text=True)\n\nversion_raw = subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid,\n    grype_img,\n    \"version\", \"-o\", \"json\",\n], text=True)\n\nprint(json.dumps({\n    \"volume\": vol,\n    \"space_before\": json.loads(space_json),\n    \"archive_sha256\": actual_sha256,\n    \"archive_size\": archive_path.stat().st_size,\n    \"grype_version\": json.loads(version_raw),\n    \"grype_db_status\": json.loads(db_status_raw),\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 38.723764,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:09:25.012657+00:00",
+      "label": "sti-119-scanner-stage-and-db-import-02",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scanner-stage-and-db-import-02.log",
+      "log_sha256": "b76ab01aba52bb4238e577f9fa0254e429ba2307058299478bfca2cfcc25cc28",
+      "log_size": 812,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:08:46.288893+00:00"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,target=/cache",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,volume-subpath=db,target=/cache/db,readonly",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,volume-subpath=sbom,target=/cache/sbom,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/cache/sbom/baseline-root-raw.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-root-raw-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.268063,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:11:03.198763+00:00",
+      "label": "sti-119-scan-raw-root-spdx",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scan-raw-root-spdx.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:11:01.930700+00:00"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,target=/cache",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,volume-subpath=db,target=/cache/db,readonly",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,volume-subpath=sbom,target=/cache/sbom,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "--env",
+        "GRYPE_INCLUDE_MATCHER_SUPPRESSIONS=true",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "-v",
+        "sbom:/cache/sbom/baseline-consolidated-normalized.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-consolidated-normalized-all-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.620306,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:11:03.545044+00:00",
+      "label": "sti-119-scan-consolidated-spdx-suppressions",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scan-consolidated-spdx-suppressions.log",
+      "log_sha256": "157b4688f55749e7b00f1a9d3d6673b48c46eae04f6ff692caecb880015bf9aa",
+      "log_size": 273,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:11:01.924738+00:00"
+    },
+    {
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,target=/cache",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,volume-subpath=db,target=/cache/db,readonly",
+        "--mount",
+        "type=volume,source=sti-119-scanner-preflight-20261118,volume-subpath=sbom,target=/cache/sbom,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/cache/sbom/baseline-consolidated-normalized.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-consolidated-normalized-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.638598,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:11:03.563336+00:00",
+      "label": "sti-119-scan-consolidated-spdx",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scan-consolidated-spdx.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:11:01.924738+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, os, shutil, subprocess\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\nscans_dir = art / \"scans\"\ndb6_dir = art / \"grype-db/6\"\nscans_dir.mkdir(parents=True, exist_ok=True)\nif (art / \"grype-tmp\").exists():\n    shutil.rmtree(art / \"grype-tmp\")\n\nvol = \"sti-119-scanner-preflight-20261118\"\nkas_img = \"ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7\"\nuid_gid = f\"{os.getuid()}:{os.getgid()}\"\n\nhelper_cid = subprocess.check_output([\n    \"docker\", \"create\", \"--network\", \"none\", \"--user\", uid_gid,\n    \"--entrypoint\", \"true\",\n    \"--mount\", f\"type=volume,source={vol},target=/cache,readonly\",\n    kas_img,\n], text=True).strip()\ntry:\n    for fname in (\n        \"baseline-root-raw-grype.json\",\n        \"baseline-consolidated-normalized-grype.json\",\n        \"baseline-consolidated-normalized-all-grype.json\",\n    ):\n        subprocess.run([\"docker\", \"cp\", f\"{helper_cid}:/cache/outputs/{fname}\", str(scans_dir / fname)], check=True)\n    subprocess.run([\"docker\", \"cp\", f\"{helper_cid}:/cache/db/6\", str(art / \"grype-db/\")], check=True)\nfinally:\n    subprocess.run([\"docker\", \"rm\", \"-f\", helper_cid], check=True, stdout=subprocess.DEVNULL)\n\n# Verify exported files exist and compute SHA-256 before removing temporary volume.\nexported = {}\nfor rel in (\n    \"scans/baseline-root-raw-grype.json\",\n    \"scans/baseline-consolidated-normalized-grype.json\",\n    \"scans/baseline-consolidated-normalized-all-grype.json\",\n    \"grype-db/6/vulnerability.db\",\n    \"grype-db/6/grype_db_metadata.json\",\n):\n    p = art / rel\n    if p.is_file():\n        with p.open(\"rb\") as f:\n            exported[rel] = {\"size\": p.stat().st_size, \"sha256\": hashlib.file_digest(f, \"sha256\").hexdigest()}\n\nassert \"grype-db/6/vulnerability.db\" in exported, exported\nassert len([k for k in exported if k.startswith(\"scans/\")]) == 3, exported\n\nsubprocess.run([\"docker\", \"volume\", \"rm\", vol], check=True, stdout=subprocess.DEVNULL)\nremaining_volumes = subprocess.check_output([\"docker\", \"volume\", \"ls\", \"--format\", \"{{.Name}}\"], text=True).splitlines()\nassert vol not in remaining_volumes\n\nspace_after = json.loads(subprocess.check_output([\n    \"docker\", \"run\", \"--rm\", \"--init\", \"--read-only\", \"--network\", \"none\",\n    \"--user\", uid_gid, \"--entrypoint\", \"python3\",\n    \"--mount\", \"type=volume,source=firmdura-kirkstone-scanner,target=/check,readonly\",\n    kas_img,\n    \"-c\", \"import json, shutil; u = shutil.disk_usage(\\\"/check\\\"); print(json.dumps({\\\"linux_total_bytes\\\": u.total, \\\"linux_free_bytes\\\": u.free}))\",\n], text=True))\n\nprint(json.dumps({\n    \"exported\": exported,\n    \"temporary_volume_removed\": vol,\n    \"remaining_volumes\": remaining_volumes,\n    \"space_after\": space_after,\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 14.323558,
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:12:45.910756+00:00",
+      "label": "sti-119-scanner-export-and-cleanup",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scanner-export-and-cleanup.log",
+      "log_sha256": "4f4c8086eed504319b66485a89c7373a9823ff3d3022908a0f7eee7d1aead92e",
+      "log_size": 1042,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:12:31.587198+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nfrom collections import Counter\nimport json, shutil, sqlite3\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\n\nraw_scan = json.loads((art / \"scans/baseline-root-raw-grype.json\").read_text())\nnorm_scan = json.loads((art / \"scans/baseline-consolidated-normalized-grype.json\").read_text())\nall_scan = json.loads((art / \"scans/baseline-consolidated-normalized-all-grype.json\").read_text())\n\ndef summarize_scan(report):\n    matches = report.get(\"matches\", [])\n    ignored = report.get(\"ignoredMatches\", [])\n    by_pkg = Counter(m[\"artifact\"][\"name\"] for m in matches)\n    by_sev = Counter(m[\"vulnerability\"][\"severity\"] for m in matches)\n    vuln_ids = sorted({m[\"vulnerability\"][\"id\"] for m in matches})\n    lws_matches = [\n        {\n            \"id\": m[\"vulnerability\"][\"id\"],\n            \"severity\": m[\"vulnerability\"][\"severity\"],\n            \"namespace\": m[\"vulnerability\"][\"namespace\"],\n            \"artifact_id\": m[\"artifact\"][\"id\"],\n            \"artifact_name\": m[\"artifact\"][\"name\"],\n            \"artifact_version\": m[\"artifact\"][\"version\"],\n            \"cpes\": m[\"artifact\"].get(\"cpes\", []),\n        }\n        for m in matches\n        if \"libwebsockets\" in m[\"artifact\"][\"name\"]\n    ]\n    return {\n        \"source\": report.get(\"source\"),\n        \"match_count\": len(matches),\n        \"ignored_match_count\": len(ignored),\n        \"unique_vulnerability_count\": len(vuln_ids),\n        \"cve_2026_19773_present\": \"CVE-2026-19773\" in vuln_ids,\n        \"cve_2026_19773_in_ignored\": any(m[\"vulnerability\"][\"id\"] == \"CVE-2026-19773\" for m in ignored),\n        \"matches_by_package\": dict(sorted(by_pkg.items())),\n        \"matches_by_severity\": dict(sorted(by_sev.items())),\n        \"libwebsockets_matches\": lws_matches,\n    }\n\n# Query SQLite vulnerability.db read-only for CVE-2026-19773 and libwebsockets\ndb_path = art / \"grype-db/6/vulnerability.db\"\nconn = sqlite3.connect(f\"file:{db_path}?mode=ro\", uri=True)\nconn.row_factory = sqlite3.Row\ntables = [r[0] for r in conn.execute(\"SELECT name FROM sqlite_master WHERE type=\\x27table\\x27 ORDER BY name\")]\n\nvuln_rows = [dict(r) for r in conn.execute(\n    \"SELECT id, name, status, published_date, modified_date, provider_id FROM vulnerability_handles WHERE name = ?\",\n    (\"CVE-2026-19773\",),\n)]\nvuln_ids_db = [r[\"id\"] for r in vuln_rows]\n\naff_pkgs = []\naff_cpes = []\nif vuln_ids_db:\n    qmarks = \",\".join(\"?\" for _ in vuln_ids_db)\n    aff_pkgs = [dict(r) for r in conn.execute(\n        f\"\"\"\n        SELECT vh.name AS vuln_name, vh.provider_id, os.name AS os_name, os.major_version, os.minor_version,\n               pkg.ecosystem, pkg.name AS pkg_name, aph.blob_id\n        FROM affected_package_handles aph\n        JOIN vulnerability_handles vh ON vh.id = aph.vulnerability_id\n        LEFT JOIN operating_systems os ON os.id = aph.operating_system_id\n        LEFT JOIN packages pkg ON pkg.id = aph.package_id\n        WHERE aph.vulnerability_id IN ({qmarks})\n        ORDER BY vh.provider_id, os.name, os.major_version, pkg.name\n        \"\"\",\n        vuln_ids_db,\n    )]\n    aff_cpes = [dict(r) for r in conn.execute(\n        f\"\"\"\n        SELECT vh.name AS vuln_name, vh.provider_id, c.part, c.vendor, c.product, c.edition, c.target_software\n        FROM affected_cpe_handles ach\n        JOIN vulnerability_handles vh ON vh.id = ach.vulnerability_id\n        JOIN cpes c ON c.id = ach.cpe_id\n        WHERE ach.vulnerability_id IN ({qmarks})\n        \"\"\",\n        vuln_ids_db,\n    )]\n\nlws_cpes_in_db = [dict(r) for r in conn.execute(\n    \"\"\"\n    SELECT DISTINCT vh.name AS vuln_name, vh.provider_id, vh.status, c.part, c.vendor, c.product\n    FROM affected_cpe_handles ach\n    JOIN vulnerability_handles vh ON vh.id = ach.vulnerability_id\n    JOIN cpes c ON c.id = ach.cpe_id\n    WHERE c.product = ?\n    ORDER BY vh.name\n    \"\"\",\n    (\"libwebsockets\",),\n)]\nconn.close()\n\nsummary = {\n    \"host_free_bytes\": shutil.disk_usage(store).free,\n    \"raw_root_scan\": summarize_scan(raw_scan),\n    \"consolidated_normalized_scan\": summarize_scan(norm_scan),\n    \"consolidated_normalized_all_suppressions_scan\": summarize_scan(all_scan),\n    \"db_tables\": tables,\n    \"db_cve_2026_19773_vulnerability_handles\": vuln_rows,\n    \"db_cve_2026_19773_affected_packages\": aff_pkgs,\n    \"db_cve_2026_19773_affected_cpes\": aff_cpes,\n    \"db_all_libwebsockets_cpes\": lws_cpes_in_db,\n}\n(art / \"scans/sti-119-analysis-summary.json\").write_text(json.dumps(summary, indent=2, sort_keys=True) + \"\\n\")\nprint(json.dumps(summary, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.539195,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:13:42.358674+00:00",
+      "label": "sti-119-scan-and-db-analysis",
+      "log": "local://firmdura-kirkstone/logs/sti-119-scan-and-db-analysis.log",
+      "log_sha256": "6746f04cfd7e8c52811b2f8b395c1331157cd41091d90e3aa9f8881eb8ea62d6",
+      "log_size": 10500,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:13:41.819479+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport json, sys\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\nreport = json.loads((art / \"scans/baseline-consolidated-normalized-grype.json\").read_text(encoding=\"utf-8\"))\nanalysis = json.loads((art / \"scans/sti-119-analysis-summary.json\").read_text(encoding=\"utf-8\"))\n\ntarget_matches = [m for m in report[\"matches\"] if m[\"vulnerability\"][\"id\"] == \"CVE-2026-19773\"]\nresult = {\n    \"required_cve\": \"CVE-2026-19773\",\n    \"scanner_version\": report[\"descriptor\"][\"version\"],\n    \"db_built\": report[\"descriptor\"][\"db\"][\"status\"][\"built\"],\n    \"total_unfiltered_matches\": len(report[\"matches\"]),\n    \"required_cve_matches\": len(target_matches),\n    \"db_nvd_status\": \"analyzing\",\n    \"db_affected_cpe_rows\": len(analysis[\"db_cve_2026_19773_affected_cpes\"]),\n    \"gate_status\": \"passed\" if target_matches else \"blocked\",\n}\nprint(json.dumps(result, indent=2))\nif not target_matches:\n    sys.exit(1)\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.031018,
+      "environment": {},
+      "exit_code": 1,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:16:27.203356+00:00",
+      "label": "sti-119-required-cve-gate",
+      "log": "local://firmdura-kirkstone/logs/sti-119-required-cve-gate.log",
+      "log_sha256": "6828b3b89698280b1aceaad6502bd3e02464ffe850049ba9e0a65802ce35caea",
+      "log_size": 262,
+      "outcome": "failed_attempt",
+      "started_at": "2026-11-18T09:16:27.172338+00:00",
+      "observation": "Expected release-gate failure: unfiltered scan of all 39 normalized baseline packages found 151 CVE matches (including Win32-only CVE-2025-1866 on libwebsockets*) and 0 matches for CVE-2026-19773 because Grype DB v6.1.10 (2026-11-18T06:21:08Z) still has 0 NVD/CPE rows for CVE-2026-19773."
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "scanner_test.py",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.110986,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:16:27.283323+00:00",
+      "label": "sti-119-unit-tests",
+      "log": "local://firmdura-kirkstone/logs/sti-119-unit-tests.log",
+      "log_sha256": "f853cb8a7b147bd06d744815f1e053c2892efb169cf6dc19c7c08fb930738b9c",
+      "log_size": 1441,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:16:27.172337+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport copy, hashlib, json, sys\nfrom pathlib import Path\n\nsys.path.insert(0, \"scripts/vex\")\nimport normalize_spdx\n\nstore = Path(\"<store>\")\ndeploy_tar = store / \"artifacts/20261117-sti108-baseline/deploy.tar\"\nart = store / \"artifacts/20261118-sti119-scanner-preflight\"\nsti108_evidence = json.loads(Path(\"evidence/20261117-sti108-baseline/run.json\").read_text(encoding=\"utf-8\"))\nhost_prefix = chr(47) + \"Users\" + chr(47)\n\ndef sha256(path: Path) -> str:\n    with path.open(\"rb\") as f:\n        return hashlib.file_digest(f, \"sha256\").hexdigest()\n\nsbom_path = art / \"sbom/baseline-consolidated-normalized.spdx.json\"\nmanifest_path = art / \"sbom/baseline-normalization-manifest.json\"\nreplay_bytes, replay_manifest = normalize_spdx.normalize_image_spdx(\n    deploy_tar=deploy_tar,\n    expected_deploy_tar_sha256=\"8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43\",\n    expected_package_count=39,\n)\nassert replay_bytes == sbom_path.read_bytes(), \"Non-deterministic consolidated SPDX output\"\nreplay_manifest_bytes = (json.dumps(replay_manifest, indent=2, sort_keys=True) + \"\\n\").encode(\"utf-8\")\nassert replay_manifest_bytes == manifest_path.read_bytes(), \"Non-deterministic normalization manifest\"\nassert host_prefix not in sbom_path.read_text(encoding=\"utf-8\")\nassert host_prefix not in manifest_path.read_text(encoding=\"utf-8\")\n\nsbom_doc = json.loads(replay_bytes.decode(\"utf-8\"))\nlws_files = [f for f in sbom_doc[\"files\"] if f[\"SPDXID\"] == \"SPDXRef-PackagedFile-libwebsockets18-1\"]\nassert len(lws_files) == 1\nlws_checksums = {c[\"algorithm\"]: c[\"checksumValue\"] for c in lws_files[0][\"checksums\"]}\nassert lws_files[0][\"fileName\"] == \"usr/lib/libwebsockets.so.18\"\nassert lws_checksums[\"SHA256\"] == \"77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a\"\n\nraw_report = json.loads((art / \"scans/baseline-root-raw-grype.json\").read_text(encoding=\"utf-8\"))\nnorm_report = json.loads((art / \"scans/baseline-consolidated-normalized-grype.json\").read_text(encoding=\"utf-8\"))\nfor report in (raw_report, norm_report):\n    cfg = report[\"descriptor\"][\"configuration\"]\n    assert cfg[\"vex-documents\"] == []\n    assert cfg[\"add-cpes-if-none\"] is False\n    assert not cfg[\"distro\"]\n    assert cfg[\"db\"][\"auto-update\"] is False\n    assert cfg[\"db\"][\"validate-by-hash-on-start\"] is True\n    assert cfg[\"db\"][\"validate-age\"] is True\n    assert len(cfg[\"ignore\"]) == 4\n    assert report[\"descriptor\"][\"version\"] == \"0.122.0\"\n    assert report[\"descriptor\"][\"db\"][\"status\"][\"built\"] == \"2026-11-18T06:21:08Z\"\n    assert report[\"descriptor\"][\"db\"][\"status\"][\"valid\"] is True\n\ncfg_raw = copy.deepcopy(raw_report[\"descriptor\"][\"configuration\"])\ncfg_norm = copy.deepcopy(norm_report[\"descriptor\"][\"configuration\"])\ndel cfg_raw[\"file\"], cfg_norm[\"file\"]\nassert cfg_raw == cfg_norm\n\nverified_sti108 = 0\nfor item in sti108_evidence[\"artifacts\"]:\n    if \"archive_member\" in item:\n        continue\n    prefix = \"local://firmdura-kirkstone/\"\n    p = store / item[\"locator\"][len(prefix):]\n    assert p.stat().st_size == item[\"size\"], p\n    assert sha256(p) == item[\"sha256\"], p\n    verified_sti108 += 1\n\nprint(json.dumps({\n    \"status\": \"verified\",\n    \"deterministic_consolidated_spdx_sha256\": sha256(sbom_path),\n    \"deterministic_manifest_sha256\": sha256(manifest_path),\n    \"library_file_sha256_preserved\": lws_checksums[\"SHA256\"],\n    \"controlled_scanner_configuration_equal\": True,\n    \"deploy_tar_sha256_after\": sha256(deploy_tar),\n    \"sti108_durable_files_verified_unchanged\": verified_sti108,\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 3.889327,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T09:24:59.976978+00:00",
+      "label": "sti-119-determinism-and-immutability-check",
+      "log": "local://firmdura-kirkstone/logs/sti-119-determinism-and-immutability-check.log",
+      "log_sha256": "f04c3d4e58fd4aa4c399cf8f5777fa32c17b5842a80fbcf71b9675986683088f",
+      "log_size": 541,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T09:24:56.087651+00:00"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "deploy.tar",
+      "role": "consumed-canonical-baseline-build-handoff",
+      "variant": "baseline",
+      "size": 1977942016,
+      "sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar"
+    },
+    {
+      "path": "sbom/baseline-root-raw.spdx.json",
+      "role": "unmodified-baseline-root-image-spdx",
+      "variant": "baseline",
+      "size": 44674,
+      "sha256": "b3adf92dd8cc1cb27823f41c5982f0f72eb41883b0c0eaf24e7201e96f2a5f72",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/sbom/baseline-root-raw.spdx.json"
+    },
+    {
+      "path": "sbom/baseline-consolidated-normalized.spdx.json",
+      "role": "consolidated-normalized-39-package-baseline-spdx",
+      "variant": "baseline",
+      "size": 255725,
+      "sha256": "f09f3b39d0943c99324fbaecb0cb5097d7d277642c4eca8d6bf8378bbc6ab7f3",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/sbom/baseline-consolidated-normalized.spdx.json"
+    },
+    {
+      "path": "sbom/baseline-normalization-manifest.json",
+      "role": "spdx-graph-normalization-audit-manifest",
+      "variant": "baseline",
+      "size": 182807,
+      "sha256": "571f7742fb2847421e23d3b642288f2cbc61aa310ade26124f76796e247af3e6",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/sbom/baseline-normalization-manifest.json"
+    },
+    {
+      "path": "feeds/20261118-feed-check.json",
+      "role": "bounded-upstream-advisory-and-consumer-snapshot",
+      "variant": "shared",
+      "size": 13075,
+      "sha256": "340046eb3f2517f0c5cb198aaa666cceaede6b33f83dd51d8f50b02e278ed7e4",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/feeds/20261118-feed-check.json"
+    },
+    {
+      "path": "grype-db/vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst",
+      "role": "grype-v6-vendor-database-archive-20261118",
+      "variant": "shared",
+      "size": 203412394,
+      "sha256": "5029e15a80ebb0ac53cad3413d2768fa241f6e2b71336d8ef73ec5a87e5a4cc0",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/grype-db/vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst"
+    },
+    {
+      "path": "grype-db/6/vulnerability.db",
+      "role": "grype-v6-unpacked-sqlite-database-20261118",
+      "variant": "shared",
+      "size": 3486990336,
+      "sha256": "efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/grype-db/6/vulnerability.db"
+    },
+    {
+      "path": "grype-db/6/import.json",
+      "role": "grype-v6-database-import-metadata-20261118",
+      "variant": "shared",
+      "size": 98,
+      "sha256": "fdb831018f180aeedba6f5ef68277626b81c88e34f6ba434fa13c65932285a8c",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/grype-db/6/import.json"
+    },
+    {
+      "path": "scans/baseline-root-raw-grype.json",
+      "role": "offline-grype-scan-raw-root-image-spdx",
+      "variant": "baseline",
+      "size": 5612,
+      "sha256": "8c89479f5fefb02f39377c1aeb72dee55166e39421afb449537c8ea593d1767e",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/scans/baseline-root-raw-grype.json"
+    },
+    {
+      "path": "scans/baseline-consolidated-normalized-grype.json",
+      "role": "offline-grype-scan-consolidated-39-package-spdx",
+      "variant": "baseline",
+      "size": 406360,
+      "sha256": "8827813d4cf905e9ef4ed99c4a614aff915d695afdc3054aa685b96cc9aca8a5",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/scans/baseline-consolidated-normalized-grype.json"
+    },
+    {
+      "path": "scans/baseline-consolidated-normalized-all-grype.json",
+      "role": "offline-grype-scan-consolidated-spdx-with-matcher-suppressions",
+      "variant": "baseline",
+      "size": 406363,
+      "sha256": "188f776aa50b874123b73e920052c1b0227a8c8fa38c194264402ae0fe3ac893",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/scans/baseline-consolidated-normalized-all-grype.json"
+    },
+    {
+      "path": "scans/sti-119-analysis-summary.json",
+      "role": "full-image-scan-and-sqlite-db-diagnostic-summary",
+      "variant": "baseline",
+      "size": 10500,
+      "sha256": "6aadaec4e37d6a0956bc3f02efb4c528d30bba9a7b89b0a27b54b97b7be6f369",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-scanner-preflight/scans/sti-119-analysis-summary.json"
+    }
+  ],
+  "results": {
+    "spdx_graph_normalization": {
+      "status": "verified",
+      "tool": "scripts/vex/normalize_spdx.py",
+      "unit_tests_passed": 9,
+      "deterministic_replay_verified": true,
+      "traversed_document_count": 179,
+      "external_document_ref_edge_count": 2001,
+      "verified_relationship_count": 11583,
+      "document_counts_by_role": {
+        "installed_package": 39,
+        "recipe_build_only_excluded": 73,
+        "recipe_target_traced": 27,
+        "root_image": 1,
+        "runtime_dependency": 39
+      },
+      "installed_package_count": 39,
+      "traced_target_recipe_count": 27,
+      "packaged_file_count": 183,
+      "runtime_dependency_relationship_count": 60,
+      "reference_type_rewrites_count": 27,
+      "recipe_external_ref_propagations_count": 39,
+      "consolidated_spdx_sha256": "f09f3b39d0943c99324fbaecb0cb5097d7d277642c4eca8d6bf8378bbc6ab7f3",
+      "normalization_manifest_sha256": "571f7742fb2847421e23d3b642288f2cbc61aa310ade26124f76796e247af3e6",
+      "rootfs_ext4_sha256": "07e2abd01189da6a977eb0ae0c07136079d3a67f260e2c27aef2bb8d311a5e83",
+      "library_file_sha256": "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+      "grype_openvex_product_purl": "pkg:generic/firmdura-reference-baseline-qemuarm64-20261117213416@1.0-sha256.07e2abd01189da6a977eb0ae0c07136079d3a67f260e2c27aef2bb8d311a5e83"
+    },
+    "scanner_preflight": {
+      "status": "blocked",
+      "required_cve": "CVE-2026-19773",
+      "controlled_scanner_configuration_equal_except_output_path": true,
+      "actual_scans": [
+        {
+          "path": "scans/baseline-root-raw-grype.json",
+          "cataloged_packages": 1,
+          "matches": 0,
+          "unique_vulnerabilities": 0,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "include_matcher_suppressions": false
+        },
+        {
+          "path": "scans/baseline-consolidated-normalized-grype.json",
+          "cataloged_packages": 39,
+          "matches": 151,
+          "unique_vulnerabilities": 68,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "matches_by_severity": {
+            "Critical": 14,
+            "High": 56,
+            "Low": 23,
+            "Medium": 58
+          },
+          "matches_by_package": {
+            "busybox": 6,
+            "busybox-hwclock": 6,
+            "busybox-syslog": 6,
+            "busybox-udhcpc": 6,
+            "ldconfig": 40,
+            "libblkid1": 6,
+            "libc6": 40,
+            "libcrypto3": 7,
+            "libgcc1": 1,
+            "liblzma5": 2,
+            "libssl3": 7,
+            "libtinfo5": 2,
+            "libuv1": 1,
+            "libwebsockets-evlib-uv": 1,
+            "libwebsockets-testapps": 1,
+            "libwebsockets18": 1,
+            "libz1": 2,
+            "ncurses-terminfo-base": 2,
+            "openssl-conf": 7,
+            "openssl-ossl-module-legacy": 7
+          },
+          "libwebsockets_matches": [
+            {
+              "artifact_id": "Package-libwebsockets-evlib-uv",
+              "artifact_name": "libwebsockets-evlib-uv",
+              "artifact_version": "4.2.2",
+              "cpes": [
+                "cpe:2.3:a:*:libwebsockets:4.2.2:*:*:*:*:*:*:*"
+              ],
+              "id": "CVE-2025-1866",
+              "namespace": "nvd:cpe",
+              "severity": "Critical"
+            },
+            {
+              "artifact_id": "Package-libwebsockets-testapps",
+              "artifact_name": "libwebsockets-testapps",
+              "artifact_version": "4.2.2",
+              "cpes": [
+                "cpe:2.3:a:*:libwebsockets:4.2.2:*:*:*:*:*:*:*"
+              ],
+              "id": "CVE-2025-1866",
+              "namespace": "nvd:cpe",
+              "severity": "Critical"
+            },
+            {
+              "artifact_id": "Package-libwebsockets18",
+              "artifact_name": "libwebsockets18",
+              "artifact_version": "4.2.2",
+              "cpes": [
+                "cpe:2.3:a:*:libwebsockets:4.2.2:*:*:*:*:*:*:*"
+              ],
+              "id": "CVE-2025-1866",
+              "namespace": "nvd:cpe",
+              "severity": "Critical"
+            }
+          ],
+          "include_matcher_suppressions": false
+        },
+        {
+          "path": "scans/baseline-consolidated-normalized-all-grype.json",
+          "cataloged_packages": 39,
+          "matches": 151,
+          "unique_vulnerabilities": 68,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "include_matcher_suppressions": true
+        }
+      ],
+      "upstream_feeds_20261118": {
+        "captured_at": "2026-11-18T09:02:17.064426+00:00",
+        "nvd_vuln_status": "Awaiting Analysis",
+        "nvd_last_modified": "2026-09-18T19:10:46.443",
+        "nvd_configurations": null,
+        "nvd_cna_affected_versions": [
+          "b4b5aed3903eaff09cd76a410f69bbe5dff66f8e"
+        ],
+        "grype_db_built": "2026-11-18T06:21:08Z",
+        "grype_db_nvd_status": "analyzing",
+        "grype_db_affected_cpe_rows_for_cve_2026_19773": 0,
+        "grype_db_affected_package_rows_for_cve_2026_19773": 17,
+        "grype_db_affected_package_providers": [
+          "debian",
+          "echo",
+          "ubuntu"
+        ],
+        "osv_package_ecosystems": [],
+        "osv_range_types": [
+          "GIT"
+        ],
+        "github_advisory_id": "GHSA-r4m8-276f-3r2f",
+        "github_advisory_type": "unreviewed",
+        "github_advisory_vulnerabilities_count": 0
+      },
+      "unblock_requirements": [
+        "External feed enrichment: NVD adds CPE 2.3 applicability configurations for CVE-2026-19773 covering libwebsockets 4.2.2 and Anchore publishes a Grype v6 DB snapshot ingesting that affected_cpe_handles row.",
+        "Or explicit owner decision: hold release publication until NVD/Grype DB enrichment lands, authorize a Git-commit/Vanir companion consumer or explicitly labelled auxiliary feed for OpenVEX mechanics verification, or approve an alternate Linux-applicable Kirkstone CVE candidate with active non-distro CPE coverage."
+      ]
+    },
+    "historical_baseline_immutability": {
+      "status": "verified",
+      "deploy_tar_sha256_before": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "deploy_tar_sha256_after": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "sti108_durable_files_verified_unchanged": 17,
+      "bitbake_and_historical_scanner_volumes_untouched": true,
+      "temporary_sti119_volume_removed": "sti-119-scanner-preflight-20261118"
+    },
+    "resources": {
+      "host_floor_bytes": 26843545600,
+      "host_free_bytes_before": 46892896256,
+      "host_free_bytes_after": 43414482944,
+      "linux_free_bytes_before": 27374858240,
+      "linux_free_bytes_after": 27374891008
+    },
+    "cve_reproduction": "not_run",
+    "repair": "not_applied",
+    "paired_image_validation": "not_run",
+    "vex": "blocked",
+    "release": "not_published"
+  },
+  "resolved_observations": [
+    {
+      "command": "sti-119-grype-db-download-and-import",
+      "observation": "Escaped quote inside inline Python string failed syntax check; corrected to os.getuid()/os.getgid() in retry."
+    },
+    {
+      "command": "sti-119-grype-db-download-and-import-02",
+      "observation": "Archive downloaded and SHA-256 verified on host, then Colima rejected direct host bind mount of <store> (expected VM isolation); switched to isolated Docker volume staging via docker cp."
+    },
+    {
+      "command": "sti-119-scanner-stage-and-db-import",
+      "observation": "Fresh Docker volume root was owned by 0:0 while kas:4.8 defaults to non-root builder user; initialized directory ownership once as 0:0 before dropping to 501:20 for all staging, DB import, and offline scans."
+    }
+  ],
+  "limitations": [
+    "STI-119 remains open and blocked on external upstream vulnerability feed metadata: unfiltered Grype 0.122.0 + DB v6.1.10 (2026-11-18T06:21:08Z) reports 0 matches for CVE-2026-19773.",
+    "The 151 full-image CPE matches (including Win32-only CVE-2025-1866 on libwebsockets18, libwebsockets-evlib-uv, and libwebsockets-testapps) are version/CPE scanner candidates, not proof of runtime exploitability on this minimal Poky configuration.",
+    "Grype 0.122.0 OpenVEX subcomponent matching supports package PURLs only; because Yocto Kirkstone create-spdx.bbclass emits CPEs without PURLs and normalize_spdx.py does not fabricate PURLs, STI-113 OpenVEX statements must bind to the rootfs-SHA-256-qualified image product PURL.",
+    "This pass consumed the baseline deploy.tar read-only and did not certify the unbuilt patched image artifact; STI-113 must run normalize_spdx.py and positive/negative VEX controls on the actual frozen STI-110 image pair once unblocked.",
+    "Durable artifacts reside on the approved single-host local store, not an off-host backup or public release asset."
+  ],
+  "timing": {
+    "measured_from": "2026-11-18T08:34:26+00:00",
+    "measured_through": "2026-11-18T09:27:03.226486+00:00",
+    "session_wall_seconds": 3157.226486,
+    "command_wait_seconds": 78.486423,
+    "active_assistant_work_seconds": 3078.740063,
+    "sum_individual_command_elapsed_seconds": 83.967231,
+    "new_image_build_seconds": 0,
+    "method": "Prospectively measured from worktree verification start through run.json generation. command_wait_seconds is the non-overlapping union of recorded command [started_at, finished_at] intervals; active_assistant_work_seconds is session_wall_seconds minus command_wait_seconds (assistant analysis/implementation time, not human engineering labor). Post-snapshot commit, PR, and Linear handoff steps are excluded."
+  }
+}
