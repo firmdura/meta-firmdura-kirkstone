@@ -12,7 +12,7 @@ on:
         default: fixture
         required: true
       artifact_id:
-        description: Optional Actions artifact ID for ZIP input (blank downloads staged draft release)
+        description: Exact frozen GitHub Actions artifact ID (empty for in-tree fixture)
         type: string
       manifest_sha256:
         description: Independently approved SHA-256 of the exact manifest bytes
@@ -87,17 +87,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -n "$ARTIFACT_ID" ]; then
-            [[ "$ARTIFACT_ID" =~ ^[1-9][0-9]*$ ]]
-            gh api "repos/firmdura/meta-firmdura-kirkstone/actions/artifacts/$ARTIFACT_ID/zip" > candidate.zip
-            python3 scripts/release/verify.py unpack --archive candidate.zip --assets candidate \
-              --manifest-sha256 "$MANIFEST_SHA256" --kind "$KIND" \
-              --release-id "$RELEASE_ID" --source-commit "$SOURCE_COMMIT"
-          else
-            python3 scripts/release/verify.py stage-download --assets candidate \
-              --manifest-sha256 "$MANIFEST_SHA256" --kind "$KIND" \
-              --release-id "$RELEASE_ID" --source-commit "$SOURCE_COMMIT"
-          fi
+          [[ "$ARTIFACT_ID" =~ ^[1-9][0-9]*$ ]]
+          gh api "repos/firmdura/meta-firmdura-kirkstone/actions/artifacts/$ARTIFACT_ID/zip" > candidate.zip
+          python3 scripts/release/verify.py unpack --archive candidate.zip --assets candidate \
+            --manifest-sha256 "$MANIFEST_SHA256" --kind "$KIND" \
+            --release-id "$RELEASE_ID" --source-commit "$SOURCE_COMMIT"
       - name: Check every frozen byte against the approved manifest
         run: |
           python3 scripts/release/verify.py check --assets candidate \
