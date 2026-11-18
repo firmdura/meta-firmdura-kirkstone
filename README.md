@@ -4,22 +4,28 @@ A Yocto Kirkstone reference project for embedded Linux engineers evaluating
 security maintenance for **libwebsockets**. It provides a pinned ARM64 QEMU
 image configuration and checks for the library running inside it.
 
-**Experimental:** the baseline builds and boots, but there is no validated
-security repair or downloadable release yet. Use it only for isolated
-evaluation, not as production firmware.
+**Experimental:** paired `baseline` and `patched` images build, boot, and
+demonstrate the target HTTP/2 fix in isolated QEMU checks, but human
+engineering review of the candidate pair, external scanner feed coverage, and a
+signed downloadable release are not yet complete. Use this repository only for
+isolated evaluation, not as production firmware.
 
 ## What is included
 
 - A `qemuarm64` image based on Poky 4.0.35, meta-openembedded and Garmin's
   [meta-lts-collab](https://github.com/garmin/meta-lts-collab).
 - Immutable layer revisions and a pinned kas build container.
-- libwebsockets 4.2.2 with HTTP/2, TLS, client and server support enabled.
-- A QEMU boot check that verifies the installed library's bytes, runtime
-  version and enabled features.
-- [Build results](evidence/20261117-sti108-baseline/run.json) linking source
-  revisions to package and image hashes.
-
-The `patched` configuration is a placeholder and does **not** contain a repair.
+- A separately consumable repair layer
+  ([`recipes-connectivity/libwebsockets/`](recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend))
+  backporting the upstream `CVE-2026-19773` bounds checks onto `libwebsockets`
+  4.2.2 with HTTP/2, TLS, client and server support kept enabled.
+- Target C and `ptest` checks verifying library identity, normal HTTP/2
+  request handling, targeted `CVE-2026-19773` out-of-bounds write reproduction
+  on `baseline`, and enforced bounds with post-attack HTTP/2 service on
+  `patched`.
+- [Paired validation results](evidence/20261118-sti110-paired-validation/run.json)
+  and [initial baseline build results](evidence/20261117-sti108-baseline/run.json)
+  linking source revisions to package, SBOM and image hashes.
 
 ## Getting started
 
@@ -38,23 +44,27 @@ from the repository root:
 
 ```sh
 sh kas/run baseline build
+sh kas/run patched build
 ```
 
-Then follow the [QEMU boot procedure](docs/testing.md#boot-and-identify-the-actual-library)
-to start the image and verify the installed library. A successful boot check
-does not prove that a vulnerability has been reproduced or fixed.
+Then follow the [QEMU boot and target test procedures](docs/testing.md#boot-and-identify-the-actual-library)
+to verify the installed library and run the HTTP/2 regression and security
+checks on disposable rootfs copies.
 
 ## Current security work
 
 The target case is [CVE-2026-19773](https://www.zerodayinitiative.com/advisories/ZDI-26-590/).
-The baseline is ready for runtime reproduction and repair work, but neither
-has been demonstrated yet. The pinned Grype scanner and database do not
-report this CVE for the actual build. Scanner interoperability is a separate
-unresolved requirement for VEX and publication, not evidence that the component
-is unaffected.
+On `qemuarm64`, the `baseline` build reproduces the HTTP/2 HPACK `:path`
+out-of-bounds heap write in `lws_frag_append`, and the `patched` build rejects
+the oversized `:path` inputs cleanly while continuing to serve valid HTTP/2
+traffic. Human engineering review is still required before freezing the
+candidate image pair for bundle redistribution.
 
-See [testing and scanner limitations](docs/testing.md) for the findings and
-what the existing checks do and do not establish.
+Full-image SPDX 2.2 consolidation lets pinned Grype catalog all installed
+target packages offline, while upstream vulnerability feeds still lack CPE
+applicability configurations for `CVE-2026-19773`; see the
+[testing guide](docs/testing.md) and [scanner guide](docs/scanner.md) for
+measured results and open publication gates.
 
 Results apply only to this reference configuration. Compatibility with other
 Kirkstone BSPs, physical boards or customer firmware has not been validated.
