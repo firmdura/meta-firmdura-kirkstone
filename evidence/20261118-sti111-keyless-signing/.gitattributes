@@ -1,0 +1,2 @@
+# CLI output is byte-exact evidence, including help text whitespace.
+logs/*.log -whitespace
