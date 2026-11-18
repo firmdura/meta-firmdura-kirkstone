@@ -39,7 +39,7 @@
     "sti119_owned_file_sha256": {
       "scripts/vex/normalize_spdx.py": "ee6338f0fae2786a79ff9793a589b85c2700f1af9b10ec5f80da0989fe77eb33",
       "tests/scanner_test.py": "c862355f7a855f83843f659a8f1f84d7ae736315ef431784041506e59f4b0efe",
-      "docs/scanner.md": "e978fe6b7b6cb91347bb88eff11c3ccc599a3b51bfcb09c2a886e47fa3a78159"
+      "docs/scanner.md": "cf06b25695321cda55842d6e4d6402a3f3c2a92284f62dc0000695db5b57cb59"
     },
     "external_repositories": {
       "poky": {
