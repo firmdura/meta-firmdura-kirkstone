@@ -23,8 +23,9 @@ firmware.
   request handling, targeted `CVE-2026-19773` out-of-bounds write reproduction
   on `baseline`, and enforced bounds with post-attack HTTP/2 service on
   `patched`.
-- [Paired validation results](evidence/20261118-sti110-paired-validation/run.json)
-  and [initial baseline build results](evidence/20261117-sti108-baseline/run.json)
+- [Paired validation results](evidence/20261118-sti110-paired-validation/run.json),
+  [independent replay review](docs/replay-review.md), and
+  [initial baseline build results](evidence/20261117-sti108-baseline/run.json)
   linking source revisions to package, SBOM and image hashes.
 
 ## Getting started
