@@ -60,8 +60,9 @@ python3 eval-patched/firmdura-kirkstone-qemuarm64-patched-eval/run-evaluation.py
 ```
 
 See the [release index](docs/release.md), [evaluation guide](docs/evaluation.md),
-[signing guide](docs/signing.md), and [OpenVEX guide](docs/vex.md) for direct
-asset links, SHA-256 digests, and offline Grype `0.122.0` commands.
+[signing guide](docs/signing.md), [OpenVEX guide](docs/vex.md), and
+[first-cycle review](docs/first-cycle-review.md) for direct asset links,
+SHA-256 digests, offline Grype `0.122.0` commands, and measured cycle data.
 
 ## Full source reproduction and layer consumption
 
