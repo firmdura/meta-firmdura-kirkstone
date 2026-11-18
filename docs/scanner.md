@@ -2,28 +2,45 @@
 
 This document defines the reusable Yocto SPDX 2.2 consolidation contract
 implemented in [`scripts/vex/normalize_spdx.py`](../scripts/vex/normalize_spdx.py),
-its unit tests in [`tests/scanner_test.py`](../tests/scanner_test.py), and the
-bounded 2026-11-18 consumer/feed diagnostic recorded in
-[`evidence/20261118-sti119-scanner-preflight/run.json`](../evidence/20261118-sti119-scanner-preflight/run.json).
+the offline OSV Git/source provenance companion detector in
+[`scripts/vex/osv_git_provenance.py`](../scripts/vex/osv_git_provenance.py),
+the isolated test-only auxiliary Grype CPE fixture builder in
+[`scripts/vex/build_aux_grype_db.py`](../scripts/vex/build_aux_grype_db.py),
+unit tests in [`tests/scanner_test.py`](../tests/scanner_test.py), and the
+verified records in
+[`evidence/20261118-sti119-scanner-preflight/run.json`](../evidence/20261118-sti119-scanner-preflight/run.json)
+and
+[`evidence/20261118-sti119-dual-track/run.json`](../evidence/20261118-sti119-dual-track/run.json).
 
 The SBOM graph and CPE reference-type interoperability gap from
 [baseline checks and scanner preflight](testing.md) is resolved: Pinned Grype
-`0.122.0` (embedded Syft `1.57.2`) now catalogs all **39 installed target
-binary packages** from a single deterministic SPDX 2.2 document bound to the
-exact image rootfs SHA-256 and evaluates full-image vulnerability matches
-offline without fabricating packages, versions, PURLs, CPEs, or OS/distro
+`0.122.0` (embedded Syft `1.57.2`) catalogs all **39 installed target binary
+packages** on the initial baseline image (and **41 packages** on the test-enabled
+pair) from a single deterministic SPDX 2.2 document bound to the exact image
+rootfs SHA-256 without fabricating packages, versions, PURLs, CPEs, or OS/distro
 identities.
 
-The release gate for scanner matching remains **blocked** on external upstream
-vulnerability feed data: as of `2026-11-18T09:02:21Z`, unfiltered scans with the
-newer Grype database snapshot (`v6.1.10`, built `2026-11-18T06:21:08Z`) report
-**151 matches (68 unique CVEs)** across the 39-package baseline image, including
-Win32-only `CVE-2025-1866` on the three installed `libwebsockets` binary
-packages, and **0 matches** for `CVE-2026-19773`. Historical baseline artifacts
-and [`evidence/20261117-sti108-baseline/run.json`](../evidence/20261117-sti108-baseline/run.json)
-remain untouched. Per [the build contract](build.md), runtime reproduction,
-repair, and signing preparation proceed independently, while OpenVEX consumer
-acceptance, candidate replay, and public release remain gated.
+Because NIST NVD still lists `CVE-2026-19773` as `Awaiting Analysis` (`0` CPE
+rows in stock Grype DB `v6.1.10`), unfiltered stock-DB scans report **151
+matches (68 unique CVEs)** across the 39-package baseline image and **0 stock
+CPE matches** for `CVE-2026-19773`. Rather than falsify distro metadata,
+dual-track detection preserves the truthful stock Grype output alongside:
+
+1. **Offline OSV Git/source provenance detection** (`osv_git_provenance.py`),
+   which evaluates the retained official OSV `CVE-2026-19773` `GIT` fix commit
+   (`824151862f37bc72f46d9a3e01d5b9408d313a0b`) and `lib/roles/h2/hpack.c`
+   (`lws_frag_append`) target against the archived Yocto `libwebsockets` source
+   and patch series, reporting `3` unfiltered `affected` package matches on the
+   baseline without VEX and distinguishing `fixed_by_verified_backport` when the
+   repair patch is present.
+2. **Isolated test-only auxiliary CPE fixture verification**
+   (`build_aux_grype_db.py`), which copies the frozen Grype v6 SQLite database
+   into an explicitly labelled `test-only-aux` directory (`source:
+   "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED"`, never shipped
+   as an official feed) and inserts only the canonical `CVE-2026-19773`
+   `libwebsockets` `<= 4.2.2` CPE row so Grype `0.122.0` can exercise real
+   `--vex` positive and negative controls while keeping stock-DB outputs
+   separate and unmodified.
 
 ## SPDX 2.2 consolidation contract (`scripts/vex/normalize_spdx.py`)
 
@@ -207,26 +224,59 @@ Single bounded query snapshot retained at
   `type: "unreviewed"` with `vulnerabilities: []` (zero ecosystem/package
   ranges).
 
-## External feed requirements for scanner and OpenVEX acceptance
+## Dual-track OSV Git-provenance detector and isolated auxiliary CPE fixture
 
-Continuous feed polling was not performed, and the scanner release gate remains
-open. Unblocking unfiltered target detection and downstream OpenVEX matching
-requires **one** of:
+### Offline OSV Git/source provenance (`scripts/vex/osv_git_provenance.py`)
 
-1. **External feed enrichment (no contract change)**: NVD completes CPE
-   applicability analysis for `CVE-2026-19773` (adding a `libwebsockets` CPE
-   range covering `4.2.2` prior to `824151862f37bc72f46d9a3e01d5b9408d313a0b`)
-   and Anchore publishes a Grype v6 database snapshot containing the resulting
-   `affected_cpe_handles` row. Re-running Grype offline against
-   `baseline-consolidated-normalized.spdx.json` will then match `libwebsockets18`
-   without modifying `scripts/vex/normalize_spdx.py`.
-2. **Explicitly reviewed consumer or scope change**: If NVD remains
-   `Awaiting Analysis` after runtime reproduction and repair finish:
-   - hold release publication until NVD/Grype DB enrichment lands;
-   - evaluate an explicitly reviewed commit- or signature-aware companion
-     consumer (for example OSV git commit/Vanir matching or Yocto `cve-check`)
-     or an explicitly labelled auxiliary vulnerability feed for OpenVEX
-     consumer-mechanics verification; or
-   - select a different Linux-applicable Kirkstone CVE candidate with active
-     non-distro CPE coverage in Grype DB v6 (`CVE-2025-1866` is Win32-only and
-     remains ineligible).
+Because OSV's auto-converted `CVE-2026-19773` record records `StandaloneSingleVersion`
+`b4b5aed3903eaff09cd76a410f69bbe5dff66f8e` (`main`) alongside fix commit
+`824151862f37bc72f46d9a3e01d5b9408d313a0b` and Vanir signatures on
+`lib/roles/h2/hpack.c:lws_frag_append`, `osv_git_provenance.py` inspects the
+canonical `deploy.tar` directly without extracting onto case-insensitive host
+storage:
+
+```sh
+python3 scripts/vex/osv_git_provenance.py \
+  --deploy-tar "<store>/artifacts/20261117-sti108-baseline/deploy.tar" \
+  --expected-deploy-tar-sha256 8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43 \
+  --osv-json "<store>/artifacts/20261118-sti119-scanner-preflight/feeds/20261118-feed-check.json" \
+  --output "<store>/artifacts/20261118-sti119-dual-track/osv-git-baseline-39pkg.json" \
+  --expect-status affected
+```
+
+On the baseline `deploy.tar`, `osv_git_provenance.py` confirms that the archived
+`libwebsockets` `4.2.2` (`8d605f0649ed1ab6d27a443c7688598ea21fdb75`) source tree
+contains the unguarded `lws_frag_append()` body and no backport of
+`824151862f37bc72f46d9a3e01d5b9408d313a0b`, emitting `status: "affected"` and
+`3` unfiltered `CVE-2026-19773` matches (`libwebsockets18`,
+`libwebsockets-evlib-uv`, `libwebsockets-testapps`). When a recipe archive
+contains a verified `Upstream-Status: Backport` patch adding the `>=`
+`max_http_header_data` guard from `824151862f37bc72f46d9a3e01d5b9408d313a0b`, it
+reports `status: "fixed_by_verified_backport"` (an incomplete `==` guard remains
+`affected`).
+
+### Isolated test-only auxiliary Grype CPE fixture (`scripts/vex/build_aux_grype_db.py`)
+
+To exercise real Grype `0.122.0` OpenVEX matching before NIST NVD populates CPE
+configurations, `build_aux_grype_db.py` copies the retained `2026-11-18T06:21:08Z`
+SQLite database (`efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506`)
+into a path explicitly containing `test-only-aux`, inserts one
+`affected_cpe_handles` row linking existing NVD handle `CVE-2026-19773` (`id =
+361868`) to existing CPE `a:warmcat:libwebsockets` (`id = 122604`, constraint
+`<= 4.2.2`), recomputes the `xxh64` `import.json` digest
+(`xxh64:da9d32d12ca5d406`, SQLite SHA-256
+`fa7123d0774cd8ae88ad884ea86150d027ccd42b762a888b0cdbfd4df32cc9d8`) with
+`source: "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED"`, and
+verifies that the stock database remains byte-identical.
+
+Offline Grype `0.122.0` (`--network none`, `validate-by-hash-on-start=true`,
+`vex-documents=[]`) scanned against `baseline-consolidated-normalized.spdx.json`
+with this labelled test database reports **`154` matches** (`151` unchanged
+stock matches plus `CVE-2026-19773` on `libwebsockets18`,
+`libwebsockets-evlib-uv`, and `libwebsockets-testapps`) while embedding
+`"from": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED"` in the
+raw JSON descriptor. This auxiliary database is strictly an isolated test
+fixture and is never distributed as an official vulnerability feed. Once NIST
+NVD adds CPE configurations for `CVE-2026-19773`, stock Anchore database
+snapshots will match the same consolidated SPDX documents without changing
+`normalize_spdx.py` or the shipped OpenVEX product PURLs.
