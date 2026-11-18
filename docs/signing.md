@@ -1,16 +1,16 @@
 # Keyless signing of frozen release assets
 
-This is the STI-111 **preparation candidate**, not a signed or approved release.
+This is a **preparation candidate**, not a signed or approved release.
 The [run record](../evidence/20261118-sti111-keyless-signing/run.json) distinguishes
 local checks from the still-blocked trusted GitHub OIDC fixture run. No fixture
-signature is release evidence. STI-116 still owns exact-release approval,
-signing, publication and public-download verification.
+signature is release evidence. Exact-release human approval, signing,
+publication and public-download verification remain required.
 
 ## Frozen manifest v1
 
-The [build/ownership contract](build.md#ownership-and-evidence-interface) remains
-authoritative. The lead accepted this concrete interface on 2026-11-18 for
-STI-112, STI-113 and STI-116 consumption:
+The [build and evidence contract](build.md#ownership-and-evidence-interface)
+remains authoritative. The concrete interface below was reviewed on 2026-11-18
+for release packaging, VEX integration and publication:
 
 - `schema_version`: integer `1`.
 - `release`: exactly `kind` (`release` or `fixture`) and `id` (the planned release
@@ -82,11 +82,9 @@ existing `release-signing` environment with:
 
 Explicit human environment approval is mandatory in every case. Prevent
 self-review is recommended when separate authorized dispatcher and reviewer
-accounts exist, but is not required by the preflight. With a single human
-maintainer, enabling it prevents that maintainer from approving a run dispatched
-under the same GitHub identity. The lead confirmed that `Azhovan` (Jabar Asadi)
-is the sole human collaborator/reviewer; `prevent_self_review: false` permits
-that arrangement without removing the required human approval gate.
+accounts exist, but is not required by the preflight. When the dispatcher is
+also an authorized reviewer, `prevent_self_review: false` permits approval by
+that account without removing the required human approval gate.
 
 Only the subsequent environment-gated signing job gets `id-token: write`.
 Its other permissions are `contents: read` and `actions: read`; it has no release
@@ -96,16 +94,16 @@ data, not scripts. The policy is rechecked after approval. Protection/API errors
 fail the workflow, rather than silently skipping signing successfully.
 
 **Current setup blocker:** the repository had **zero environments** on
-2026-11-18. The owner must configure the protection, disable administrator
-approval bypass, and verify the settings before the lead dispatches anything.
+2026-11-18. Configure the protection, disable administrator approval bypass,
+and verify the settings before dispatching a workflow.
 The read API does not expose the bypass checkbox; its human readback is still
-required. The owner chooses the self-review setting appropriate to the available
+required. Choose the self-review setting appropriate to the available
 accounts, while retaining explicit human reviewers and main-only deployment.
-This worker has not created environments, changed permissions, dispatched
-workflows or published tags.
+This preparation candidate does not configure environments, change permissions,
+dispatch workflows or publish tags.
 
-The lead must review/integrate this code into trusted main **before** a fixture
-dispatch. Do not run signing code from this unreviewed topic branch.
+Signing code must be reviewed and integrated into trusted main **before** a
+fixture dispatch. Do not run signing code from an unreviewed topic branch.
 
 ## Sign and verify
 
@@ -176,8 +174,8 @@ a new directory. Failed output must not be used. Neither command signs anything.
 
 The workflow retains a signed candidate Actions artifact for **14 days** and
 prints manifest/bundle hashes. This is a handoff, **not durable publication**.
-STI-116 must copy unchanged bytes and logs to the approved durable artifact
-store before expiry, obtain exact-release human approval, publish all assets,
+Copy unchanged bytes and logs to the approved durable artifact store before
+expiry, obtain exact-release human approval, publish all assets,
 and run the complete public-download verifier. This workflow never publishes.
 
 ## Focused validation and the next trusted run
@@ -213,5 +211,6 @@ missing prerequisites fail, never skip. It checks:
 
 Retain the run URL, dispatch/approval identities, workflow commit, raw logs,
 bundle, certificate identity and hashes in a new labelled evidence record.
-This blocked run must pass before STI-111 can be accepted as complete. No
-successful trusted fixture run or real release verification is claimed here.
+This blocked run must pass before signing preparation can be accepted as
+complete. No successful trusted fixture run or real release verification is
+claimed here.
