@@ -1,0 +1,17 @@
+fixture bytes: 104 sha256: f407fadc99c0d9f88ea9d250132afc02e86bdcd4d180db1b7004e03c246d814d
+    --bundle='':
+    --identity-token='':
+	identity token to use for certificate from fulcio. the token or a path to a file containing the token is accepted.
+    --oidc-client-id='sigstore':
+	OIDC client ID for application
+    --oidc-client-secret-file='':
+	Path to file containing OIDC client secret for application
+    --oidc-disable-ambient-providers=false:
+	Disable ambient OIDC providers. When true, ambient credentials will not be read
+    --oidc-provider='':
+	Specify the provider to get the OIDC token from (Optional). If unset, all options will be tried. Options include: [spiffe, google, github-actions, filesystem, buildkite-agent]
+    --oidc-redirect-url='':
+	OIDC redirect URL (Optional). The default oidc-redirect-url is 'http://localhost:0/auth/callback'.
+
+    --signing-config='':
+	path to a signing config file. Must provide --bundle, which will output verification material in the new format

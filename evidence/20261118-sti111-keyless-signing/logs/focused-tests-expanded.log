@@ -1,0 +1,36 @@
+test_human_review_main_only_policy_is_accepted (release_test.ApprovalTests.test_human_review_main_only_policy_is_accepted) ... ok
+test_missing_self_approved_bot_or_unrestricted_policies_fail (release_test.ApprovalTests.test_missing_self_approved_bot_or_unrestricted_policies_fail) ... ok
+test_untrusted_workflow_context_fails_before_api_access (release_test.ApprovalTests.test_untrusted_workflow_context_fails_before_api_access) ... release approval policy blocked: wrong workflow repository
+release approval policy blocked: workflow must run from main
+release approval policy blocked: only an explicit trusted dispatch can sign
+ok
+test_ambiguous_paths_are_rejected_before_filesystem_access (release_test.ReleaseTests.test_ambiguous_paths_are_rejected_before_filesystem_access) ... ok
+test_changed_manifest_bytes_fail_even_if_json_meaning_is_unchanged (release_test.ReleaseTests.test_changed_manifest_bytes_fail_even_if_json_meaning_is_unchanged) ... ok
+test_changed_payload_same_size_fails_digest (release_test.ReleaseTests.test_changed_payload_same_size_fails_digest) ... ok
+test_changed_payload_size_fails (release_test.ReleaseTests.test_changed_payload_size_fails) ... ok
+test_cosign_identity_and_issuer_failures_are_not_swallowed (release_test.ReleaseTests.test_cosign_identity_and_issuer_failures_are_not_swallowed) ... ok
+test_cosign_missing_and_wrong_version_fail (release_test.ReleaseTests.test_cosign_missing_and_wrong_version_fail) ... ok
+test_cosign_orchestration_pins_exact_identity_and_issuer (release_test.ReleaseTests.test_cosign_orchestration_pins_exact_identity_and_issuer) ... ok
+test_duplicate_keys_and_paths_fail (release_test.ReleaseTests.test_duplicate_keys_and_paths_fail) ... ok
+test_extra_manifest_entry_fails (release_test.ReleaseTests.test_extra_manifest_entry_fails) ... ok
+test_file_and_directory_symlinks_fail (release_test.ReleaseTests.test_file_and_directory_symlinks_fail) ... ok
+test_fixture_cannot_be_verified_as_release_or_another_source (release_test.ReleaseTests.test_fixture_cannot_be_verified_as_release_or_another_source) ... ok
+test_github_detects_remote_asset_changes_during_verification (release_test.ReleaseTests.test_github_detects_remote_asset_changes_during_verification) ... ok
+test_github_rejects_unsigned_remote_asset_before_cosign (release_test.ReleaseTests.test_github_rejects_unsigned_remote_asset_before_cosign) ... ok
+test_github_requires_complete_download_not_a_filtered_subset (release_test.ReleaseTests.test_github_requires_complete_download_not_a_filtered_subset) ... ok
+test_github_snapshot_reads_all_asset_pages (release_test.ReleaseTests.test_github_snapshot_reads_all_asset_pages) ... ok
+test_labelled_fixture_bytes_and_manifest_are_valid_without_authenticity_claim (release_test.ReleaseTests.test_labelled_fixture_bytes_and_manifest_are_valid_without_authenticity_claim) ... ok
+test_manifest_and_bundle_cannot_be_payloads (release_test.ReleaseTests.test_manifest_and_bundle_cannot_be_payloads) ... ok
+test_missing_payload_fails (release_test.ReleaseTests.test_missing_payload_fails) ... ok
+test_mutation_during_cosign_is_detected (release_test.ReleaseTests.test_mutation_during_cosign_is_detected) ... ok
+test_signed_and_unsigned_asset_sets_are_distinct (release_test.ReleaseTests.test_signed_and_unsigned_asset_sets_are_distinct) ... ok
+test_strict_schema_types_and_unknown_fields (release_test.ReleaseTests.test_strict_schema_types_and_unknown_fields) ... ok
+test_unsigned_file_and_empty_directory_each_fail (release_test.ReleaseTests.test_unsigned_file_and_empty_directory_each_fail) ... ok
+test_zip_preserves_frozen_manifest_and_payload (release_test.ReleaseTests.test_zip_preserves_frozen_manifest_and_payload) ... ok
+test_zip_rejects_preexisting_destination_and_signed_input (release_test.ReleaseTests.test_zip_rejects_preexisting_destination_and_signed_input) ... ok
+test_zip_rejects_unsafe_extra_duplicate_and_symlink_members_before_writing (release_test.ReleaseTests.test_zip_rejects_unsafe_extra_duplicate_and_symlink_members_before_writing) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.033s
+
+OK

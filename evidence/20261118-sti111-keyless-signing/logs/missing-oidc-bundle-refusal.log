@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/azhovan/GolandProjects/meta-firmdura-kirkstone-sti-106.worktrees/sti-111-keyless-signing/tests/release_oidc.py", line 102, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/azhovan/GolandProjects/meta-firmdura-kirkstone-sti-106.worktrees/sti-111-keyless-signing/tests/release_oidc.py", line 43, in main
+    verify.verify_assets(args.assets, args.cosign, **expected)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/azhovan/GolandProjects/meta-firmdura-kirkstone-sti-106.worktrees/sti-111-keyless-signing/scripts/release/verify.py", line 199, in verify_assets
+    inspect_assets(root, signed=True, **expected)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/azhovan/GolandProjects/meta-firmdura-kirkstone-sti-106.worktrees/sti-111-keyless-signing/scripts/release/verify.py", line 166, in inspect_assets
+    require(files == expected_files,
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+            f"asset set mismatch: missing={sorted(expected_files - files)}, "
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            f"extra={sorted(files - expected_files)}")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/azhovan/GolandProjects/meta-firmdura-kirkstone-sti-106.worktrees/sti-111-keyless-signing/scripts/release/verify.py", line 32, in require
+    raise InvalidRelease(message)
+verify.InvalidRelease: asset set mismatch: missing=['manifest.sigstore.json'], extra=[]

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "release": {
+    "kind": "fixture",
+    "id": "sti111-keyless-fixture"
+  },
+  "source": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "commit": "44210974feddea19687ea2d7466f99f45d43588b"
+  },
+  "artifacts": [
+    {
+      "path": "payloads/fixture.txt",
+      "role": "test-fixture",
+      "size": 104,
+      "sha256": "f407fadc99c0d9f88ea9d250132afc02e86bdcd4d180db1b7004e03c246d814d"
+    }
+  ]
+}
