@@ -279,4 +279,5 @@ raw JSON descriptor. This auxiliary database is strictly an isolated test
 fixture and is never distributed as an official vulnerability feed. Once NIST
 NVD adds CPE configurations for `CVE-2026-19773`, stock Anchore database
 snapshots will match the same consolidated SPDX documents without changing
-`normalize_spdx.py` or the shipped OpenVEX product PURLs.
+`normalize_spdx.py` or the shipped OpenVEX product PURLs; see
+[the OpenVEX guide](vex.md) for paired positive and negative consumer verification.
