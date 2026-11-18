@@ -172,4 +172,6 @@ estimated.
 4. **Human review & NVD feed latency**: Human approval checkpoints (`release-signing`
    and pair freeze) are essential trust gates that bound turnaround to reviewer
    availability, and newly disclosed CVEs frequently lack NVD CPE rows for days
-   or weeks after upstream Git fixes land.
+   or weeks after upstream Git fixes land. See
+   [the maintenance boundary and decision](maintenance-decision.md) for the
+   approved post-`v0.1.0` disposition.

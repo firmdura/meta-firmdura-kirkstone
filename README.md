@@ -96,7 +96,8 @@ sh kas/run patched build
   `CVE-2026-19773` while NIST NVD lists the CVE as `Awaiting Analysis`; see the
   [scanner guide](docs/scanner.md) and [OpenVEX guide](docs/vex.md).
 - No ongoing SLA or universal CVE maintenance commitment is implied by this
-  single-case reference release.
+  single-case reference release; see the
+  [post-`v0.1.0` maintenance boundary and decision](docs/maintenance-decision.md).
 
 ## Licensing and corresponding source
 

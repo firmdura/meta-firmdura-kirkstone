@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti118-maintenance-decision",
+  "issue": "STI-118",
+  "status": "completed",
+  "started_at": "2026-11-18T19:15:57.067684+00:00",
+  "finished_at": "2026-11-18T19:41:17.735276+00:00",
+  "prerequisite_cycle_review": "evidence/20261118-sti117-cycle-review/run.json",
+  "owner_decision": {
+    "decision": "defer_additional_cases_remain_verified_one_off_sample",
+    "approver_name": "Jabar Asadi",
+    "approver_github_login": "Azhovan",
+    "notes": "Approved by Jabar Asadi (Azhovan)",
+    "new_follow_up_tickets_created": 0,
+    "preserved_release_tag": "v0.1.0",
+    "preserved_release_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0"
+  },
+  "applicability_and_community_repair_recheck": {
+    "already_patched_in_poky_community_reuse": [
+      {
+        "package": "libuv1",
+        "version": "1.44.2",
+        "cves": [
+          "CVE-2024-24806"
+        ]
+      },
+      {
+        "package": "libz1",
+        "version": "1.2.11",
+        "cves": [
+          "CVE-2022-37434",
+          "CVE-2018-25032"
+        ]
+      },
+      {
+        "package": "busybox",
+        "version": "1.35.0",
+        "cves": [
+          "CVE-2022-48174",
+          "CVE-2022-28391",
+          "CVE-2022-30065"
+        ]
+      }
+    ],
+    "platform_or_config_not_affected": [
+      {
+        "package": "libwebsockets18",
+        "version": "4.2.2",
+        "cves": [
+          "CVE-2025-1866"
+        ],
+        "reason": "Win32-specific / requires non-default LWS_WITHOUT_EXTENSIONS=OFF or LWS_WITH_HTTP_STREAM_COMPRESSION=ON"
+      }
+    ],
+    "deferred_unpatched_user_space_candidates": [
+      {
+        "package": "libblkid1",
+        "version": "2.37.4",
+        "cves": [
+          "CVE-2026-53615"
+        ]
+      },
+      {
+        "package": "libcrypto3/libssl3",
+        "version": "3.0.22",
+        "cves": [
+          "CVE-2026-84782",
+          "CVE-2026-107496"
+        ]
+      },
+      {
+        "package": "busybox",
+        "version": "1.35.0",
+        "cves": [
+          "CVE-2025-60876"
+        ]
+      }
+    ]
+  },
+  "commands": [
+    {
+      "label": "sti-118-recheck-community-repairs",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T19:18:33.661750+00:00",
+      "finished_at": "2026-11-18T19:18:37.463811+00:00",
+      "elapsed_seconds": 3.8019147908780724,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-118-recheck-community-repairs.log",
+      "log_sha256": "9243597370499f0e6a0452bba0a49ab61a6983f1d279bbac3090d745aa45de9a",
+      "log_size": 5655
+    },
+    {
+      "label": "sti-118-final-repo-tests",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T19:41:17.484752+00:00",
+      "finished_at": "2026-11-18T19:41:17.701271+00:00",
+      "elapsed_seconds": 0.2163372919894755,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-118-final-repo-tests.log",
+      "log_sha256": "e6630e9805f710f1d268739dacd56e2b8bdc076f2c26e939933ad2301a28a64e",
+      "log_size": 6842
+    }
+  ],
+  "timing": {
+    "effort_ledger": "local://firmdura-kirkstone/runs/20261118-successor-sti118-effort.jsonl",
+    "started_at": "2026-11-18T19:15:57.067684+00:00",
+    "measured_through": "2026-11-18T19:41:17.735276+00:00",
+    "active_assistant_session_seconds": 547.417026376,
+    "separately_recorded_wait_seconds": 973.227303791,
+    "initial_brief_command_seconds": null,
+    "state": "paused",
+    "method": "Prospective, manually bracketed supervised assistant-session wall time; not human labor or CPU time. Explicit command/build/user waits are excluded from active intervals. Historical effort remains unknown.",
+    "ledger_sha256": "bac7e9513627b4298bfcb99adf13f67f45478a1e930c2d751452ec641e9f2b99"
+  }
+}
