@@ -1,0 +1,774 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti111-keyless-signing",
+  "issue": "STI-111",
+  "status": "candidate-validated-trusted-oidc-blocked",
+  "started_at": "2026-11-18T07:32:33.081379+00:00",
+  "finished_at": "2026-11-18T08:21:39.281867+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "branch": "sti-111-keyless-signing",
+    "base_commit": "44210974feddea19687ea2d7466f99f45d43588b",
+    "tested_implementation_precommit_tree": "0ebfc837efa7d2ea212e5efdd61b6b1e4f333eb7",
+    "precommit_tree_note": "Staged tree before replacing the updated run record. File hashes identify validated source/test inputs; this is not an integrated revision. The final signed commit is recorded in Linear.",
+    "files": [
+      {
+        "path": ".github/workflows/release.yml",
+        "size": 4561,
+        "sha256": "bfb7b8f68954d8f9216ca80f8d8bc63dfc635ece4123cb8a1fd007bd887db9c8"
+      },
+      {
+        "path": "scripts/release/approval.py",
+        "size": 2477,
+        "sha256": "38f506176885d5921b46787b030adabf73f36368570041e94c2ebd6e48deb9fc"
+      },
+      {
+        "path": "scripts/release/verify.py",
+        "size": 15396,
+        "sha256": "1e24f4abac83b0a209577dcfbd221ec198ad27b777b67d179f90fec42fd501b4"
+      },
+      {
+        "path": "docs/signing.md",
+        "size": 11918,
+        "sha256": "d390c1bcc319e4fbd171923888ab439c6f86418c96b9a89cada687dc77a5f4d3"
+      },
+      {
+        "path": "tests/release_test.py",
+        "size": 18463,
+        "sha256": "288a65f639791fa2f0a68a6b2d4f90f31c6c55a09ff759644d9d299f27614f73"
+      },
+      {
+        "path": "tests/release_oidc.py",
+        "size": 4626,
+        "sha256": "3084be772f0eb2847695a78a00ee78989f33bc59f31648a516bc256cca6ce33e"
+      },
+      {
+        "path": "tests/release-fixtures/unsigned/manifest.json",
+        "size": 457,
+        "sha256": "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60"
+      },
+      {
+        "path": "tests/release-fixtures/unsigned/payloads/fixture.txt",
+        "size": 104,
+        "sha256": "f407fadc99c0d9f88ea9d250132afc02e86bdcd4d180db1b7004e03c246d814d"
+      }
+    ],
+    "prerequisites": {
+      "sti107_current_main_commit": "6799585d26caf7048acd555e4d0d2a74abe5b019",
+      "sti107_historical_same_tree_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+      "sti108_integrated_main_commit": "44210974feddea19687ea2d7466f99f45d43588b",
+      "verification": "Parent-supplied verified handoff and checked-out main history; no baseline build was repeated."
+    },
+    "ownership": {
+      "lead_session": "cde10eaa-05aa-477c-ade0-fe788d89c09d",
+      "sti106_transfer_comment": "c2db7675-08e9-4578-9449-6d96ff71fd9c",
+      "sti111_claim_comment": "c135d628-11f1-4369-b8ee-9a60caf093e1",
+      "contract_and_blocker_comment": "1426630b-0a8c-4efd-8ad0-19979cd0e2ea"
+    },
+    "tools": {
+      "python": "3.15.2",
+      "gh": "gh version 2.92.0 (2026-04-28)",
+      "cosign": {
+        "version": "v3.1.4",
+        "commit": "0e48502cf5ef34e2e60bbd3617aa19945712f705",
+        "darwin_arm64_sha256": "9f9b8cd557cf2e5b3df3373a00baa005a86b02391e3e06dd0ce37b3a1533d3a4",
+        "workflow_linux_amd64_sha256": "424e2c97d0b45fd7a6b608a87f090f35633f4c23ece5f092d48bba11aaf4bbfa"
+      },
+      "actionlint": {
+        "version": "1.7.12",
+        "darwin_arm64_archive_sha256": "aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f"
+      }
+    },
+    "actions": {
+      "actions/checkout@v7.0.1": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "sigstore/cosign-installer@v4.1.3": "756fe2d284c7292c4e9b62c8a28f1e5629c59532",
+      "actions/upload-artifact@v7.0.2": "cf430e030ddbb5b0abf93d22962f4752f3646cd9"
+    },
+    "builder": null,
+    "builder_note": "No builder/container, firmware, existing evidence or frozen artifact store entry was modified or used.",
+    "upstream_tool_only_signature": {
+      "payload_url": "https://github.com/sigstore/cosign/releases/download/v3.1.4/cosign_checksums.txt",
+      "payload_sha256": "e70e59b328d52949b3a9ae3e0d04721ea8f380c4e91c28197aa91df02afbf4c0",
+      "bundle_url": "https://github.com/sigstore/cosign/releases/download/v3.1.4/cosign_checksums.txt.sigstore.json",
+      "bundle_sha256": "8fc87b5562359b0414655ee281b80eb3752f58c4e137d5f0e4881f095bc26309",
+      "identity": "keyless@projectsigstore.iam.gserviceaccount.com",
+      "issuer": "https://accounts.google.com",
+      "scope": "Existing public maintainer signature; not Firmdura GitHub OIDC, not a local signing substitute.",
+      "base_argv": [
+        "cosign",
+        "verify-blob",
+        "--bundle",
+        "upstream-cosign-checksums.sigstore.json",
+        "--certificate-identity",
+        "keyless@projectsigstore.iam.gserviceaccount.com",
+        "--certificate-oidc-issuer",
+        "https://accounts.google.com",
+        "upstream-cosign-checksums.txt"
+      ],
+      "negative_controls": [
+        {
+          "change": "identity=https://github.com/invalid/repo/.github/workflows/release.yml@refs/heads/main",
+          "exit": 1
+        },
+        {
+          "change": "issuer=https://invalid.example/issuer",
+          "exit": 1
+        },
+        {
+          "change": "append one LF byte to signed checksum payload",
+          "exit": 1
+        }
+      ],
+      "driver_sha256": "a8889d914002a37dc66f3eea3ac60dfa8eaac382c11e033019c307c9b1190d93",
+      "driver_note": "Disposable driver removed after checks; public inputs, command contract and raw outcome are retained."
+    },
+    "previous_candidate": {
+      "commit": "5d670fd7c4f2cec8b4aea47a936b012500acaa7f",
+      "run_record_sha256": "02714bd6db0b4e6b8796291394d4a00cfa63d25626acaede9c62d1e8a55d9f7d",
+      "finished_at": "2026-11-18T07:48:08.021404+00:00",
+      "tested_implementation_precommit_tree": "b6845168c2fd001cfd32b254e6243924db207e8e",
+      "files": [
+        {
+          "path": ".github/workflows/release.yml",
+          "size": 4561,
+          "sha256": "bfb7b8f68954d8f9216ca80f8d8bc63dfc635ece4123cb8a1fd007bd887db9c8"
+        },
+        {
+          "path": "scripts/release/approval.py",
+          "size": 2569,
+          "sha256": "06f6787497c6f731c70a594e39e465c34a922d75db5fd23119cca755c8a338d7"
+        },
+        {
+          "path": "scripts/release/verify.py",
+          "size": 15396,
+          "sha256": "1e24f4abac83b0a209577dcfbd221ec198ad27b777b67d179f90fec42fd501b4"
+        },
+        {
+          "path": "docs/signing.md",
+          "size": 11180,
+          "sha256": "bdc840b99a17667c3c8d90234f8937d150bae2c993284b337331011bb93ca95b"
+        },
+        {
+          "path": "tests/release_test.py",
+          "size": 18286,
+          "sha256": "df884fee2c461307d4923fabae9e29bafe31a4528d7dcd172c25b0536d654a27"
+        },
+        {
+          "path": "tests/release_oidc.py",
+          "size": 4626,
+          "sha256": "3084be772f0eb2847695a78a00ee78989f33bc59f31648a516bc256cca6ce33e"
+        },
+        {
+          "path": "tests/release-fixtures/unsigned/manifest.json",
+          "size": 457,
+          "sha256": "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60"
+        },
+        {
+          "path": "tests/release-fixtures/unsigned/payloads/fixture.txt",
+          "size": 104,
+          "sha256": "f407fadc99c0d9f88ea9d250132afc02e86bdcd4d180db1b7004e03c246d814d"
+        }
+      ]
+    },
+    "manifest_contract_acceptance": {
+      "status": "accepted",
+      "by": "lead",
+      "date": "2026-11-18",
+      "consumers": [
+        "STI-112",
+        "STI-113",
+        "STI-116"
+      ],
+      "source": "Explicit lead review feedback on PR #6."
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "curl --fail --silent --show-error --location --max-time 120 https://github.com/sigstore/cosign/releases/download/v3.1.4/cosign-darwin-arm64 -o evidence/20261118-sti111-keyless-signing/.work/cosign && printf \"%s  %s\\n\" 9f9b8cd557cf2e5b3df3373a00baa005a86b02391e3e06dd0ce37b3a1533d3a4 evidence/20261118-sti111-keyless-signing/.work/cosign | shasum -a 256 -c && chmod +x evidence/20261118-sti111-keyless-signing/.work/cosign && curl --fail --silent --show-error --location --max-time 120 https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_darwin_arm64.tar.gz -o evidence/20261118-sti111-keyless-signing/.work/actionlint.tar.gz && printf \"%s  %s\\n\" aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f evidence/20261118-sti111-keyless-signing/.work/actionlint.tar.gz | shasum -a 256 -c && tar -xzf evidence/20261118-sti111-keyless-signing/.work/actionlint.tar.gz -C evidence/20261118-sti111-keyless-signing/.work actionlint && evidence/20261118-sti111-keyless-signing/.work/cosign version --json && evidence/20261118-sti111-keyless-signing/.work/cosign verify-blob --help && evidence/20261118-sti111-keyless-signing/.work/actionlint -version"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:32:33.081379+00:00",
+      "finished_at": "2026-11-18T07:32:40.446135+00:00",
+      "elapsed_seconds": 7.364590459037572,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-install-validators.log",
+      "log_sha256": "44df9568b17b6948d02684928e2e69dc9b2e405b073436cda14c24a07b48d9ba",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-install-validators",
+      "log_size": 5695,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; import hashlib,subprocess; p=Path(\"tests/release-fixtures/unsigned/payloads/fixture.txt\"); print(\"fixture bytes:\",p.stat().st_size,\"sha256:\",hashlib.sha256(p.read_bytes()).hexdigest()); r=subprocess.run([\"evidence/20261118-sti111-keyless-signing/.work/cosign\",\"sign-blob\",\"--help\"],capture_output=True,text=True,check=True); lines=r.stdout.splitlines(); print(\"\\n\".join(line for i,line in enumerate(lines) if any(k in line for k in (\"oidc\", \"bundle\", \"signing-config\", \"identity-token\")) or (i>0 and any(k in lines[i-1] for k in (\"oidc\", \"signing-config\", \"identity-token\")))))"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:33:02.887596+00:00",
+      "finished_at": "2026-11-18T07:33:02.926133+00:00",
+      "elapsed_seconds": 0.03840674995444715,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-fixture-input-and-sign-help.log",
+      "log_sha256": "f92e095929d0f040b1f7c708a0f5231a96cbed49d9659670ebdd87b3c70e2201",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-fixture-input-and-sign-help",
+      "log_size": 1002,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "release_test.py",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:35:26.721456+00:00",
+      "finished_at": "2026-11-18T07:35:26.870938+00:00",
+      "elapsed_seconds": 0.14932466601021588,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-focused-tests-initial.log",
+      "log_sha256": "0feaeffc2ddec8e860c4cafca2c386006bae44c12385d39d61ea4ea026e5d202",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-focused-tests-initial",
+      "log_size": 3542,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "python3 -c 'from pathlib import Path; files=sorted(Path(\"scripts/release\").glob(\"*.py\"))+sorted(Path(\"tests\").glob(\"release*.py\")); [compile(p.read_bytes(),str(p),\"exec\") for p in files]; print(\"Python syntax:\", len(files), \"files passed\")' && evidence/20261118-sti111-keyless-signing/.work/actionlint -color .github/workflows/release.yml && git -C <checkout> diff --check"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:35:26.898341+00:00",
+      "finished_at": "2026-11-18T07:35:26.939624+00:00",
+      "elapsed_seconds": 0.04113545804284513,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-syntax-initial.log",
+      "log_sha256": "be966b1061838bf889c0cb6086f965587d1985712f4eb6a3e3e685ae54a42963",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-syntax-initial",
+      "log_size": 30,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "release_test.py",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:39:59.341646+00:00",
+      "finished_at": "2026-11-18T07:39:59.456377+00:00",
+      "elapsed_seconds": 0.11458341591060162,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-focused-tests-expanded.log",
+      "log_sha256": "ae00b59238373049a691bad9b5e8022cdd620a488c0049608e31f84f973c6ff3",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-focused-tests-expanded",
+      "log_size": 4124,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "curl --fail --silent --show-error --location --max-time 60 https://github.com/sigstore/cosign/releases/download/v3.1.4/cosign_checksums.txt -o evidence/20261118-sti111-keyless-signing/.work/upstream-cosign-checksums.txt && curl --fail --silent --show-error --location --max-time 60 https://github.com/sigstore/cosign/releases/download/v3.1.4/cosign_checksums.txt.sigstore.json -o evidence/20261118-sti111-keyless-signing/.work/upstream-cosign-checksums.sigstore.json && shasum -a 256 evidence/20261118-sti111-keyless-signing/.work/upstream-cosign-checksums.txt evidence/20261118-sti111-keyless-signing/.work/upstream-cosign-checksums.sigstore.json"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:39:59.485170+00:00",
+      "finished_at": "2026-11-18T07:40:00.295452+00:00",
+      "elapsed_seconds": 0.8101203341502696,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-download-upstream-tool-only-fixture.log",
+      "log_sha256": "3169c73dae7c9962a88fdacb4d2904acc887b9443febab2290f772150e13079a",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-download-upstream-tool-only-fixture",
+      "log_size": 296,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "evidence/20261118-sti111-keyless-signing/.work/check-engine.py"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:40:27.019741+00:00",
+      "finished_at": "2026-11-18T07:40:30.342598+00:00",
+      "elapsed_seconds": 3.322668874869123,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-real-cosign-upstream-only.log",
+      "log_sha256": "e7e001944450d34d1cafd0275d7718fdda700b1a638b91af7afaa91516c0aa70",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-real-cosign-upstream-only",
+      "log_size": 1646,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "gh api repos/firmdura/meta-firmdura-kirkstone/environments --jq \"{total_count,environments:[.environments[]|{name,protection_rules,deployment_branch_policy}]}\" && gh api repos/firmdura/meta-firmdura-kirkstone/actions/permissions/workflow && gh api repos/sigstore/cosign-installer/commits/v4.1.3 --jq \"{sha,html_url}\" && gh api repos/actions/checkout/commits/v7.0.1 --jq \"{sha,html_url}\" && gh api repos/actions/upload-artifact/commits/v7.0.2 --jq \"{sha,html_url}\" && shasum -a 256 tests/release-fixtures/unsigned/manifest.json tests/release-fixtures/unsigned/payloads/fixture.txt && gh release download --help"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:41:47.492618+00:00",
+      "finished_at": "2026-11-18T07:41:49.696735+00:00",
+      "elapsed_seconds": 2.2039525830186903,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-settings-pins-fixture-inputs.log",
+      "log_sha256": "d687d6ecf901ad2c23813200ded954f0ae491733453f65440f40150a76286701",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-settings-pins-fixture-inputs",
+      "log_size": 2385,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/release/verify.py",
+        "check",
+        "--assets",
+        "tests/release-fixtures/unsigned",
+        "--manifest-sha256",
+        "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60",
+        "--kind",
+        "fixture",
+        "--release-id",
+        "sti111-keyless-fixture",
+        "--source-commit",
+        "44210974feddea19687ea2d7466f99f45d43588b"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:43:00.793406+00:00",
+      "finished_at": "2026-11-18T07:43:00.825590+00:00",
+      "elapsed_seconds": 0.03202058398164809,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-unsigned-fixture-preflight.log",
+      "log_sha256": "1cb370a2305e2cd4dece9ee602f53e6792269b6e3c5a90ebdb428d18d4c84309",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-unsigned-fixture-preflight",
+      "log_size": 436,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "tests/release_oidc.py",
+        "--assets",
+        "tests/release-fixtures/unsigned",
+        "--manifest-sha256",
+        "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60",
+        "--kind",
+        "fixture",
+        "--release-id",
+        "sti111-keyless-fixture",
+        "--source-commit",
+        "44210974feddea19687ea2d7466f99f45d43588b",
+        "--cosign",
+        "<checkout>/evidence/20261118-sti111-keyless-signing/.work/cosign"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:43:00.856844+00:00",
+      "finished_at": "2026-11-18T07:43:00.899713+00:00",
+      "elapsed_seconds": 0.04271145793609321,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-missing-oidc-bundle-refusal.log",
+      "log_sha256": "73a6f589def720ebdad29844d67d3d1f8b725bd9eda5e1d363f0aea7f9c7e184",
+      "outcome": "expected_negative_control",
+      "label": "sti-111-20261118T081954562834Z-original-missing-oidc-bundle-refusal",
+      "log_size": 1530,
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "argv": [
+        "env",
+        "GITHUB_REPOSITORY=firmdura/meta-firmdura-kirkstone",
+        "GITHUB_REF=refs/heads/main",
+        "GITHUB_EVENT_NAME=workflow_dispatch",
+        "python3",
+        "scripts/release/approval.py"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:43:00.929640+00:00",
+      "finished_at": "2026-11-18T07:43:01.391135+00:00",
+      "elapsed_seconds": 0.46131983306258917,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-live-missing-environment-refusal.log",
+      "log_sha256": "9f2474e07a4ee9874f753eb42a9d768f7e81d1b65ad30f5c53898d5316ae54dd",
+      "outcome": "expected_negative_control",
+      "label": "sti-111-20261118T081954562834Z-original-live-missing-environment-refusal",
+      "log_size": 159,
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "python3 -m unittest discover -s tests -p release_test.py -v && python3 -c 'from pathlib import Path; files=sorted(Path(\"scripts/release\").glob(\"*.py\"))+sorted(Path(\"tests\").glob(\"release*.py\")); [compile(p.read_bytes(),str(p),\"exec\") for p in files]; print(\"Python syntax:\", len(files), \"files passed\")' && evidence/20261118-sti111-keyless-signing/.work/actionlint .github/workflows/release.yml && git -C <checkout> diff --check"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:43:01.432605+00:00",
+      "finished_at": "2026-11-18T07:43:01.596211+00:00",
+      "elapsed_seconds": 0.1634271249640733,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-final-focused-and-syntax.log",
+      "log_sha256": "eaad3e7a958b9a972177dc69ba9fe8cea869ad64afb3f733f9e7052c3c838792",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-final-focused-and-syntax",
+      "log_size": 4154,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "git -C <checkout> --no-pager log -10 --oneline --author=\"$(git -C <checkout> config user.name)\" && git -C <checkout> add -- .github/workflows/release.yml scripts/release docs/signing.md tests/release_test.py tests/release_oidc.py tests/release-fixtures && git -C <checkout> diff --cached --check && git -C <checkout> diff --cached --stat && git -C <checkout> write-tree && git -C <checkout> status --short --branch"
+      ],
+      "cwd": "<checkout>",
+      "started_at": "2026-11-18T07:44:36.206660+00:00",
+      "finished_at": "2026-11-18T07:44:36.310267+00:00",
+      "elapsed_seconds": 0.10347116715274751,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-original-scoped-staging-and-review.log",
+      "log_sha256": "a4dbd07a5878a4311fd3b3a9f0923d3f3e0f7ed4370efbc8258dfbed6e5bff03",
+      "outcome": "command_succeeded",
+      "label": "sti-111-20261118T081954562834Z-original-scoped-staging-and-review",
+      "log_size": 1549,
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-single-maintainer-before-fix",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "release_test.py",
+        "-k",
+        "test_human_review_main_only_policy_is_accepted",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:19:54.596664+00:00",
+      "finished_at": "2026-11-18T08:19:54.700394+00:00",
+      "elapsed_seconds": 0.10317220794968307,
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-single-maintainer-before-fix.log",
+      "log_size": 1613,
+      "log_sha256": "20943c9cf806c7003011af86d638dc220a85665d4517751cc4b4f53cbdcda095",
+      "outcome": "expected_negative_control"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-restore-actionlint",
+      "argv": [
+        "bash",
+        "-c",
+        "curl --fail --silent --show-error --location --max-time 120 https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_darwin_arm64.tar.gz -o tests/release-feedback-work/actionlint.tar.gz && printf \"%s  %s\\n\" aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f tests/release-feedback-work/actionlint.tar.gz | shasum -a 256 -c && tar -xzf tests/release-feedback-work/actionlint.tar.gz -C tests/release-feedback-work actionlint && tests/release-feedback-work/actionlint -version"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:19:54.731862+00:00",
+      "finished_at": "2026-11-18T08:19:55.660018+00:00",
+      "elapsed_seconds": 0.9277435420081019,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-restore-actionlint.log",
+      "log_size": 146,
+      "log_sha256": "7cc20f1504c5c95ed592e82c92e91fedebc8a5b658e9a5023d649cffe1e807f6",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-focused-tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "release_test.py",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:20:35.404787+00:00",
+      "finished_at": "2026-11-18T08:20:35.557165+00:00",
+      "elapsed_seconds": 0.15173416584730148,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-focused-tests.log",
+      "log_size": 4096,
+      "log_sha256": "51181bfb4794b05ca3be05c850828bde00b77d4b61222ed66caa9ba87a6940f3",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-python-syntax",
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; files=sorted(Path(\"scripts/release\").glob(\"*.py\"))+sorted(Path(\"tests\").glob(\"release*.py\")); [compile(p.read_bytes(),str(p),\"exec\") for p in files]; print(\"Python syntax:\",len(files),\"files passed\")"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:20:35.586652+00:00",
+      "finished_at": "2026-11-18T08:20:35.612061+00:00",
+      "elapsed_seconds": 0.025029333075508475,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-python-syntax.log",
+      "log_size": 30,
+      "log_sha256": "be966b1061838bf889c0cb6086f965587d1985712f4eb6a3e3e685ae54a42963",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-actionlint",
+      "argv": [
+        "tests/release-feedback-work/actionlint",
+        ".github/workflows/release.yml"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:20:35.639063+00:00",
+      "finished_at": "2026-11-18T08:20:35.654825+00:00",
+      "elapsed_seconds": 0.015340707963332534,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-actionlint.log",
+      "log_size": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-diff-check",
+      "argv": [
+        "git",
+        "-C",
+        "<checkout>",
+        "diff",
+        "--check"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:20:35.681206+00:00",
+      "finished_at": "2026-11-18T08:20:35.701680+00:00",
+      "elapsed_seconds": 0.02012083283625543,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-diff-check.log",
+      "log_size": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-environment-readback",
+      "argv": [
+        "gh",
+        "api",
+        "repos/firmdura/meta-firmdura-kirkstone/environments",
+        "--jq",
+        "{total_count,environments:[.environments[]|{name,protection_rules,deployment_branch_policy}]}"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:20:35.727673+00:00",
+      "finished_at": "2026-11-18T08:20:36.232086+00:00",
+      "elapsed_seconds": 0.5035173748619854,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-environment-readback.log",
+      "log_size": 36,
+      "log_sha256": "b524561784636a5e718232bacfc532b24fcfd4ad60b6370934b79c91e5c03bb3",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-evidence-contract-check",
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; import hashlib,json,subprocess\nroot=Path.cwd(); folder=Path(\"evidence/20261118-sti111-keyless-signing\"); store=Path(\"<store>\")\nraw=(folder/\"run.json\").read_text(); data=json.loads(raw)\nassert chr(47)+\"Users\"+chr(47) not in raw\nassert {\"schema_version\",\"run_id\",\"issue\",\"status\",\"started_at\",\"finished_at\",\"inputs\",\"commands\",\"artifacts\",\"results\",\"limitations\",\"timing\"} <= data.keys()\nassert set(data[\"command_path_aliases\"])=={\"<checkout>\",\"<store>\"}\nassert {p.relative_to(folder).as_posix() for p in folder.rglob(\"*\") if p.is_file()}=={\"run.json\"}\ntracked=subprocess.run([\"git\",\"-C\",str(root),\"ls-files\",str(folder)],capture_output=True,text=True,check=True).stdout.splitlines(); assert tracked==[str(folder/\"run.json\")]\nfor command in data[\"commands\"]:\n    assert {\"exit_code\",\"expected_exit_code\",\"log\",\"log_sha256\",\"log_size\",\"outcome\",\"argv\",\"cwd\"} <= command.keys()\n    assert command[\"cwd\"]==\"<checkout>\" and command[\"exit_code\"]==command[\"expected_exit_code\"]\n    assert command[\"log\"].startswith(\"local://firmdura-kirkstone/logs/sti-111-\")\n    content=(store/command[\"log\"].removeprefix(\"local://firmdura-kirkstone/\")).read_bytes()\n    assert len(content)==command[\"log_size\"] and hashlib.sha256(content).hexdigest()==command[\"log_sha256\"]\n    if \"-original-\" in command[\"log\"]:\n        original=command[\"log\"].split(\"-original-\",1)[1]\n        old=subprocess.run([\"git\",\"-C\",str(root),\"show\",\"5d670fd7c4f2cec8b4aea47a936b012500acaa7f:\"+str(folder/\"logs\"/original)],capture_output=True,check=True).stdout\n        assert content==old\nassert data[\"results\"][\"trusted_firmdura_oidc_smoke\"][\"status\"]==\"blocked\"\nprint(\"PASS: aliases/schema; run.json-only Git evidence; all historical logs byte-identical at verified store locators; OIDC still blocked\")"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:21:39.018430+00:00",
+      "finished_at": "2026-11-18T08:21:39.209444+00:00",
+      "elapsed_seconds": 0.1902506658807397,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-evidence-contract-check.log",
+      "log_size": 132,
+      "log_sha256": "b7b4bf6d071287ada9365f6ce29f99747797279ce93cfc3c824d5e6d37b6c4e8",
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-111-20261118T081954562834Z-staged-diff-check",
+      "argv": [
+        "git",
+        "-C",
+        "<checkout>",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "started_at": "2026-11-18T08:21:39.236638+00:00",
+      "finished_at": "2026-11-18T08:21:39.253144+00:00",
+      "elapsed_seconds": 0.01593962498009205,
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-111-20261118T081954562834Z-staged-diff-check.log",
+      "log_size": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "outcome": "command_succeeded"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "tests/release-fixtures/unsigned/manifest.json",
+      "size": 457,
+      "sha256": "fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60",
+      "role": "test-manifest",
+      "variant": null,
+      "evidence_kind": "unsigned-test-fixture-only",
+      "locator": "repository:tests/release-fixtures/unsigned/manifest.json"
+    },
+    {
+      "path": "tests/release-fixtures/unsigned/payloads/fixture.txt",
+      "size": 104,
+      "sha256": "f407fadc99c0d9f88ea9d250132afc02e86bdcd4d180db1b7004e03c246d814d",
+      "role": "test-fixture",
+      "variant": null,
+      "evidence_kind": "unsigned-test-fixture-only",
+      "locator": "repository:tests/release-fixtures/unsigned/payloads/fixture.txt"
+    }
+  ],
+  "results": {
+    "local_contract_tests": {
+      "status": "passed",
+      "tests": 28,
+      "crypto": "explicit orchestration mocks only"
+    },
+    "python_syntax": {
+      "status": "passed",
+      "files": 4
+    },
+    "workflow_syntax": {
+      "status": "passed",
+      "validator": "actionlint 1.7.12"
+    },
+    "unsigned_fixture_preflight": {
+      "status": "passed",
+      "authenticity": "not_checked"
+    },
+    "real_cosign_upstream_only": {
+      "status": "passed",
+      "positive_exit": 0,
+      "negative_exits": [
+        1,
+        1,
+        1
+      ]
+    },
+    "missing_bundle_refusal": {
+      "status": "passed",
+      "actual_exit": 1,
+      "expected_exit": 1
+    },
+    "live_policy_refusal": {
+      "status": "passed",
+      "actual_exit": 1,
+      "expected_exit": 1,
+      "context": "Local simulated trusted workflow variables, real read-only GitHub API; NOT a workflow dispatch."
+    },
+    "environment": {
+      "name": "release-signing",
+      "exists": false,
+      "repository_environment_count": 0,
+      "changed": false
+    },
+    "trusted_firmdura_oidc_smoke": {
+      "status": "blocked",
+      "run_url": null,
+      "actual_certificate_identity": null,
+      "bundle_sha256": null,
+      "reason": "No protected environment; candidate must first be reviewed/integrated on trusted main, then owner-protected/approved."
+    },
+    "production_signing_and_public_download": {
+      "status": "not_run",
+      "owner": "STI-116"
+    },
+    "publication_or_tag": {
+      "performed": false
+    },
+    "review_feedback": {
+      "status": "addressed",
+      "historical_raw_logs_moved": 13,
+      "host_paths": "sanitized using checkout/store aliases",
+      "single_maintainer_with_explicit_human_approval": "accepted by preflight",
+      "without_human_reviewers_or_main_only_policy": "still rejected",
+      "manifest_v1_contract": "accepted by lead",
+      "scope": "Local tests and evidence repair only; no approval configuration, dispatch, merge or release."
+    }
+  },
+  "limitations": [
+    "STI-111 is not complete. The lead accepted manifest v1; integration and a real human-approved GitHub OIDC fixture run remain required.",
+    "The last read-only GitHub inspection found zero environments. Owner setup of explicit human reviewers, main-only deployment and disabled admin bypass remains necessary; no protection settings were changed.",
+    "Prevent self-review is recommended with separate authorized dispatcher/reviewer accounts, not required for the sole human maintainer. Explicit human environment approval remains mandatory.",
+    "Unit mocks do not demonstrate keyless cryptography. The real upstream engine check authenticates a Google issuer/public Cosign maintainer, not this repository's GitHub workflow.",
+    "No fixture bundle or certificate was fabricated. Missing prerequisites are explicit failures, not successful skips.",
+    "All uploaded public release assets are checked by the implemented download path; its API/orchestration controls are local mocks because no approved production release was published or available for this task.",
+    "The lead accepted manifest v1, flat release filenames and the exact main-workflow identity on 2026-11-18 for STI-112/113/116 consumption; release ID and producer commit remain independently bound.",
+    "Action artifacts expire after 14 days; STI-116 must retain unchanged candidates/logs in approved durable storage before expiry.",
+    "The workflow and helpers do not establish redistribution, scanner, runtime, pair/replay or public-release approval.",
+    "Raw logs are byte-identical in the approved local://firmdura-kirkstone/logs/ store, not in Git. Fixture repository locators resolve at the commit containing this sanitized record; final commit and PR are in the Linear handoff."
+  ],
+  "command_path_aliases": {
+    "<checkout>": "Isolated STI-111 checkout; expand this alias to its local path before replay.",
+    "<store>": "Owner-approved local://firmdura-kirkstone/ artifact storage root; expand before replay."
+  },
+  "timing": {
+    "build_elapsed_seconds": 0,
+    "oidc_execution_seconds": 0,
+    "feedback_log_transfer_elapsed_seconds": 0.004713
+  }
+}
