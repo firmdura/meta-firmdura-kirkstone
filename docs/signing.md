@@ -1,10 +1,14 @@
 # Keyless signing of frozen release assets
 
-This is a **preparation candidate**, not a signed or approved release.
-The [run record](../evidence/20261118-sti111-keyless-signing/run.json) distinguishes
-local checks from the still-blocked trusted GitHub OIDC fixture run. No fixture
-signature is release evidence. Exact-release human approval, signing,
-publication and public-download verification remain required.
+The signing workflow, strict manifest v1 verifier, human-gated
+`release-signing` environment, and trusted `kind=fixture` GitHub Actions OIDC
+smoke run are verified in
+[`evidence/20261118-sti111-oidc-fixture/run.json`](../evidence/20261118-sti111-oidc-fixture/run.json)
+(supplementing the initial local preparation record in
+[`evidence/20261118-sti111-keyless-signing/run.json`](../evidence/20261118-sti111-keyless-signing/run.json)).
+Fixture signatures are **not** production release evidence: exact-release human
+approval, `kind=release` signing over the final frozen candidate assets,
+publication, and public-download verification remain separately required.
 
 ## Frozen manifest v1
 
@@ -93,14 +97,10 @@ Untrusted PR code is never checked out or executed. Candidate downloads are
 data, not scripts. The policy is rechecked after approval. Protection/API errors
 fail the workflow, rather than silently skipping signing successfully.
 
-**Current setup blocker:** the repository had **zero environments** on
-2026-11-18. Configure the protection, disable administrator approval bypass,
-and verify the settings before dispatching a workflow.
-The read API does not expose the bypass checkbox; its human readback is still
-required. Choose the self-review setting appropriate to the available
-accounts, while retaining explicit human reviewers and main-only deployment.
-This preparation candidate does not configure environments, change permissions,
-dispatch workflows or publish tags.
+**Verified environment protection:** `release-signing` is configured with
+explicit human user review, `can_admins_bypass: false`, and a single custom
+deployment branch policy permitting only `main`. `scripts/release/approval.py`
+verifies this policy both before and after human deployment approval.
 
 Signing code must be reviewed and integrated into trusted main **before** a
 fixture dispatch. Do not run signing code from an unreviewed topic branch.
@@ -178,7 +178,7 @@ Copy unchanged bytes and logs to the approved durable artifact store before
 expiry, obtain exact-release human approval, publish all assets,
 and run the complete public-download verifier. This workflow never publishes.
 
-## Focused validation and the next trusted run
+## Focused validation and verified trusted OIDC fixture run
 
 Only the small sanitized `run.json` is committed under each evidence run
 directory. Raw command logs are retained in the approved
@@ -196,21 +196,29 @@ complete/paginated remote asset sets and human-policy failures. Cosign
 orchestration tests use explicit mocks: they check exact arguments and failure
 propagation, **not cryptographic authenticity or GitHub OIDC**.
 
-After protection and integration, dispatch `release.yml` on main with
-`kind=fixture`, blank `artifact_id`, `release_id=sti111-keyless-fixture`, source
-`44210974feddea19687ea2d7466f99f45d43588b` and the reviewed fixture manifest hash
-from the run record. The human must approve that run. Its real
-`tests/release_oidc.py` harness requires an actual bundle and pinned Cosign;
-missing prerequisites fail, never skip. It checks:
+On 2026-11-18, `release.yml` was dispatched on trusted `main`
+(`b028134144e00abb123d7b2d8d0235f018e3d90b`) in
+[Actions run `44306456937`](https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44306456937)
+with `kind=fixture`, blank `artifact_id`, `release_id=sti111-keyless-fixture`,
+`source_commit=44210974feddea19687ea2d7466f99f45d43588b`, and
+`manifest_sha256=fddfeeedd471693861cf6649f22030c3b41a1923eda49b20e1e83afdf184bb60`.
+After `approval-policy` passed and human deployment approval was granted on
+`release-signing`, `sign` minted a Fulcio certificate via GitHub Actions OIDC,
+emitted Sigstore bundle `manifest.sigstore.json`
+(`4f85529b613a09ad223ede82644ace7b814d11c8c329d4afb285bd29c7325de6`, certificate
+DER `b71f7a5206b351bf31d48b626baf9b7e1b49ad96d311a30c5a5a0043a480e9c2`, SAN
+`URI:https://github.com/firmdura/meta-firmdura-kirkstone/.github/workflows/release.yml@refs/heads/main`,
+issuer `https://token.actions.githubusercontent.com`), and passed all
+`tests/release_oidc.py` positive and negative controls both in-workflow and
+upon local archive download and re-verification:
 
 - Real valid fixture signature, actual certificate SAN and certificate/bundle hashes.
-- Wrong exact identity and wrong issuer rejected by real Cosign.
+- Wrong exact identity and wrong issuer rejected by real Cosign `v3.1.4`.
 - Changed manifest bytes rejected by Cosign even with the new digest supplied.
 - Changed/missing payload, unsigned extra and renamed/mismatched asset sets rejected.
 - Original frozen fixture still verifies after the negative controls.
 
-Retain the run URL, dispatch/approval identities, workflow commit, raw logs,
-bundle, certificate identity and hashes in a new labelled evidence record.
-This blocked run must pass before signing preparation can be accepted as
-complete. No successful trusted fixture run or real release verification is
-claimed here.
+Full run metadata, approval records, durable bundle locators, and local
+re-verification logs are indexed in
+[`evidence/20261118-sti111-oidc-fixture/run.json`](../evidence/20261118-sti111-oidc-fixture/run.json).
+This fixture signature is **not** production release evidence.
