@@ -1,0 +1,638 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti114-contribution",
+  "issue": "STI-114",
+  "status": "verified",
+  "scope": "Refresh garmin/meta-lts-collab kirkstone coverage, validate the scoped libwebsockets 4.2.2 CVE-2026-19773 backport against meta-lts-collab lint and target-selection tooling, submit signed fork pull request garmin/meta-lts-collab#283, and commit public contribution documentation and sanitized run evidence without altering frozen paired build artifacts.",
+  "started_at": "2026-11-18T13:09:48.164000+00:00",
+  "finished_at": "2026-11-18T14:13:01.513197+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "branch": "sti-114-community-contribution",
+    "base_main_commit": "b3f34157700a5547f5829ed9124779bcf1f4587e",
+    "base_main_tree": "6e73bbfa2846e2b9691f2a2c56792f02bcbf356b",
+    "paired_validation_record": "evidence/20261118-sti110-paired-validation/run.json",
+    "paired_validation_record_sha256": "325e062597f16cdd6f702fc0ea38344e53c3678b79f4030f534f514b294effff",
+    "paired_build_commit": "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+    "frozen_test_commit": "6e3e70b94281c8f75f52f90e77152deba7372c83",
+    "external_repositories": {
+      "poky": {
+        "url": "https://git.yoctoproject.org/poky",
+        "commit": "93431249a6260da7bd29ee3ca32145d89e5b8259"
+      },
+      "meta-openembedded": {
+        "url": "https://github.com/openembedded/meta-openembedded",
+        "commit": "ce8539c941f6fcbecaca4d16640ac105c0595589"
+      },
+      "meta-lts-collab": {
+        "url": "https://github.com/garmin/meta-lts-collab",
+        "commit": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0"
+      },
+      "libwebsockets": {
+        "url": "https://github.com/warmcat/libwebsockets",
+        "commit": "8d605f0649ed1ab6d27a443c7688598ea21fdb75"
+      }
+    },
+    "upstream_advisory_and_commits": {
+      "cve": "CVE-2026-19773",
+      "advisory": "https://www.zerodayinitiative.com/advisories/ZDI-26-590/",
+      "commits": [
+        "https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b",
+        "https://github.com/warmcat/libwebsockets/commit/0c6cef0922c531f2662e87e74e17c191fa18162b"
+      ]
+    },
+    "effective_configuration_hashes": {
+      "conf/layer.conf": "0db7333de22c5c7a4c55eb3622f93255513d527a8a145ed801f9fa03056f77a3",
+      "kas/baseline.yml": "0da53535fc26b1d77f60ce4702da8d885e7c03ee880620cda7f0ec27d3956652",
+      "kas/builder-image.txt": "724b1461299f361e1b23354d230dc2e463082b12d3abbd104abcd1658bc5e901",
+      "kas/common.yml": "c963dc518cb5243858366dce7b34a0afb8201d8189bc47070f71f9b092ca4dfd",
+      "kas/patched.yml": "8f53d97ae594be6283d5b397a27013c357adcc6cb8d4a9f9d75ff0f3caf15844",
+      "recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend": "5291c38e09b0af0a7c778a3dde48d7fbb3e6e224597007b5d2959c6c55b7df40",
+      "recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch": "a13f788fab3a5bf06435e18ffe1e46e4570e49ac57fcd94befceef896e15b382",
+      "recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch": "3bc3975d8469aeea38f4a2851299479cade104abfe9029d3ace9e59ae0eafcfa"
+    },
+    "builder_image": "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+    "tools": {
+      "git": "git version 2.50.1 (Apple Git-155)",
+      "gh": "gh version 2.92.0 (2026-04-28)",
+      "host_python": "3.15.2",
+      "lint_venv_python": "3.12.15",
+      "oelint_adv": "9.11.3",
+      "oelint_data": "1.5.29",
+      "oelint_parser": "8.13.2",
+      "ruff": "0.17.5",
+      "yamllint": "1.38.0"
+    }
+  },
+  "command_path_aliases": {
+    "<checkout>": "Isolated STI-114 Git worktree on the approved control host",
+    "<store>": "Owner-approved local://firmdura-kirkstone/ durable storage root",
+    "<workspace>": "Disposable isolated workspace outside <checkout> used to clone garmin/meta-lts-collab and run requirements-dev.txt linters; removed after archiving format-patch"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nfrom datetime import datetime, timezone\nimport json, subprocess\n\ndef gh_json(args):\n    out = subprocess.check_output([\"gh\", *args], text=True)\n    return json.loads(out)\n\nbranch = gh_json([\"api\", \"repos/garmin/meta-lts-collab/branches/kirkstone\"])\ntip_sha = branch[\"commit\"][\"sha\"]\ntip_date = branch[\"commit\"][\"commit\"][\"committer\"][\"date\"]\ntip_msg = branch[\"commit\"][\"commit\"][\"message\"].splitlines()[0]\n\ncompare = gh_json([\n    \"api\",\n    \"repos/garmin/meta-lts-collab/compare/e127ed67e74ca6b7e0fdc6cbda572302886c00a0...kirkstone\",\n])\n\ntree = gh_json([\"api\", f\"repos/garmin/meta-lts-collab/git/trees/{tip_sha}?recursive=1\"])\nlws_paths = [\n    item[\"path\"]\n    for item in tree.get(\"tree\", [])\n    if \"libwebsockets\" in item[\"path\"].lower()\n    or \"19773\" in item[\"path\"].lower()\n    or \"zdi-26-590\" in item[\"path\"].lower()\n]\n\nqueries = [\"libwebsockets\", \"CVE-2026-19773\", \"ZDI-26-590\", \"824151862\", \"0c6cef092\", \"zdi-can-31036\"]\npr_matches = {}\nissue_matches = {}\nfor q in queries:\n    prs = gh_json([\n        \"pr\", \"list\", \"--repo\", \"garmin/meta-lts-collab\", \"--state\", \"all\",\n        \"--limit\", \"100\", \"--search\", q,\n        \"--json\", \"number,title,state,baseRefName,headRefName,url,createdAt,closedAt,mergedAt\",\n    ])\n    issues = gh_json([\n        \"issue\", \"list\", \"--repo\", \"garmin/meta-lts-collab\", \"--state\", \"all\",\n        \"--limit\", \"100\", \"--search\", q,\n        \"--json\", \"number,title,state,url,createdAt,closedAt\",\n    ])\n    pr_matches[q] = prs\n    issue_matches[q] = issues\n\nreport = {\n    \"checked_at\": datetime.now(timezone.utc).isoformat(),\n    \"repository\": \"garmin/meta-lts-collab\",\n    \"branch\": \"kirkstone\",\n    \"locked_pin\": \"e127ed67e74ca6b7e0fdc6cbda572302886c00a0\",\n    \"current_kirkstone_tip\": {\n        \"sha\": tip_sha,\n        \"committed_at\": tip_date,\n        \"subject\": tip_msg,\n    },\n    \"compare_from_locked_pin\": {\n        \"status\": compare[\"status\"],\n        \"ahead_by\": compare[\"ahead_by\"],\n        \"behind_by\": compare[\"behind_by\"],\n        \"total_commits\": compare[\"total_commits\"],\n        \"commits\": [\n            {\n                \"sha\": c[\"sha\"],\n                \"subject\": c[\"commit\"][\"message\"].splitlines()[0],\n            }\n            for c in compare.get(\"commits\", [])\n        ],\n    },\n    \"kirkstone_tree_entry_count\": len(tree.get(\"tree\", [])),\n    \"kirkstone_tree_truncated\": tree.get(\"truncated\"),\n    \"libwebsockets_or_cve_tree_matches\": lws_paths,\n    \"pr_search_matches\": pr_matches,\n    \"issue_search_matches\": issue_matches,\n}\nprint(json.dumps(report, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 10.715345,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:17:39.932197+00:00",
+      "label": "sti-114-community-coverage-check",
+      "log": "local://firmdura-kirkstone/logs/sti-114-community-coverage-check.log",
+      "log_sha256": "a7c7e84f0ba4b69e13860a3bb566937b463774dfae3aef49506cecc168b1238f",
+      "log_size": 961,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:17:29.216852+00:00"
+    },
+    {
+      "argv": [
+        "git",
+        "clone",
+        "--branch",
+        "kirkstone",
+        "https://github.com/garmin/meta-lts-collab.git",
+        "<workspace>/meta-lts-collab"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.988141,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:18:49.018452+00:00",
+      "label": "sti-114-clone-meta-lts-collab",
+      "log": "local://firmdura-kirkstone/logs/sti-114-clone-meta-lts-collab.log",
+      "log_sha256": "56fb6acc0418328565f1a7a57526a51ae9a4d764d2dc0830e14bd870c74f6518",
+      "log_size": 132,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:18:48.030311+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport base64, json, subprocess\n\ndef gh_json(args):\n    return json.loads(subprocess.check_output([\"gh\", *args], text=True))\n\nbranch = gh_json([\"api\", \"repos/openembedded/meta-openembedded/branches/kirkstone\"])\ndir_items = gh_json([\"api\", \"repos/openembedded/meta-openembedded/contents/meta-oe/recipes-connectivity/libwebsockets?ref=kirkstone\"])\nbb_item = gh_json([\"api\", \"repos/openembedded/meta-openembedded/contents/meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bb?ref=kirkstone\"])\nbb_text = base64.b64decode(bb_item[\"content\"]).decode(\"utf-8\")\n\nprint(json.dumps({\n    \"meta_oe_kirkstone_tip\": branch[\"commit\"][\"sha\"],\n    \"meta_oe_kirkstone_date\": branch[\"commit\"][\"commit\"][\"committer\"][\"date\"],\n    \"dir_entries\": [x[\"name\"] for x in dir_items],\n    \"bb_sha\": bb_item[\"sha\"],\n}, indent=2))\nprint(\"--- libwebsockets_4.2.2.bb ---\")\nprint(bb_text)\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.830231,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:37:14.373239+00:00",
+      "label": "sti-114-check-upstream-meta-oe-kirkstone",
+      "log": "local://firmdura-kirkstone/logs/sti-114-check-upstream-meta-oe-kirkstone.log",
+      "log_sha256": "7fa6c19a4691393804048677f9a036b7cf379a4d01ff6d31fe938e2b8c83e74f",
+      "log_size": 3424,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:37:12.543008+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport json, subprocess\n\nfor sha in [\n    \"824151862f37bc72f46d9a3e01d5b9408d313a0b\",\n    \"0c6cef0922c531f2662e87e74e17c191fa18162b\",\n]:\n    c = json.loads(subprocess.check_output([\"gh\", \"api\", f\"repos/warmcat/libwebsockets/commits/{sha}\"], text=True))\n    print(json.dumps({\n        \"sha\": c[\"sha\"],\n        \"html_url\": c[\"html_url\"],\n        \"author\": c[\"commit\"][\"author\"],\n        \"committer\": c[\"commit\"][\"committer\"],\n        \"message\": c[\"commit\"][\"message\"],\n        \"files\": [\n            {\n                \"filename\": f[\"filename\"],\n                \"additions\": f[\"additions\"],\n                \"deletions\": f[\"deletions\"],\n                \"patch\": f.get(\"patch\"),\n            }\n            for f in c.get(\"files\", [])\n        ],\n    }, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 1.397308,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:38:23.343501+00:00",
+      "label": "sti-114-verify-upstream-lws-commits",
+      "log": "local://firmdura-kirkstone/logs/sti-114-verify-upstream-lws-commits.log",
+      "log_sha256": "8d1829617bada996fc6bfab8095e37f59c00c880c17535aacfa9ddee5f8232fd",
+      "log_size": 1950,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:38:21.946193+00:00"
+    },
+    {
+      "argv": [
+        "/bin/sh",
+        "-c",
+        "/opt/homebrew/bin/python3.12 -m venv <workspace>/.venv && <workspace>/.venv/bin/python -m pip install --quiet -r requirements-dev.txt && <workspace>/.venv/bin/python -m pip list"
+      ],
+      "cwd": "<workspace>/meta-lts-collab",
+      "elapsed_seconds": 5.653383,
+      "environment": {
+        "TMPDIR": "<workspace>/pip-tmp"
+      },
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:39:28.598266+00:00",
+      "label": "sti-114-setup-lint-venv",
+      "log": "local://firmdura-kirkstone/logs/sti-114-setup-lint-venv.log",
+      "log_sha256": "ade64cab5c1edeae3d8f18c040542679ebfb25182784547e3ed00591025871b3",
+      "log_size": 586,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:39:22.944883+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nfrom pathlib import Path\nimport subprocess, sys\n\nvenv = Path(\"<workspace>/.venv/bin\")\nbb_files = sorted(\n    str(p)\n    for p in Path(\".\").rglob(\"*\")\n    if p.is_file() and \".git\" not in p.parts and p.suffix in (\".bb\", \".bbappend\", \".conf\")\n)\n\nchecks = [\n    (\"ruff-check-scripts\", [str(venv / \"ruff\"), \"check\", \"meta-lts-collab-test/scripts\"]),\n    (\"ruff-format-check-scripts\", [str(venv / \"ruff\"), \"format\", \"--check\", \"meta-lts-collab-test/scripts/\"]),\n    (\"yamllint-github\", [str(venv / \"yamllint\"), \".github/\"]),\n    (\"yamllint-all\", [str(venv / \"yamllint\"), \".\"]),\n    (\"oelint-adv-all\", [str(venv / \"oelint-adv\"), *bb_files]),\n    (\"oelint-adv-libwebsockets-verbose\", [str(venv / \"oelint-adv\"), \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend\"]),\n    (\"get-bitbake-targets-image\", [\n        str(venv / \"python\"),\n        \"./meta-lts-collab-test/scripts/get-bitbake-targets.py\",\n        \"--image\",\n        \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend\",\n        \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch\",\n        \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch\",\n    ]),\n    (\"get-bitbake-targets-native\", [\n        str(venv / \"python\"),\n        \"./meta-lts-collab-test/scripts/get-bitbake-targets.py\",\n        \"--native\",\n        \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend\",\n        \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch\",\n        \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch\",\n    ]),\n]\n\noverall_rc = 0\nfor name, cmd in checks:\n    r = subprocess.run(cmd, capture_output=True, text=True)\n    print(f\"=== {name} (exit={r.returncode}) ===\")\n    if r.stdout:\n        print(r.stdout.rstrip())\n    if r.stderr:\n        print(r.stderr.rstrip())\n    if r.returncode != 0:\n        overall_rc = r.returncode\nsys.exit(overall_rc)\n"
+      ],
+      "cwd": "<workspace>/meta-lts-collab",
+      "elapsed_seconds": 1.591469,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:44:45.700178+00:00",
+      "label": "sti-114-meta-lts-collab-lint",
+      "log": "local://firmdura-kirkstone/logs/sti-114-meta-lts-collab-lint.log",
+      "log_sha256": "b7f18f34ebc3300df9d3697c5651bef54c5d6dccde2c5c10179327e6cf9328fc",
+      "log_size": 2118,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:44:44.108709+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, shutil, subprocess, tarfile\nfrom pathlib import Path\n\ncheckout = Path(\"<checkout>\")\ncontrib = Path(\"<workspace>/meta-lts-collab\")\nstore = Path(\"<store>\")\nlws_tmp = Path(\"<workspace>/lws-4.2.2-check\")\n\nif lws_tmp.exists():\n    shutil.rmtree(lws_tmp)\n\npatch_pairs = [\n    (\n        checkout / \"recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch\",\n        contrib / \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch\",\n    ),\n    (\n        checkout / \"recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch\",\n        contrib / \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch\",\n    ),\n]\n\ndiff_comparisons = []\nfor sample_p, contrib_p in patch_pairs:\n    s_txt = sample_p.read_text(encoding=\"utf-8\")\n    c_txt = contrib_p.read_text(encoding=\"utf-8\")\n    s_diff = s_txt.split(\"\\n---\\n\", 1)[1]\n    c_diff = c_txt.split(\"\\n---\\n\", 1)[1]\n    assert s_diff == c_diff, f\"Diff body diverged for {sample_p.name}\"\n    diff_comparisons.append({\n        \"patch\": sample_p.name,\n        \"sample_sha256\": hashlib.sha256(s_txt.encode()).hexdigest(),\n        \"contributed_sha256\": hashlib.sha256(c_txt.encode()).hexdigest(),\n        \"diff_payload_identical\": True,\n        \"diff_payload_sha256\": hashlib.sha256(c_diff.encode()).hexdigest(),\n    })\n\nsubprocess.run([\"git\", \"init\", \"-q\", str(lws_tmp)], check=True)\nsubprocess.run([\"git\", \"-C\", str(lws_tmp), \"remote\", \"add\", \"origin\", \"https://github.com/warmcat/libwebsockets.git\"], check=True)\nsubprocess.run([\"git\", \"-C\", str(lws_tmp), \"fetch\", \"-q\", \"--depth\", \"1\", \"origin\", \"8d605f0649ed1ab6d27a443c7688598ea21fdb75\"], check=True)\nsubprocess.run([\"git\", \"-C\", str(lws_tmp), \"checkout\", \"-q\", \"FETCH_HEAD\"], check=True)\nsubprocess.run([\"git\", \"-C\", str(lws_tmp), \"config\", \"user.name\", \"Jabar Asadi\"], check=True)\nsubprocess.run([\"git\", \"-C\", str(lws_tmp), \"config\", \"user.email\", \"azhovan@outlook.com\"], check=True)\n\nfor _, contrib_p in patch_pairs:\n    subprocess.run([\"git\", \"-C\", str(lws_tmp), \"apply\", \"--check\", \"--whitespace=error\", str(contrib_p)], check=True)\n    subprocess.run([\"git\", \"-C\", str(lws_tmp), \"am\", \"--quiet\", str(contrib_p)], check=True)\n\nam_log = subprocess.check_output([\"git\", \"-C\", str(lws_tmp), \"log\", \"-n\", \"3\", \"--oneline\"], text=True).strip().splitlines()\nshutil.rmtree(lws_tmp)\n\ntask_logs_tar = store / \"artifacts/20261118-sti110-patched/libwebsockets-task-logs.tar\"\ndo_patch_excerpt = None\nwith tarfile.open(task_logs_tar, \"r:\") as archive:\n    for m in archive.getmembers():\n        if m.isfile() and m.name.endswith(\"/log.do_patch\") or (\"log.do_patch.\" in m.name and m.isfile()):\n            do_patch_excerpt = archive.extractfile(m).read().decode(\"utf-8\", errors=\"replace\")\n            break\n\nprint(json.dumps({\n    \"status\": \"verified\",\n    \"upstream_srcrev_tested\": \"8d605f0649ed1ab6d27a443c7688598ea21fdb75\",\n    \"diff_comparisons\": diff_comparisons,\n    \"git_am_commits_on_4_2_2\": am_log,\n    \"sti110_do_patch_fuzz_warnings\": (\"fuzz\" in (do_patch_excerpt or \"\").lower()),\n    \"sti110_do_patch_log\": (do_patch_excerpt or \"\").strip(),\n}, indent=2))\n"
+      ],
+      "cwd": "<workspace>",
+      "elapsed_seconds": 2.196501,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:44:46.291911+00:00",
+      "label": "sti-114-verify-patch-equivalence-and-apply",
+      "log": "local://firmdura-kirkstone/logs/sti-114-verify-patch-equivalence-and-apply.log",
+      "log_sha256": "c0c38751d01cee0e10d6a6e73acc90d8eb5d68785cd76e55a712b9ed5ed4633a",
+      "log_size": 9252,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:44:44.095410+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport subprocess\n\nsubprocess.run([\"git\", \"--no-pager\", \"diff\", \"--check\"], check=True)\nsubprocess.run([\n    \"git\", \"add\",\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend\",\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch\",\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch\",\n], check=True)\nsubprocess.run([\"git\", \"--no-pager\", \"diff\", \"--cached\", \"--check\"], check=True)\n\nmsg = \"\"\"libwebsockets: Fix CVE-2026-19773\n\nBackport the upstream HTTP/2 HPACK :path header bounds checks [1][2]\nto libwebsockets 4.2.2 in meta-oe:\n\n- 824151862f37bc72f46d9a3e01d5b9408d313a0b checks ah->pos >=\n  max_http_header_data before writing to ah->data in lws_frag_append().\n- 0c6cef0922c531f2662e87e74e17c191fa18162b checks ah->pos >=\n  max_http_header_data immediately after advancing ah->pos on '?' in\n  lws_parse_urldecode().\n\n[1] https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b\n[2] https://github.com/warmcat/libwebsockets/commit/0c6cef0922c531f2662e87e74e17c191fa18162b\"\"\"\n\nsubprocess.run([\"git\", \"commit\", \"-s\", \"-m\", msg], check=True)\nprint(subprocess.check_output([\"git\", \"--no-pager\", \"log\", \"-1\", \"--show-signature\", \"--stat\"], text=True))\n"
+      ],
+      "cwd": "<workspace>/meta-lts-collab",
+      "elapsed_seconds": 0.13845,
+      "environment": {},
+      "exit_code": 1,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:45:40.210662+00:00",
+      "label": "sti-114-commit-upstream-contribution",
+      "log": "local://firmdura-kirkstone/logs/sti-114-commit-upstream-contribution.log",
+      "log_sha256": "f25e70ffc87464a0ca3821cb3fcc4be945724a3a1b20d0f33819b51e79601204",
+      "log_size": 2479,
+      "outcome": "failed_attempt",
+      "started_at": "2026-11-18T13:45:40.072212+00:00",
+      "observation": "git diff --cached --check flagged unified-diff leading-space context prefixes (' \\t' and blank context lines) inside .patch files; scoped whitespace check to libwebsockets_4.2.2.bbappend while verifying .patch whitespace via git apply --check --whitespace=error."
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport subprocess\n\nsubprocess.run([\n    \"git\", \"--no-pager\", \"diff\", \"--cached\", \"--check\", \"--\",\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend\",\n], check=True)\n\nmsg = \"\"\"libwebsockets: Fix CVE-2026-19773\n\nBackport the upstream HTTP/2 HPACK :path header bounds checks [1][2]\nto libwebsockets 4.2.2 in meta-oe:\n\n- 824151862f37bc72f46d9a3e01d5b9408d313a0b checks ah->pos >=\n  max_http_header_data before writing to ah->data in lws_frag_append().\n- 0c6cef0922c531f2662e87e74e17c191fa18162b checks ah->pos >=\n  max_http_header_data immediately after advancing ah->pos on '?' in\n  lws_parse_urldecode().\n\n[1] https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b\n[2] https://github.com/warmcat/libwebsockets/commit/0c6cef0922c531f2662e87e74e17c191fa18162b\"\"\"\n\nsubprocess.run([\"git\", \"commit\", \"-s\", \"-m\", msg], check=True)\nprint(subprocess.check_output([\"git\", \"--no-pager\", \"log\", \"-1\", \"--show-signature\", \"--stat\"], text=True))\n"
+      ],
+      "cwd": "<workspace>/meta-lts-collab",
+      "elapsed_seconds": 0.102533,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:47:14.078843+00:00",
+      "label": "sti-114-commit-upstream-contribution-signed",
+      "log": "local://firmdura-kirkstone/logs/sti-114-commit-upstream-contribution-signed.log",
+      "log_sha256": "3c2e16ebd224d3553b74201609755f0cc0df87e586f6930fdb96a62ec95bcacc",
+      "log_size": 1620,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:47:13.976310+00:00"
+    },
+    {
+      "argv": [
+        "gh",
+        "repo",
+        "fork",
+        "garmin/meta-lts-collab",
+        "--org",
+        "firmdura",
+        "--clone=false"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 2.17374,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:47:16.159503+00:00",
+      "label": "sti-114-fork-meta-lts-collab",
+      "log": "local://firmdura-kirkstone/logs/sti-114-fork-meta-lts-collab.log",
+      "log_sha256": "057634d66582be64590643b95b11d490279ce088b86ce21f1ab7505fb00620da",
+      "log_size": 44,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:47:13.985763+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport subprocess\nsubprocess.run([\"git\", \"remote\", \"add\", \"fork\", \"https://github.com/firmdura/meta-lts-collab.git\"], check=True)\nsubprocess.run([\"git\", \"push\", \"-u\", \"fork\", \"kirkstone-libwebsockets-cve-2026-19773\"], check=True)\n"
+      ],
+      "cwd": "<workspace>/meta-lts-collab",
+      "elapsed_seconds": 2.721214,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:48:08.454587+00:00",
+      "label": "sti-114-push-upstream-fork-branch",
+      "log": "local://firmdura-kirkstone/logs/sti-114-push-upstream-fork-branch.log",
+      "log_sha256": "298f3b8cd49ac06b37257ff93805b330e5367c74ea5babcd8af96301c9d7bd72",
+      "log_size": 501,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:48:05.733373+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport subprocess\n\ntitle = \"libwebsockets: Fix CVE-2026-19773\"\nbody = \"\"\"Backport the upstream server-side HTTP/2 HPACK `:path` bounds checks for `CVE-2026-19773` ([ZDI-26-590](https://www.zerodayinitiative.com/advisories/ZDI-26-590/), discovered by Maher Azzouzi working with TrendAI Zero Day Initiative) to `meta-oe` `libwebsockets` `4.2.2`:\n\n1. [`824151862f37bc72f46d9a3e01d5b9408d313a0b`](https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b) (`Andy Green`): checks `(unsigned int)ah->pos >= wsi->a.context->max_http_header_data` before writing to `ah->data` in `lws_frag_append()` (`lib/roles/h2/hpack.c`).\n2. [`0c6cef0922c531f2662e87e74e17c191fa18162b`](https://github.com/warmcat/libwebsockets/commit/0c6cef0922c531f2662e87e74e17c191fa18162b) (`Feng Xue`): checks `(unsigned int)ah->pos >= wsi->a.context->max_http_header_data` immediately after `ah->frags[ah->nfrag].offset = ++ah->pos;` when `?` starts `WSI_TOKEN_HTTP_URI_ARGS` in `lws_parse_urldecode()` (`lib/roles/http/parsers.c`).\n\n### Validation and scope\n\n- **Local layer checks**: Validated against `requirements-dev.txt` (`oelint-adv 9.11.3`, `ruff 0.17.5`, `yamllint 1.38.0`), `meta-lts-collab-test/scripts/get-bitbake-targets.py`, and clean zero-fuzz patch application onto `libwebsockets` `4.2.2` (`SRCREV = 8d605f0649ed1ab6d27a443c7688598ea21fdb75`).\n- **Paired target validation (`qemuarm64`)**: Validated on Poky `4.0.35` (`93431249a6260da7bd29ee3ca32145d89e5b8259`), `meta-openembedded` `kirkstone` (`ce8539c941f6fcbecaca4d16640ac105c0595589`), and `garmin/meta-lts-collab` `kirkstone` (`e127ed67e74ca6b7e0fdc6cbda572302886c00a0`) with default `PACKAGECONFIG` (`libuv client server http2 ssl`) enabled. System-mode `qemuarm64` tests reproduced the `lws_frag_append()` heap out-of-bounds write across `max_http_header_data` boundary and delimiter (`?`, `;`) vectors on the unpatched build and verified clean bounds rejection, post-attack HTTP/2 `200` liveness, and `libwebsockets-testapps` regressions on the patched build (reference test harness and build evidence: [`firmdura/meta-firmdura-kirkstone`](https://github.com/firmdura/meta-firmdura-kirkstone)).\n- **CI architecture note**: Our local build and runtime validation ran on `qemuarm64`; `meta-lts-collab` PR CI covers `yocto-check-layer` and `qemux86-64` `core-image-minimal` builds/`do_testimage` across `sysvinit` and `systemd`.\"\"\"\n\nsubprocess.run([\n    \"gh\", \"pr\", \"create\",\n    \"--repo\", \"garmin/meta-lts-collab\",\n    \"--base\", \"kirkstone\",\n    \"--head\", \"firmdura:kirkstone-libwebsockets-cve-2026-19773\",\n    \"--title\", title,\n    \"--body\", body,\n], check=True)\n"
+      ],
+      "cwd": "<workspace>/meta-lts-collab",
+      "elapsed_seconds": 3.077742,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:49:48.144035+00:00",
+      "label": "sti-114-open-upstream-pr",
+      "log": "local://firmdura-kirkstone/logs/sti-114-open-upstream-pr.log",
+      "log_sha256": "384346998628983862c4dff390ca68dd479c4d4b1295f40a9b767acb83b5e6e5",
+      "log_size": 51,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:49:45.066293+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nfrom datetime import datetime, timezone\nimport hashlib, json, subprocess, time\nfrom pathlib import Path\n\ntime.sleep(8)\n\ncontrib = Path(\"<workspace>/meta-lts-collab\")\ncontributed_files = {}\nfor rel in [\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend\",\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch\",\n    \"meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch\",\n]:\n    raw = (contrib / rel).read_bytes()\n    contributed_files[rel] = {\n        \"size\": len(raw),\n        \"sha256\": hashlib.sha256(raw).hexdigest(),\n    }\n\ndef gh_json(args):\n    return json.loads(subprocess.check_output([\"gh\", *args], text=True))\n\npr = gh_json([\n    \"pr\", \"view\", \"283\", \"--repo\", \"garmin/meta-lts-collab\",\n    \"--json\", \"number,title,state,isDraft,url,baseRefName,baseRefOid,headRefName,headRefOid,headRepository,headRepositoryOwner,createdAt,mergeStateStatus,reviewDecision,statusCheckRollup,comments,reviews\",\n])\nfork_commit = gh_json([\"api\", \"repos/firmdura/meta-lts-collab/commits/e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c\"])\nactions_runs = gh_json([\"api\", \"repos/garmin/meta-lts-collab/actions/runs?head_sha=e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c\"])\ncheck_runs = gh_json([\"api\", \"repos/garmin/meta-lts-collab/commits/e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c/check-runs\"])\n\nsummary = {\n    \"checked_at\": datetime.now(timezone.utc).isoformat(),\n    \"pr\": pr,\n    \"fork_commit_verification\": fork_commit.get(\"commit\", {}).get(\"verification\"),\n    \"fork_commit_html_url\": fork_commit.get(\"html_url\"),\n    \"contributed_files\": contributed_files,\n    \"upstream_actions_runs\": [\n        {\n            \"id\": r.get(\"id\"),\n            \"name\": r.get(\"name\"),\n            \"event\": r.get(\"event\"),\n            \"status\": r.get(\"status\"),\n            \"conclusion\": r.get(\"conclusion\"),\n            \"html_url\": r.get(\"html_url\"),\n            \"created_at\": r.get(\"created_at\"),\n        }\n        for r in actions_runs.get(\"workflow_runs\", [])\n    ],\n    \"upstream_check_runs\": [\n        {\n            \"id\": c.get(\"id\"),\n            \"name\": c.get(\"name\"),\n            \"status\": c.get(\"status\"),\n            \"conclusion\": c.get(\"conclusion\"),\n            \"html_url\": c.get(\"html_url\"),\n        }\n        for c in check_runs.get(\"check_runs\", [])\n    ],\n}\nprint(json.dumps(summary, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 11.526002,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:50:28.716492+00:00",
+      "label": "sti-114-inspect-upstream-pr-and-ci",
+      "log": "local://firmdura-kirkstone/logs/sti-114-inspect-upstream-pr-and-ci.log",
+      "log_sha256": "d4f0d5a6b7d9be21911104cbc3a8ae29bbccf3802a670c49c4794c3aa1ac3cb7",
+      "log_size": 3339,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:50:17.190490+00:00"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "\nimport hashlib, json, shutil, subprocess\nfrom pathlib import Path\n\nstore = Path(\"<store>\")\nws = Path(\"<workspace>\")\ncontrib = ws / \"meta-lts-collab\"\nart_dir = store / \"artifacts/20261118-sti114-contribution\"\nart_dir.mkdir(parents=True, exist_ok=True)\n\npatch_out = art_dir / \"0001-libwebsockets-Fix-CVE-2026-19773.patch\"\nfmt = subprocess.check_output(\n    [\"git\", \"-C\", str(contrib), \"format-patch\", \"--stdout\", \"-1\", \"e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c\"]\n)\npatch_out.write_bytes(fmt)\n\nshutil.rmtree(ws)\n\nprint(json.dumps({\n    \"format_patch_locator\": \"local://firmdura-kirkstone/artifacts/20261118-sti114-contribution/0001-libwebsockets-Fix-CVE-2026-19773.patch\",\n    \"format_patch_size\": len(fmt),\n    \"format_patch_sha256\": hashlib.sha256(fmt).hexdigest(),\n    \"workspace_cleaned\": not ws.exists(),\n}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.223954,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T13:51:01.513239+00:00",
+      "label": "sti-114-archive-patch-and-cleanup-workspace",
+      "log": "local://firmdura-kirkstone/logs/sti-114-archive-patch-and-cleanup-workspace.log",
+      "log_sha256": "7f98943b3929a000cce595a84ee26261decef28dd9b59f953c228c64b59da7fc",
+      "log_size": 293,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T13:51:01.289285+00:00"
+    },
+    {
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.025374,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T14:13:01.430239+00:00",
+      "label": "sti-114-verify-docs-and-evidence-contract",
+      "log": "local://firmdura-kirkstone/logs/sti-114-verify-docs-and-evidence-contract.log",
+      "log_sha256": "7bcf7587cf9c15de4edfadab0633a39363f5bf708211574d2f9e2dec93d033b6",
+      "log_size": 176,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T14:13:01.404865+00:00",
+      "description": "Verified the contribution documentation and recorded evidence. The full invocation is in the tagged run record."
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "<checkout>",
+        "--no-pager",
+        "diff",
+        "--check"
+      ],
+      "cwd": "<checkout>",
+      "elapsed_seconds": 0.020694,
+      "environment": {},
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "finished_at": "2026-11-18T14:13:01.484176+00:00",
+      "label": "sti-114-git-diff-check",
+      "log": "local://firmdura-kirkstone/logs/sti-114-git-diff-check.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "outcome": "command_succeeded",
+      "started_at": "2026-11-18T14:13:01.463482+00:00"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/contribution.md",
+      "role": "community-contribution-documentation",
+      "variant": "shared",
+      "size": 11378,
+      "sha256": "29710b1dab40f45c0f787f821c95b813c7dc3dec85bf82c666e181a0ca6a22f1",
+      "locator": "repository:docs/contribution.md"
+    },
+    {
+      "path": "0001-libwebsockets-Fix-CVE-2026-19773.patch",
+      "role": "contributed-git-format-patch",
+      "variant": "patched",
+      "size": 4769,
+      "sha256": "72cc72b252b7669114da73806889ad34d694685350d872ac472c81f780d99b23",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti114-contribution/0001-libwebsockets-Fix-CVE-2026-19773.patch"
+    },
+    {
+      "path": "meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend",
+      "role": "contributed-upstream-bbappend",
+      "variant": "patched",
+      "size": 144,
+      "sha256": "09915113401129ad4053d39389e899f33014e2c5e5c8cac1b01d016cc5d2a4d8",
+      "locator": "https://github.com/firmdura/meta-lts-collab/blob/e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c/meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend"
+    },
+    {
+      "path": "meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch",
+      "role": "contributed-upstream-patch-1",
+      "variant": "patched",
+      "size": 982,
+      "sha256": "941c7b1651aa3e953f37de71d3c76736545eaf2d34468794bd50e80ae8b1075c",
+      "locator": "https://github.com/firmdura/meta-lts-collab/blob/e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c/meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch"
+    },
+    {
+      "path": "meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch",
+      "role": "contributed-upstream-patch-2",
+      "variant": "patched",
+      "size": 1204,
+      "sha256": "bfc4939b4f29c44abd2615ad4468d780c256b1ad06a04e89a85a0387f42ca048",
+      "locator": "https://github.com/firmdura/meta-lts-collab/blob/e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c/meta-oe/recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch"
+    },
+    {
+      "path": "logs/sti-114-community-coverage-check.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 961,
+      "sha256": "a7c7e84f0ba4b69e13860a3bb566937b463774dfae3aef49506cecc168b1238f",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-community-coverage-check.log"
+    },
+    {
+      "path": "logs/sti-114-clone-meta-lts-collab.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 132,
+      "sha256": "56fb6acc0418328565f1a7a57526a51ae9a4d764d2dc0830e14bd870c74f6518",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-clone-meta-lts-collab.log"
+    },
+    {
+      "path": "logs/sti-114-check-upstream-meta-oe-kirkstone.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 3424,
+      "sha256": "7fa6c19a4691393804048677f9a036b7cf379a4d01ff6d31fe938e2b8c83e74f",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-check-upstream-meta-oe-kirkstone.log"
+    },
+    {
+      "path": "logs/sti-114-verify-upstream-lws-commits.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 1950,
+      "sha256": "8d1829617bada996fc6bfab8095e37f59c00c880c17535aacfa9ddee5f8232fd",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-verify-upstream-lws-commits.log"
+    },
+    {
+      "path": "logs/sti-114-setup-lint-venv.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 586,
+      "sha256": "ade64cab5c1edeae3d8f18c040542679ebfb25182784547e3ed00591025871b3",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-setup-lint-venv.log"
+    },
+    {
+      "path": "logs/sti-114-meta-lts-collab-lint.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 2118,
+      "sha256": "b7f18f34ebc3300df9d3697c5651bef54c5d6dccde2c5c10179327e6cf9328fc",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-meta-lts-collab-lint.log"
+    },
+    {
+      "path": "logs/sti-114-verify-patch-equivalence-and-apply.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 9252,
+      "sha256": "c0c38751d01cee0e10d6a6e73acc90d8eb5d68785cd76e55a712b9ed5ed4633a",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-verify-patch-equivalence-and-apply.log"
+    },
+    {
+      "path": "logs/sti-114-commit-upstream-contribution.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 2479,
+      "sha256": "f25e70ffc87464a0ca3821cb3fcc4be945724a3a1b20d0f33819b51e79601204",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-commit-upstream-contribution.log"
+    },
+    {
+      "path": "logs/sti-114-commit-upstream-contribution-signed.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 1620,
+      "sha256": "3c2e16ebd224d3553b74201609755f0cc0df87e586f6930fdb96a62ec95bcacc",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-commit-upstream-contribution-signed.log"
+    },
+    {
+      "path": "logs/sti-114-fork-meta-lts-collab.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 44,
+      "sha256": "057634d66582be64590643b95b11d490279ce088b86ce21f1ab7505fb00620da",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-fork-meta-lts-collab.log"
+    },
+    {
+      "path": "logs/sti-114-push-upstream-fork-branch.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 501,
+      "sha256": "298f3b8cd49ac06b37257ff93805b330e5367c74ea5babcd8af96301c9d7bd72",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-push-upstream-fork-branch.log"
+    },
+    {
+      "path": "logs/sti-114-open-upstream-pr.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 51,
+      "sha256": "384346998628983862c4dff390ca68dd479c4d4b1295f40a9b767acb83b5e6e5",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-open-upstream-pr.log"
+    },
+    {
+      "path": "logs/sti-114-inspect-upstream-pr-and-ci.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 3339,
+      "sha256": "d4f0d5a6b7d9be21911104cbc3a8ae29bbccf3802a670c49c4794c3aa1ac3cb7",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-inspect-upstream-pr-and-ci.log"
+    },
+    {
+      "path": "logs/sti-114-archive-patch-and-cleanup-workspace.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 293,
+      "sha256": "7f98943b3929a000cce595a84ee26261decef28dd9b59f953c228c64b59da7fc",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-archive-patch-and-cleanup-workspace.log"
+    },
+    {
+      "path": "logs/sti-114-verify-docs-and-evidence-contract.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 176,
+      "sha256": "7bcf7587cf9c15de4edfadab0633a39363f5bf708211574d2f9e2dec93d033b6",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-verify-docs-and-evidence-contract.log"
+    },
+    {
+      "path": "logs/sti-114-git-diff-check.log",
+      "role": "command-execution-log",
+      "variant": "shared",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "locator": "local://firmdura-kirkstone/logs/sti-114-git-diff-check.log"
+    }
+  ],
+  "results": {
+    "community_coverage_refresh": {
+      "status": "passed",
+      "checked_at": "2026-11-18T13:17:39.924463+00:00",
+      "meta_lts_collab_kirkstone_tip": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0",
+      "compare_with_locked_pin": "identical",
+      "kirkstone_tree_entries_checked": 241,
+      "libwebsockets_tree_matches": 0,
+      "open_and_closed_pr_matches": 0,
+      "open_and_closed_issue_matches": 0,
+      "meta_openembedded_kirkstone_tip": "ce8539c941f6fcbecaca4d16640ac105c0595589",
+      "disposition": "no_existing_repair_found_submit_pr"
+    },
+    "local_meta_lts_collab_checks": {
+      "status": "passed",
+      "ruff_check_scripts_exit": 0,
+      "ruff_format_check_scripts_exit": 0,
+      "yamllint_github_exit": 0,
+      "yamllint_repo_exit": 0,
+      "oelint_adv_all_exit": 0,
+      "oelint_adv_libwebsockets_exit": 0,
+      "get_bitbake_targets_image": "libwebsockets",
+      "get_bitbake_targets_native": ""
+    },
+    "patch_equivalence_and_apply": {
+      "status": "passed",
+      "upstream_srcrev_tested": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+      "diff_payloads_identical_to_frozen_sample": true,
+      "patch_1_diff_payload_sha256": "84b7b05d8f0b6c1f28402bb0699bef720ec90f3e24fae775e1cf41f1ff86605c",
+      "patch_2_diff_payload_sha256": "c9d1e94f228c4670b72da3f5a6555674ea12be8c9c5c3066339c4b8d78f47767",
+      "git_apply_whitespace_error_exit": 0,
+      "git_am_exit": 0,
+      "sti110_do_patch_fuzz_warnings": false
+    },
+    "upstream_contribution": {
+      "status": "passed",
+      "upstream_repository": "garmin/meta-lts-collab",
+      "base_branch": "kirkstone",
+      "base_commit": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0",
+      "fork_repository": "firmdura/meta-lts-collab",
+      "head_branch": "kirkstone-libwebsockets-cve-2026-19773",
+      "contributed_commit": "e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c",
+      "contributed_tree": "cc2b0de95174dd6b896edada48da48a8cce1a08d",
+      "commit_url": "https://github.com/firmdura/meta-lts-collab/commit/e0d216d2f4884c3ad2368ac6ffc4f4a72aeb0c0c",
+      "ssh_signature_verified_on_github": true,
+      "dco_signed_off": true,
+      "pull_request_number": 283,
+      "pull_request_url": "https://github.com/garmin/meta-lts-collab/pull/283",
+      "pull_request_state": "OPEN",
+      "review_decision": "REVIEW_REQUIRED",
+      "actionable_maintainer_feedback_count": 0
+    },
+    "upstream_ci": {
+      "status": "blocked",
+      "workflow_name": "PR Validation",
+      "workflow_run_id": 44317715424,
+      "workflow_run_url": "https://github.com/garmin/meta-lts-collab/actions/runs/44317715424",
+      "workflow_conclusion": "action_required",
+      "documented_ci_scope": "ruff/yamllint/oelint-adv lint, yocto-check-layer --without-software-layer-signature-check, and qemux86-64 core-image-minimal build + do_testimage matrixed over systemd=true and systemd=false on self-hosted yocto_build_host runners",
+      "reason": "First-time external fork PR awaits garmin/meta-lts-collab maintainer approval before GitHub Actions executes workflows."
+    },
+    "upstream_merge": {
+      "status": "not_run",
+      "required_for_sti114": false
+    },
+    "frozen_sample_handoff_preserved": {
+      "status": "verified",
+      "kas_meta_lts_collab_pin_unchanged": true,
+      "deploy_archives_unmodified": true,
+      "temporary_workspace_cleaned": true
+    }
+  },
+  "limitations": [
+    "Upstream PR garmin/meta-lts-collab#283 is OPEN and unmerged; PR Validation workflow run 44317715424 is in action_required awaiting maintainer workflow approval for a first-time external fork contributor.",
+    "garmin/meta-lts-collab PR CI builds core-image-minimal and runs do_testimage on qemux86-64 (systemd and sysvinit), and meta-openembedded's libwebsockets_4.2.2.bb does not define a ptest package; targeted CVE-2026-19773 HTTP/2 HPACK :path boundary reproduction and post-attack liveness proof come from this repository's paired qemuarm64 validation (STI-110), whereas local qemux86-64 systemd/sysvinit matrix builds were not executed here.",
+    "kas/common.yml remains pinned to garmin/meta-lts-collab e127ed67e74ca6b7e0fdc6cbda572302886c00a0. Advancing that pin after an upstream merge without retiring recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend would double-apply CVE-2026-19773 patches and invalidate the frozen baseline/patched image pair."
+  ],
+  "timing": {
+    "cumulative_command_process_seconds": 44.382081,
+    "build_elapsed_seconds": 0
+  }
+}
