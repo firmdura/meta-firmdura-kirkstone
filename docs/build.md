@@ -1,7 +1,8 @@
 # Pinned reference build and handoff contract
 
-This is the STI-107 bootstrap, not a successful image build or a CVE
-reproduction. The repair layer is currently empty. The `patched` configuration
+The STI-107 bootstrap and STI-108 baseline build/boot are verified, but the
+scanner preflight is blocked. This is not a CVE reproduction.
+The repair layer is currently empty. The `patched` configuration
 reserves the comparison interface; its name does **not** mean it contains a
 repair. Only STI-110 can establish that distinction with actual target evidence.
 
@@ -12,6 +13,13 @@ image. Expanded baseline configuration and relevant effective
 baseline/patched feature settings matched. The ownership correction to the
 container helper was separately verified with another new empty volume;
 it did not change the locked configuration, image recipe or layer files.
+
+The [baseline checkpoint](../evidence/20261117-sti108-baseline/run.json) records
+the actual clean build at `209222b2f7fbd6a30257b0e064d3f4df18e23692`:
+4,921 executed tasks, no reused downloads or sstate, 5,366.709314 seconds,
+and four retained warnings. Its QEMU checks identify the installed library
+and HTTP/2 support, not a vulnerability or repair. See
+[the test procedure and scanner blocker](testing.md).
 
 ## Locked inputs
 
@@ -166,6 +174,24 @@ copy/archive interfaces to the approved persistent host store; never depend
 on an ephemeral container layer. Preserve symlink targets when exporting deploy
 outputs and record the SHA-256 and size of each actual payload.
 
+On a case-insensitive control host, retain the Docker archive stream as the
+canonical handoff rather than extracting the whole deploy directory. The
+baseline contains distinct `LICENSE.txt` and `License.txt` files in bzip2
+licence directories; a direct directory copy silently loses two files.
+`docker cp <export-container>:/work/build-baseline/tmp/deploy -` emits a tar
+stream that preserves both names. Write binary stdout directly to a new tar
+file, keep stderr separate, and retain the command's exit status.
+
+The verified baseline `deploy.tar` preserves 16,851 files and 9,618 symlinks.
+Its full path/size/SHA-256 inventory is retained with the run logs. Validate
+every member and link against that Linux inventory, not only the tar hash.
+The image licence alias has an absolute target under
+`/work/build-baseline/tmp/deploy/`; its versioned target is included. Restore
+that original layout in a fresh Linux volume, or use the versioned members
+directly. Do not treat this unchanged raw archive as freely relocatable.
+The earlier macOS directory export is non-canonical and must not be used as
+the complete licence handoff.
+
 The initial durable locator is `local://firmdura-kirkstone/`, mapped on the
 owner's control host to
 `~/Library/Application Support/Firmdura/kirkstone-sample/`.
@@ -188,14 +214,23 @@ qemu-system-aarch64 -machine virt -cpu cortex-a57 -smp 2 -m 512 \
   -nographic -nic none -kernel "$KERNEL" \
   -drive "id=disk0,file=$RUN_ROOTFS,if=none,format=raw" \
   -device virtio-blk-pci,drive=disk0 \
+  -object rng-random,filename=/dev/urandom,id=rng0 \
+  -device virtio-rng-pci,rng=rng0 \
+  -device virtio-serial-pci -chardev null,id=virtcon \
+  -device virtconsole,chardev=virtcon \
   -append 'console=ttyAMA0 root=/dev/vda rw'
 ```
 
 Use a unique disposable path and hash the frozen original before and after.
 Do not use a bridged network, publish a vulnerable service, or treat successful
-boot alone as library validation. This command is a bootstrap interface;
-STI-108 must record its actual successful invocation and target observations
-before the boot path is claimed verified.
+boot alone as library validation. The RNG and second console devices come
+from the image's actual QEMU configuration; the RNG avoids the uninitialized
+entropy warning observed with the earlier minimal command.
+The [automated boot check](../tests/boot-reference.py) verifies target
+architecture/distro, exact library bytes, its runtime version and HTTP/2
+banner, the running server's library mapping, and unchanged originals.
+[Testing instructions](testing.md) include the recorded invocation and its
+deliberately failing wrong-library control.
 
 ## Ownership and evidence interface
 

@@ -2,7 +2,7 @@
 
 A public engineering sample showing the source maintenance layer, integration process, and repair evidence that an embedded Linux engineering team can evaluate.
 
-**Status: bootstrap metadata verified. Locked inputs resolve from clean checkouts and BitBake parses the reference image configuration. The actual baseline image build and boot are next. No CVE reproduction, validated repair, or sample release is available yet.**
+**Status: the clean baseline image build and QEMU boot/library checks succeeded. Scanner preflight is blocked: the pinned Grype/database combination does not report CVE-2026-19773. No CVE reproduction, validated repair, or sample release is available yet.**
 
 See [the reference build and handoff contract](docs/build.md) for locked inputs,
 isolated builder setup, baseline/patched configuration boundaries, commands,
@@ -10,6 +10,10 @@ evidence storage, and file ownership. The repair layer is still empty: a
 configuration named `patched` is not evidence that a repair has been applied.
 The [bootstrap run record](evidence/20261117-sti107-bootstrap/run.json) indexes
 the actual commands, configuration comparisons, retained logs and hashes.
+The [baseline checkpoint](evidence/20261117-sti108-baseline/run.json) records
+the real build, artifact hashes, target observations, and unsuccessful scanner
+preflight. See [testing and scanner limitations](docs/testing.md) before
+interpreting an empty scan as a security result.
 
 ## Planned first release
 
@@ -38,7 +42,7 @@ There will be two evaluation paths:
 1. **Quick evaluation:** verify the signed manifest and downloaded assets, boot the reference images, and run the tests.
 2. **Full reproduction:** build and test from the documented, pinned source inputs.
 
-The vulnerable baseline is for isolated testing only. Neither image is production firmware, and both may contain other unresolved vulnerabilities. There is no general package feed or device-update service.
+The baseline is for isolated testing only. Neither image is production firmware, and both may contain other unresolved vulnerabilities. There is no general package feed or device-update service.
 
 ## Signing and VEX
 
@@ -61,7 +65,11 @@ This sample does not require building a general orchestration platform.
 
 ## Scope and next milestone
 
-The next milestone is a clean, pinned reference image that builds and boots. After that come the security comparison, repair integration, release assembly, and internal clean-environment replay.
+The baseline now builds and boots, including the intended shared library and
+HTTP/2 configuration. The next gate is owner reassessment of the selected case
+and its scanner coverage, not repair work. STI-108 is not Done while that
+preflight remains blocked. Security comparison, repair integration, release
+assembly, and internal clean-environment replay remain unverified.
 
 Customer participation, external replay, physical-board qualification, and community PR acceptance are not prerequisites for publishing this sample.
 
