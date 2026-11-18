@@ -1,13 +1,14 @@
 # Pinned reference build and handoff contract
 
-The bootstrap and baseline build/boot/inventory handoff are verified.
+The bootstrap, baseline build/boot/inventory handoff, target `CVE-2026-19773`
+reproduction, and reviewed paired `baseline`/`patched` validation are
+recorded in
+[paired validation evidence](../evidence/20261118-sti110-paired-validation/run.json).
 The [baseline handoff review](../evidence/20261118-sti108-handoff/run.json)
-separates that result from the still-blocked scanner preflight. Runtime
-reproduction and repair may proceed independently; scanner/VEX acceptance
-remains a publication requirement. This is not a CVE reproduction.
-The repair layer is currently empty. The `patched` configuration
-reserves the comparison interface; its name does **not** mean it contains a
-repair. A repair must be established with actual target evidence.
+separates runtime verification from the external scanner feed gap documented in
+[the scanner guide](scanner.md). The tested image pair is frozen for
+read-only consumption by packaging and replay checks, while OpenVEX consumer
+acceptance and exact-release human approval remain publication requirements.
 
 The [bootstrap run record](../evidence/20261117-sti107-bootstrap/run.json)
 records a public-source clean checkout, 2,427 parsed recipes, and an image
@@ -251,10 +252,11 @@ deliberately failing wrong-library control.
 
 | Area | Purpose |
 |---|---|
-| `conf/` | Repair-layer configuration; the repair layer is currently empty |
+| `conf/`, `recipes-connectivity/` | Separately consumable `libwebsockets` 4.2.2 repair layer (`CVE-2026-19773`) |
 | `kas/` | Shared locks, configuration and narrow container invocation |
 | `meta-firmdura-tests/`, `tests/`, `docs/testing.md` | Image/test-only integration and C tests |
 | `.github/workflows/release.yml`, `scripts/release/`, `docs/signing.md` | Signing preparation and strict verification |
+| `scripts/vex/`, `docs/scanner.md` | Yocto SPDX 2.2 consolidation and offline scanner preflight |
 | `evidence/<run-id>/` | Small sanitized run records only |
 | `README.md` | Public capabilities and current limitations |
 

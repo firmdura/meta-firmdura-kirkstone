@@ -1,18 +1,19 @@
-# Baseline checks, target reproduction, and scanner preflight
+# Baseline checks, target reproduction, paired repair, and scanner preflight
 
-The clean image build, boot/library checks, retained inventory, and target
-`CVE-2026-19773` vulnerability reproduction are verified on the baseline
-`qemuarm64` image (`libwebsockets` 4.2.2-r0, shared library SHA-256
-`77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a`).
+The clean baseline build, boot/library checks, target `CVE-2026-19773`
+reproduction, and paired `baseline`/`patched` candidate validation are
+recorded in
+[`evidence/20261118-sti110-paired-validation/run.json`](../evidence/20261118-sti110-paired-validation/run.json).
 The [handoff review](../evidence/20261118-sti108-handoff/run.json) rechecked
-the build/boot identities and canonical archive contents, and the
+the initial build/boot identities, and the
 [target reproduction record](../evidence/20261118-sti109-reproduction/run.json)
-freezes the target security and normal-path HTTP/2 test contract. The historical
+froze the target security and normal-path HTTP/2 test contract. The historical
 [baseline run record](../evidence/20261117-sti108-baseline/run.json) remains
 unchanged: its `blocked` status describes the original combined build/scanner
-gate. Scanner interoperability is tracked separately in
-[the scanner guide](scanner.md). No repair, paired-image freeze, OpenVEX
-statement, or release is claimed here.
+gate. Scanner interoperability is tracked in [the scanner guide](scanner.md).
+Human engineering review confirmed patch completeness, test expectations, and
+evidence limits on 2026-11-18, freezing the `baseline` and `patched` image pair
+for bundle packaging. No OpenVEX statement or public release is claimed here.
 
 ## Boot and identify the actual library
 
@@ -287,3 +288,82 @@ Observed results in
 - Demanding `--expected-security-outcome repaired` or passing an all-zero
   `--library-sha256` each exited `1` as negative controls while leaving the
   frozen kernel and rootfs SHA-256 digests unchanged.
+
+## Paired `baseline` versus `patched` candidate validation
+
+### Scoped repair layer
+
+[`recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend`](../recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend)
+scopes the repair explicitly to `libwebsockets` `4.2.2`, sets
+`PR:append = ".firmdura1"` while keeping `PV = "4.2.2"` (so CPE identity stays
+intact without hiding `CVE-2026-19773` from scanners), and applies two upstream
+backports in order:
+
+1. [`CVE-2026-19773-1.patch`](../recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-1.patch)
+   ([`824151862f37bc72f46d9a3e01d5b9408d313a0b`](https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b)):
+   enforces `(unsigned int)ah->pos >= wsi->a.context->max_http_header_data` at
+   entry to `lws_frag_append()` (`lib/roles/h2/hpack.c`).
+2. [`CVE-2026-19773-2.patch`](../recipes-connectivity/libwebsockets/libwebsockets/CVE-2026-19773-2.patch)
+   ([`0c6cef0922c531f2662e87e74e17c191fa18162b`](https://github.com/warmcat/libwebsockets/commit/0c6cef0922c531f2662e87e74e17c191fa18162b)):
+   enforces `(unsigned int)ah->pos >= wsi->a.context->max_http_header_data`
+   immediately after `ah->frags[ah->nfrag].offset = ++ah->pos;` when `'?'`
+   starts `WSI_TOKEN_HTTP_URI_ARGS` in `lws_parse_urldecode()`
+   (`lib/roles/http/parsers.c`).
+
+`PACKAGECONFIG` (`libuv client server http2 ssl`), kernel binary, external layer
+commits, and the compiled target harness `/usr/bin/firmdura-h2-cve-2026-19773`
+(`774de9bf7a48e6f750886015c9ef8260c483cfd049187e19369eede1489f7795`) remain
+identical across both builds at source commit
+`a8a2adb0a299221d6f246f7c95e0912e4babd419`.
+
+### Recorded paired commands and comparison
+
+```sh
+FIRMDURA_WORK_VOLUME=firmdura-kirkstone-baseline sh kas/run baseline build
+FIRMDURA_WORK_VOLUME=firmdura-kirkstone-baseline sh kas/run patched build
+
+docker --context colima-firmdura-kirkstone run --rm --init \
+  --read-only --network none --user "$(id -u):$(id -g)" \
+  --cpus 2 --memory 1g --pids-limit 256 \
+  --cap-drop ALL --security-opt no-new-privileges \
+  --tmpfs /tmp:rw,nosuid,nodev,mode=1777,size=128m \
+  --mount type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly \
+  --mount "type=bind,source=$PWD,target=/repo,readonly" \
+  --entrypoint python3 "$(cat kas/builder-image.txt)" \
+  /repo/tests/run-cve-2026-19773.py \
+  --qemu /work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64 \
+  --kernel /work/build-patched/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin \
+  --rootfs /work/build-patched/tmp/deploy/images/qemuarm64/firmdura-reference-patched-qemuarm64-20261118120234.rootfs.ext4 \
+  --library-sha256 4aac446382e44af454bed760127683a16faf98a8abb1c257d7564da798a717c5 \
+  --library-version 4.2.1-v4.2.2 \
+  --harness-sha256 774de9bf7a48e6f750886015c9ef8260c483cfd049187e19369eede1489f7795 \
+  --expected-security-outcome repaired
+```
+
+| Property | `baseline` | `patched` |
+|---|---|---|
+| Package revision | `libwebsockets18` `4.2.2-r0` | `libwebsockets18` `4.2.2-r0.firmdura1` |
+| `/usr/lib/libwebsockets.so.18` SHA-256 | `77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a` | `4aac446382e44af454bed760127683a16faf98a8abb1c257d7564da798a717c5` |
+| `/usr/bin/firmdura-h2-cve-2026-19773` SHA-256 | `774de9bf7a48e6f750886015c9ef8260c483cfd049187e19369eede1489f7795` | `774de9bf7a48e6f750886015c9ef8260c483cfd049187e19369eede1489f7795` |
+| `.rootfs.ext4` SHA-256 (`41` packages) | `6f18018f84e0799faeb30a892f827500e209f7831305748eeb64f41813e197a2` | `92a3d9f9aaf40de580590bff13774d39b51aab8b3494b1e14bea1963e344598d` |
+| Consolidated SPDX 2.2 SHA-256 | `050eb32b37945ded03465de1f1f178cb433d7a37c408ee1a0fc83327292e3765` | `f050a6e085b2c61afa3507cd35e977252f3fcf9836f91148c099189e20009110` |
+| Runtime feature banner (`boot-reference.py`) | `NET CLI SRV H1 H2 WS` (`passed`) | `NET CLI SRV H1 H2 WS` (`passed`) |
+| Normal HTTP/2 controls (`--mode normal-only`) | `passed` (`exit 0`) | `passed` (`exit 0`) |
+| `CVE-2026-19773` suite (`--mode full`) | `vulnerable-oob-write-reproduced` (`7/7` OOB, `exit 1`) | `bounds-enforced-secure` (`7/7` blocked, post-attack H2 `200`, `exit 0`) |
+| `ptest-runner firmdura-lws-h2-tests` | `PASS` normal, `FAIL` bounds (`exit 1`) | `PASS` normal, `PASS` bounds (`TOTAL: 1 FAIL: 0`, `exit 0`) |
+| Upstream `libwebsockets-testapps` (`lejp` + HTTP file transfer) | `passed` (`leaf.jpg` `e72831a0...b44f`) | `passed` (`leaf.jpg` `e72831a0...b44f`) |
+
+Two compiled diagnostic incomplete-repair libraries were also checked against
+the frozen target harness binary:
+
+- Checking `ah->pos == max_http_header_data` instead of `>=` blocked Vector 1
+  (`+0`) while failing Vectors 2 and 3 (`0x5a` written at `+1`).
+- Applying only `CVE-2026-19773-2.patch` (`?` post-bump check) without
+  `CVE-2026-19773-1.patch` blocked Vectors 1 and 2 (`?`) while failing Vector 3
+  (`;Z` wrote `0x5a` at `+1`).
+
+All paired logs, canonical `deploy.tar` inventories, and consolidated SPDX
+identities are indexed in
+[`evidence/20261118-sti110-paired-validation/run.json`](../evidence/20261118-sti110-paired-validation/run.json).
+The reviewed `baseline` and `patched` image pair is frozen for read-only
+consumption by bundle packaging, community contribution, and candidate replay.
