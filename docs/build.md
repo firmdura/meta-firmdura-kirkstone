@@ -1,7 +1,10 @@
 # Pinned reference build and handoff contract
 
-The STI-107 bootstrap and STI-108 baseline build/boot are verified, but the
-scanner preflight is blocked. This is not a CVE reproduction.
+The bootstrap and baseline build/boot/inventory handoff are verified.
+The [baseline handoff review](../evidence/20261118-sti108-handoff/run.json)
+separates that result from the still-blocked scanner preflight. Runtime
+reproduction and repair may proceed independently; scanner/VEX acceptance
+remains a publication requirement. This is not a CVE reproduction.
 The repair layer is currently empty. The `patched` configuration
 reserves the comparison interface; its name does **not** mean it contains a
 repair. Only STI-110 can establish that distinction with actual target evidence.
@@ -20,6 +23,20 @@ the actual clean build at `209222b2f7fbd6a30257b0e064d3f4df18e23692`:
 and four retained warnings. Its QEMU checks identify the installed library
 and HTTP/2 support, not a vulnerability or repair. See
 [the test procedure and scanner blocker](testing.md).
+
+### Historical source identities
+
+An owner-approved commit-message cleanup changed commit IDs without changing
+their file trees. The handoff review verified these bindings:
+
+| Actually built/tested commit | Same-tree commit on current main |
+|---|---|
+| `209222b2f7fbd6a30257b0e064d3f4df18e23692` | `6799585d26caf7048acd555e4d0d2a74abe5b019` |
+| `b5f1902618e0c23f1be38fac8c690ae91b7aab72` | `d6b528ea5b106f1c26f8f0e26b6fec4ea7728839` |
+
+The original IDs remain reachable through retained topic branches. Historical
+run records still name the revisions actually used, not their later equivalents.
+Neither this metadata cleanup nor the handoff review rebuilt an image.
 
 ## Locked inputs
 

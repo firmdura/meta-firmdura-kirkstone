@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti108-handoff",
+  "issue": "STI-108",
+  "status": "verified",
+  "scope": "Revised baseline build/boot/identity/inventory handoff; not scanner acceptance or a new runtime run.",
+  "started_at": "2026-11-18T07:14:39.770783+00:00",
+  "finished_at": "2026-11-18T07:19:25.267867+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "review_source_commit": "5cf0edc3e73e87ea39ac3fd8590b764988bf36b4",
+    "source_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+    "configuration_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+    "test_commit": "b5f1902618e0c23f1be38fac8c690ae91b7aab72",
+    "source_file_sha256": {
+      "conf/layer.conf": "0db7333de22c5c7a4c55eb3622f93255513d527a8a145ed801f9fa03056f77a3",
+      "kas/baseline.yml": "0da53535fc26b1d77f60ce4702da8d885e7c03ee880620cda7f0ec27d3956652",
+      "kas/builder-image.txt": "724b1461299f361e1b23354d230dc2e463082b12d3abbd104abcd1658bc5e901",
+      "kas/common.yml": "c963dc518cb5243858366dce7b34a0afb8201d8189bc47070f71f9b092ca4dfd",
+      "kas/patched.yml": "8f53d97ae594be6283d5b397a27013c357adcc6cb8d4a9f9d75ff0f3caf15844",
+      "kas/run": "51c77a033e869db2c54982d83d3a4030ba6f6457bb3af81b39d5bf70dc93989d",
+      "meta-firmdura-tests/conf/layer.conf": "061e62a0736fc93214fd4f6dddd40fc4267a734f3f7441df858ebca13945e747",
+      "meta-firmdura-tests/recipes-core/images/firmdura-reference-image.bb": "924221cb4dc5222933149d1aec58bb46ef0c510f737b8cb5f897f3ce668955d9"
+    },
+    "test_file_sha256": {
+      "tests/boot-reference.py": "5a60fecd324b28db8bfaa6182c6f005a2f6b488f5d92066be863d6d4c43011bf"
+    },
+    "repositories": {
+      "sample": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+      "poky": "93431249a6260da7bd29ee3ca32145d89e5b8259",
+      "meta-openembedded": "ce8539c941f6fcbecaca4d16640ac105c0595589",
+      "meta-lts-collab": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0"
+    },
+    "builder_image": "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+    "historical_record": "evidence/20261117-sti108-baseline/run.json",
+    "historical_record_sha256": "e9dc9d736f1bc7e7b7e67877b8b32cfcafa15518bbe3ea3fc86921545e4fa585",
+    "source_mapping": [
+      {
+        "historical_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+        "current_main_equivalent": "6799585d26caf7048acd555e4d0d2a74abe5b019",
+        "tree": "2b00d9a4ff817c8a455c0e947d8ad2922b27796f"
+      },
+      {
+        "historical_commit": "b5f1902618e0c23f1be38fac8c690ae91b7aab72",
+        "current_main_equivalent": "d6b528ea5b106f1c26f8f0e26b6fec4ea7728839",
+        "tree": "d2f4976e221e58c1eb832d2172ee5f02a4c235cd"
+      }
+    ],
+    "mapping_note": "Same file trees, not a reassignment of which commits were actually built/tested.",
+    "work_volume": "firmdura-kirkstone-baseline"
+  },
+  "command_path_aliases": {
+    "<checkout>": "Successor checkout at the reviewed main source; historical build/test files remain unchanged.",
+    "<store>": "Owner-approved local://firmdura-kirkstone/ storage root. Expand aliases in argv before replay."
+  },
+  "commands": [
+    {
+      "label": "20261118-successor-current-handoff-check",
+      "argv": [
+        "python3",
+        "-c",
+        "import ast\nimport copy\nimport hashlib\nimport json\nimport re\nimport subprocess\nfrom datetime import datetime\nfrom pathlib import Path\nfrom urllib.parse import unquote, urlsplit\n\nREPO = Path(\"<checkout>\")\nSTORE = Path(\"<store>\")\nROOT = STORE / \"artifacts/20261117-sti108-baseline\"\nEVIDENCE = REPO / \"evidence/20261117-sti108-baseline/run.json\"\n\n\ndef sha256(path):\n    with path.open(\"rb\") as stream:\n        return hashlib.file_digest(stream, \"sha256\").hexdigest()\n\n\ndata = json.loads(EVIDENCE.read_text())\nassert data[\"status\"] == \"blocked\"\nassert data[\"schema_version\"] == 1\nassert EVIDENCE.stat().st_size < 200_000\nassert \"/Users/\" not in EVIDENCE.read_text()\nassert not re.search(r\"github_pat_[A-Za-z0-9_]+|gh[pousr]_[A-Za-z0-9]+|lin_api_[A-Za-z0-9]+|BEGIN .*PRIVATE KEY\", EVIDENCE.read_text())\nassert data[\"inputs\"][\"source_commit\"] == \"209222b2f7fbd6a30257b0e064d3f4df18e23692\"\nassert data[\"inputs\"][\"configuration_commit\"] == data[\"inputs\"][\"source_commit\"]\nassert data[\"inputs\"][\"test_commit\"] == \"b5f1902618e0c23f1be38fac8c690ae91b7aab72\"\nfor group, commit_key in ((\"source_file_sha256\", \"source_commit\"), (\"test_file_sha256\", \"test_commit\")):\n    for relative, expected in data[\"inputs\"][group].items():\n        source = subprocess.check_output([\"git\", \"-C\", str(REPO), \"show\", data[\"inputs\"][commit_key] + \":\" + relative])\n        assert hashlib.sha256(source).hexdigest() == expected == sha256(REPO / relative)\nast.parse((REPO / \"tests/boot-reference.py\").read_text())\ncommands = {item[\"label\"]: item for item in data[\"commands\"]}\nassert len(commands) == len(data[\"commands\"]) == 61\nfor item in commands.values():\n    path = STORE / \"logs\" / (item[\"label\"] + \".log\")\n    assert path.stat().st_size == item[\"log_size\"]\n    assert sha256(path) == item[\"log_sha256\"]\n    duration = (datetime.fromisoformat(item[\"finished_at\"]) - datetime.fromisoformat(item[\"started_at\"])).total_seconds()\n    assert abs(duration - item[\"elapsed_seconds\"]) < 0.000001\n    if item[\"outcome\"] in (\"command_succeeded\", \"expected_negative_control\"):\n        assert item[\"exit_code\"] == item[\"expected_exit_code\"]\n    else:\n        assert item[\"exit_code\"] != item[\"expected_exit_code\"]\n\nresults = data[\"results\"]\nassert results[\"image_build\"][\"executed_tasks\"] == 4921\nassert results[\"image_build\"][\"tasks_not_rerun\"] == 0\nassert len(results[\"image_build\"][\"warnings\"]) == 4\nassert len(results[\"installed_packages\"]) == 39\nassert results[\"boot_check\"][\"status\"] == \"passed\"\nassert results[\"boot_check\"][\"originals_unchanged\"]\nassert results[\"wrong_library_negative_control\"][\"negative_expected_exit\"] == 1\nassert results[\"wrong_library_negative_control\"][\"negative_actual_exit\"] == 1\nnegative = (STORE / \"logs/sti-108-boot-rejects-wrong-library.log\").read_text()\nassert \"RuntimeError: Guest library differs from the built package/rootfs\" in negative\nassert '\"originals_after\"' in negative\nassert results[\"existing_component_patch_order\"] == []\nassert results[\"component_source_worktree_clean\"]\nassert results[\"cve_reproduction\"] == \"not_run\" and results[\"repair\"] == \"not_applied\"\nassert results[\"ptest_suites\"] == \"not_run\" and results[\"release\"] == \"not_published\"\nassert data[\"timing\"][\"active_engineering_seconds\"] is None\nassert data[\"timing\"][\"elapsed_image_build_seconds\"] == 5366.709314\nassert data[\"timing\"][\"elapsed_committed_boot_check_seconds\"] == 15.462019\nassert results[\"resources\"][\"host_free_space_sample_count\"] == 357\nassert results[\"resources\"][\"host_minimum_sampled_free_bytes\"] >= 25 * 1024**3\nassert results[\"resources\"][\"resource_monitor_exit_code\"] == 1\nassert results[\"resources\"][\"peak_memory_bytes\"] is None\n\ninventory_path = STORE / \"logs/sti-108-deploy-source-hashes.log\"\ninventory = {item[\"path\"]: item for item in map(json.loads, inventory_path.read_text().splitlines())}\nverified_files = {}\nfor item in data[\"artifacts\"]:\n    assert item[\"size\"] > 0 and re.fullmatch(\"[0-9a-f]{64}\", item[\"sha256\"])\n    assert item[\"role\"]\n    if \"archive_member\" in item:\n        source = inventory[item[\"path\"]]\n        assert item[\"archive_member\"] == \"deploy/\" + item[\"path\"]\n        assert source[\"size\"] == item[\"size\"] and source[\"sha256\"] == item[\"sha256\"]\n    else:\n        prefix = \"local://firmdura-kirkstone/\"\n        assert item[\"locator\"].startswith(prefix)\n        path = STORE / item[\"locator\"][len(prefix):]\n        assert path.stat().st_size == item[\"size\"]\n        verified_files[item[\"path\"]] = sha256(path)\n        assert verified_files[item[\"path\"]] == item[\"sha256\"]\nassert verified_files[\"deploy.tar\"] == results[\"canonical_artifact_integrity\"][\"archive_sha256\"]\nassert verified_files[\"libwebsockets-task-logs.tar\"] == results[\"component_task_log_integrity\"][\"archive_sha256\"]\nassert sha256(inventory_path) == results[\"canonical_artifact_integrity\"][\"source_index_sha256\"]\nassert all(results[key][\"status\"] == \"verified\" for key in (\n    \"canonical_artifact_integrity\", \"component_task_log_integrity\", \"supplemental_artifact_integrity\",\n))\n\nscans = {}\nfor path in sorted((ROOT / \"scans\").glob(\"*-grype.json\")):\n    report = json.loads(path.read_text())\n    configuration = report[\"descriptor\"][\"configuration\"]\n    assert configuration[\"vex-documents\"] == []\n    assert configuration[\"add-cpes-if-none\"] is False\n    assert not configuration[\"distro\"]\n    assert configuration[\"db\"][\"auto-update\"] is False\n    assert configuration[\"db\"][\"validate-by-hash-on-start\"] is True\n    assert configuration[\"db\"][\"validate-age\"] is True\n    assert configuration[\"db\"][\"max-allowed-built-age\"] == 120 * 3600 * 1_000_000_000\n    assert len(configuration[\"ignore\"]) == 4\n    assert report[\"descriptor\"][\"version\"] == \"0.122.0\"\n    assert report[\"descriptor\"][\"db\"][\"status\"][\"valid\"]\n    matches = report[\"matches\"] + report.get(\"ignoredMatches\", [])\n    expected_ids = [\"CVE-2025-1866\"] if path.name in (\n        \"baseline-library-normalized-grype.json\", \"baseline-built-cpe-grype.json\",\n    ) else []\n    assert sorted(item[\"vulnerability\"][\"id\"] for item in matches) == expected_ids\n    scans[path.name] = report\nassert len(scans) == 5\nnative = copy.deepcopy(scans[\"baseline-library-native-all-grype.json\"][\"descriptor\"][\"configuration\"])\nnormalized = copy.deepcopy(scans[\"baseline-library-normalized-grype.json\"][\"descriptor\"][\"configuration\"])\ndel native[\"file\"], normalized[\"file\"]\nassert native == normalized\noriginal = json.loads((ROOT / \"deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json\").read_text())\nchanged = json.loads((ROOT / \"scans/libwebsockets-reference-type-normalized.spdx.json\").read_text())\nassert original[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"] == \"http://spdx.org/rdf/references/cpe23Type\"\nassert changed[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"] == \"cpe23Type\"\nchanged[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"] = original[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"]\nassert changed == original\nassert results[\"scanner_preflight\"][\"status\"] == \"blocked\"\nassert results[\"scanner_preflight\"][\"grype_nvd_affected_packages\"] == 0\nassert commands[\"sti-108-scanner-results-summary\"][\"exit_code\"] == 1\n\n\nmapping = []\nfor old, new in [(\"209222b2f7fbd6a30257b0e064d3f4df18e23692\", \"6799585d26caf7048acd555e4d0d2a74abe5b019\"), (\"b5f1902618e0c23f1be38fac8c690ae91b7aab72\", \"d6b528ea5b106f1c26f8f0e26b6fec4ea7728839\")]:\n    trees = subprocess.check_output([\"git\", \"rev-parse\", old + \"^{tree}\", new + \"^{tree}\"], text=True).splitlines()\n    assert trees[0] == trees[1]\n    mapping.append({\"historical_commit\": old, \"current_main_equivalent\": new, \"tree\": trees[0]})\nprint(json.dumps({\"status\":\"verified\", \"scope\":\"Existing baseline handoff consistency in the successor checkout; no new build or runtime run\", \"evidence_sha256\":sha256(EVIDENCE), \"commands\":len(commands), \"artifacts\":len(data[\"artifacts\"]), \"installed_packages\":len(results[\"installed_packages\"]), \"scanner_reports\":len(scans), \"scanner_preflight\":\"blocked\", \"required_cve_matches\":0, \"source_mapping\":mapping}, indent=2))\n"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T07:18:09.793738+00:00",
+      "finished_at": "2026-11-18T07:18:12.142220+00:00",
+      "elapsed_seconds": 2.348315916955471,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/20261118-successor-current-handoff-check.log",
+      "log_sha256": "562473a5f8e8569fff33e4b1f784fe3d1a75611ed53c781f2bade97f03fa9829",
+      "log_size": 837,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "20261118-successor-deploy-archive-check",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, posixpath, tarfile; from pathlib import Path\nstore = Path(\"<store>\")\npath = store / \"artifacts/20261117-sti108-baseline/deploy.tar\"\nsource = store / \"logs/sti-108-deploy-source-hashes.log\"\nsource_root = \"/work/build-baseline/tmp/deploy/\"\nentries = [json.loads(line) for line in source.read_text().splitlines()]\nexpected = {item[\"path\"]: item for item in entries}\nabsolute_aliases = []\nwith tarfile.open(path, \"r:\") as archive:\n    members = archive.getmembers()\n    names = {member.name.rstrip(\"/\") for member in members}\n    actual = {}\n    for member in members:\n        if member.isdir():\n            continue\n        if not member.name.startswith(\"deploy/\"):\n            raise RuntimeError(f\"Unexpected archive path: {member.name}\")\n        relative = member.name[len(\"deploy/\"):]\n        if relative in actual:\n            raise RuntimeError(f\"Duplicate archive path: {relative}\")\n        actual[relative] = member\n    if set(actual) != set(expected):\n        raise RuntimeError({\"missing\": sorted(set(expected) - set(actual)), \"extra\": sorted(set(actual) - set(expected))})\n    for relative, item in expected.items():\n        member = actual[relative]\n        if item[\"type\"] == \"symlink\":\n            if not member.issym() or member.linkname != item[\"target\"]:\n                raise RuntimeError(f\"Symlink mismatch: {relative}\")\n            if member.linkname.startswith(source_root):\n                target = \"deploy/\" + member.linkname[len(source_root):]\n                absolute_aliases.append({\"path\": relative, \"target\": member.linkname, \"archive_member\": target})\n            else:\n                target = posixpath.normpath(posixpath.join(posixpath.dirname(member.name), member.linkname))\n            if not target.startswith(\"deploy/\") or target not in names:\n                raise RuntimeError(f\"Unresolved archive symlink: {relative} -> {target}\")\n        else:\n            if not (member.isfile() or member.islnk()):\n                raise RuntimeError(f\"File type mismatch: {relative}\")\n            with archive.extractfile(member) as stream:\n                digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n                size = stream.tell()\n            if digest != item[\"sha256\"] or size != item[\"size\"]:\n                raise RuntimeError(f\"Content mismatch: {relative}\")\nwith path.open(\"rb\") as stream:\n    archive_digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\nresult = {\"status\": \"verified\", \"files\": sum(item[\"type\"] == \"file\" for item in entries), \"symlinks\": sum(item[\"type\"] == \"symlink\" for item in entries), \"logical_file_bytes\": sum(item.get(\"size\", 0) for item in entries), \"archive_size\": path.stat().st_size, \"archive_sha256\": archive_digest, \"source_index_sha256\": hashlib.sha256(source.read_bytes()).hexdigest(), \"locator\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar\", \"directory_export_is_canonical\": False, \"absolute_aliases\": absolute_aliases, \"restore_root\": source_root, \"relocatable_without_alias_handling\": False}\nwith (store / \"runs/20261118-successor-deploy-integrity.json\").open(\"x\") as stream:\n    json.dump(result, stream, indent=2)\n    stream.write(\"\\n\")\nprint(json.dumps(result, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T07:16:10.428542+00:00",
+      "finished_at": "2026-11-18T07:16:12.691507+00:00",
+      "elapsed_seconds": 2.2627497911453247,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/20261118-successor-deploy-archive-check.log",
+      "log_sha256": "ee78ae6bab2dae19c2449d2153e5303a2791b984ad986c531949a45d48ac1e35",
+      "log_size": 857,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "20261118-successor-component-logs-check",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, tarfile; from pathlib import Path\nstore = Path(\"<store>\")\nsource_path = store / \"logs/sti-108-component-logs-source-hashes.log\"\nsource = json.loads(source_path.read_text())\nexpected = {item[\"path\"]: item for item in source[\"members\"]}\narchive = store / \"artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar\"\nseen = set()\nwith tarfile.open(archive, \"r:\") as stream:\n    for member in stream:\n        if member.isdir():\n            continue\n        if not member.name.startswith(source[\"archive_prefix\"]):\n            raise RuntimeError(\"Unexpected archive prefix: \" + member.name)\n        name = member.name[len(source[\"archive_prefix\"]):]\n        if name in seen or name not in expected:\n            raise RuntimeError(\"Unexpected or duplicate member: \" + name)\n        seen.add(name)\n        item = expected[name]\n        if item[\"type\"] == \"file\":\n            if not member.isfile() or member.size != item[\"size\"]:\n                raise RuntimeError(\"Incorrect file type/size: \" + name)\n            with stream.extractfile(member) as data:\n                if hashlib.file_digest(data, \"sha256\").hexdigest() != item[\"sha256\"]:\n                    raise RuntimeError(\"Incorrect file bytes: \" + name)\n        elif item[\"type\"] == \"symlink\":\n            if not member.issym() or member.linkname != item[\"target\"]:\n                raise RuntimeError(\"Incorrect link target: \" + name)\n        else:\n            raise RuntimeError(\"Unexpected source member type: \" + name)\nif seen != set(expected):\n    raise RuntimeError(\"Incomplete component task-log handoff\")\nwith archive.open(\"rb\") as data:\n    sha = hashlib.file_digest(data, \"sha256\").hexdigest()\nresult = {\"status\": \"verified\", \"archive\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar\", \"archive_size\": archive.stat().st_size, \"archive_sha256\": sha, \"source_index_sha256\": hashlib.sha256(source_path.read_bytes()).hexdigest(), \"regular_files\": sum(item[\"type\"] == \"file\" for item in expected.values()), \"symlinks\": sum(item[\"type\"] == \"symlink\" for item in expected.values()), \"logical_file_bytes\": sum(item[\"size\"] for item in expected.values() if item[\"type\"] == \"file\")}\nwith (store / \"runs/20261118-successor-component-logs-integrity.json\").open(\"x\") as output:\n    json.dump(result, output, indent=2)\n    output.write(\"\\n\")\nprint(json.dumps(result, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T07:16:10.424778+00:00",
+      "finished_at": "2026-11-18T07:16:10.468855+00:00",
+      "elapsed_seconds": 0.04392208391800523,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/20261118-successor-component-logs-check.log",
+      "log_sha256": "6835adf6163abef137557a74d1c308d7724fd68ab3f44b046cb231eefe3b976b",
+      "log_size": 416,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "deploy.tar",
+      "size": 1977942016,
+      "sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "role": "canonical-complete-build-handoff",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar"
+    },
+    {
+      "path": "libwebsockets-task-logs.tar",
+      "size": 2025984,
+      "sha256": "9c4a51113d9625dc467ad9157c006f7d872c3ff27b95e31577908eba6936505c",
+      "role": "component-task-logs-and-run-scripts",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar"
+    },
+    {
+      "path": "logs/sti-108-deploy-source-hashes.log",
+      "role": "complete-deploy-member-index",
+      "variant": "baseline",
+      "size": 5062182,
+      "sha256": "97ad7f94118600db2390061cfd6f5cf889c993f47365e0f657e83924ab67098c",
+      "locator": "local://firmdura-kirkstone/logs/sti-108-deploy-source-hashes.log"
+    }
+  ],
+  "results": {
+    "baseline_gate": "verified",
+    "retained_evidence": {
+      "status": "verified",
+      "scope": "Existing baseline handoff consistency in the successor checkout; no new build or runtime run",
+      "evidence_sha256": "e9dc9d736f1bc7e7b7e67877b8b32cfcafa15518bbe3ea3fc86921545e4fa585",
+      "commands": 61,
+      "artifacts": 37,
+      "installed_packages": 39,
+      "scanner_reports": 5,
+      "scanner_preflight": "blocked",
+      "required_cve_matches": 0,
+      "source_mapping": [
+        {
+          "historical_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+          "current_main_equivalent": "6799585d26caf7048acd555e4d0d2a74abe5b019",
+          "tree": "2b00d9a4ff817c8a455c0e947d8ad2922b27796f"
+        },
+        {
+          "historical_commit": "b5f1902618e0c23f1be38fac8c690ae91b7aab72",
+          "current_main_equivalent": "d6b528ea5b106f1c26f8f0e26b6fec4ea7728839",
+          "tree": "d2f4976e221e58c1eb832d2172ee5f02a4c235cd"
+        }
+      ]
+    },
+    "canonical_artifact_integrity": {
+      "status": "verified",
+      "files": 16851,
+      "symlinks": 9618,
+      "logical_file_bytes": 1963428739,
+      "archive_size": 1977942016,
+      "archive_sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "source_index_sha256": "97ad7f94118600db2390061cfd6f5cf889c993f47365e0f657e83924ab67098c",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "directory_export_is_canonical": false,
+      "absolute_aliases": [
+        {
+          "path": "licenses/firmdura-reference-baseline-qemuarm64",
+          "target": "/work/build-baseline/tmp/deploy/licenses/firmdura-reference-baseline-qemuarm64-20261117213416",
+          "archive_member": "deploy/licenses/firmdura-reference-baseline-qemuarm64-20261117213416"
+        }
+      ],
+      "restore_root": "/work/build-baseline/tmp/deploy/",
+      "relocatable_without_alias_handling": false
+    },
+    "component_task_log_integrity": {
+      "status": "verified",
+      "archive": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar",
+      "archive_size": 2025984,
+      "archive_sha256": "9c4a51113d9625dc467ad9157c006f7d872c3ff27b95e31577908eba6936505c",
+      "source_index_sha256": "bcad4c9942941bce721857aa9d2cf07d493bccef130b86089806ffc78c8f8d5d",
+      "regular_files": 163,
+      "symlinks": 49,
+      "logical_file_bytes": 1870837
+    },
+    "historical_record_and_payloads_unchanged": true,
+    "build_and_boot": "Reused verified historical runs; no rebuild or new boot claimed.",
+    "scanner_preflight": "blocked; owned by STI-119, not the runtime dependency path",
+    "cve_reproduction": "not_run",
+    "repair": "not_applied",
+    "paired_image_freeze": "not_done",
+    "vex": "not_run",
+    "release": "not_published"
+  },
+  "timing": {
+    "active_assistant_session_seconds": 221.851229791,
+    "excluded_interval_seconds": 63.646329292,
+    "measured_through": "2026-11-18T07:19:25.267867+00:00",
+    "method": "Prospective manually bracketed assistant-session wall time, not human labor. Excluded intervals include command waiting and unbracketed coordination; coverage is partial. Integration after this snapshot is not included.",
+    "historical_active_engineering_seconds": null,
+    "new_image_build_seconds": 0,
+    "historical_image_build_seconds": 5366.709314,
+    "command_elapsed_seconds": "Recorded individually; parallel checks must not be summed as active time."
+  },
+  "limitations": [
+    "The original blocked run and failed scanner evidence remain unchanged.",
+    "The narrowed baseline gate does not establish vulnerability applicability, a repair or scanner/VEX acceptance.",
+    "Canonical tar archives retain case-sensitive names and original absolute alias bindings; do not extract on a case-insensitive filesystem or assume relocatability.",
+    "The approved artifact store is local single-host storage, not a public release or off-host backup.",
+    "Human engineering review, exact-release approval and downstream gates remain required."
+  ]
+}
