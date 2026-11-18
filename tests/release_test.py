@@ -334,12 +334,15 @@ class ApprovalTests(unittest.TestCase):
         }, {"total_count": 1, "branch_policies": [{"type": "branch", "name": "main"}]}
 
     def test_human_review_main_only_policy_is_accepted(self):
-        approval.check_policy(*self.policy())
+        for prevent_self_review in (True, False):
+            with self.subTest(prevent_self_review=prevent_self_review):
+                environment, branches = self.policy()
+                environment["protection_rules"][0]["prevent_self_review"] = prevent_self_review
+                approval.check_policy(environment, branches)
 
-    def test_missing_self_approved_bot_or_unrestricted_policies_fail(self):
+    def test_missing_bot_or_unrestricted_policies_fail(self):
         changes = (
             lambda env, branches: env.update(protection_rules=[]),
-            lambda env, branches: env["protection_rules"][0].update(prevent_self_review=False),
             lambda env, branches: env["protection_rules"][0].update(reviewers=[]),
             lambda env, branches: env["protection_rules"][0]["reviewers"][0]["reviewer"].update(type="Bot"),
             lambda env, branches: env.update(deployment_branch_policy=None),
