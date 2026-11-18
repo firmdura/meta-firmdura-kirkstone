@@ -107,12 +107,19 @@ fixture dispatch. Do not run signing code from an unreviewed topic branch.
 
 ## Sign and verify
 
-The reviewer approves all dispatch inputs together: `kind`, numeric artifact
-ID (blank for the in-tree fixture), the independently recorded exact manifest
-SHA-256, release ID, and source commit. For real releases, the artifact must be
-the immutable GitHub Actions ZIP whose root contains `manifest.json` and exactly
-its listed frozen payloads. It must not contain an old signature or a wrapper
-directory. Review the bytes and provenance before approval, not just a job name.
+The reviewer approves all dispatch inputs together: `kind`, optional numeric
+artifact ID (blank for the in-tree fixture or when `kind=release` downloads a
+staged unpublished `draft` GitHub Release for `release_id`), the independently
+recorded exact manifest SHA-256, release ID, and source commit. For real
+releases, the staged input must be either an immutable GitHub Actions ZIP or a
+single unpublished `draft` GitHub Release (`verify.py stage-download`) whose
+asset set contains `manifest.json` and exactly its listed frozen payloads, with
+no preexisting signature bundle or wrapper directory. Assemble the frozen
+candidate deterministically from `<store>` and the reviewed release commit with
+[`scripts/release/assemble_candidate.py`](../scripts/release/assemble_candidate.py),
+and verify the staged draft release after attaching `manifest.sigstore.json`
+with `verify.py draft-release` before flipping `draft` to `false`. Review the
+bytes and provenance before approval, not just a job name.
 
 The only signing command is:
 
