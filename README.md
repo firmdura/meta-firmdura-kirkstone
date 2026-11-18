@@ -5,10 +5,10 @@ security maintenance for **libwebsockets**. It provides a pinned ARM64 QEMU
 image configuration and checks for the library running inside it.
 
 **Experimental:** paired `baseline` and `patched` images build, boot, and
-demonstrate the target HTTP/2 fix in isolated QEMU checks, but human
-engineering review of the candidate pair, external scanner feed coverage, and a
-signed downloadable release are not yet complete. Use this repository only for
-isolated evaluation, not as production firmware.
+demonstrate the reviewed target HTTP/2 fix in isolated QEMU checks, while
+external scanner feed coverage and a signed downloadable release are not yet
+complete. Use this repository only for isolated evaluation, not as production
+firmware.
 
 ## What is included
 
@@ -57,8 +57,8 @@ The target case is [CVE-2026-19773](https://www.zerodayinitiative.com/advisories
 On `qemuarm64`, the `baseline` build reproduces the HTTP/2 HPACK `:path`
 out-of-bounds heap write in `lws_frag_append`, and the `patched` build rejects
 the oversized `:path` inputs cleanly while continuing to serve valid HTTP/2
-traffic. Human engineering review is still required before freezing the
-candidate image pair for bundle redistribution.
+traffic. The reviewed `baseline` and `patched` image pair is frozen for
+evaluation-bundle packaging.
 
 Full-image SPDX 2.2 consolidation lets pinned Grype catalog all installed
 target packages offline, while upstream vulnerability feeds still lack CPE

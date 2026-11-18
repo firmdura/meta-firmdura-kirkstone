@@ -11,8 +11,9 @@ froze the target security and normal-path HTTP/2 test contract. The historical
 [baseline run record](../evidence/20261117-sti108-baseline/run.json) remains
 unchanged: its `blocked` status describes the original combined build/scanner
 gate. Scanner interoperability is tracked in [the scanner guide](scanner.md).
-Human engineering review is still required before declaring the candidate
-image pair frozen, and no OpenVEX statement or public release is claimed here.
+Human engineering review confirmed patch completeness, test expectations, and
+evidence limits on 2026-11-18, freezing the `baseline` and `patched` image pair
+for bundle packaging. No OpenVEX statement or public release is claimed here.
 
 ## Boot and identify the actual library
 
@@ -364,5 +365,5 @@ the frozen target harness binary:
 All paired logs, canonical `deploy.tar` inventories, and consolidated SPDX
 identities are indexed in
 [`evidence/20261118-sti110-paired-validation/run.json`](../evidence/20261118-sti110-paired-validation/run.json).
-Human engineering review must confirm patch completeness, test expectations, and
-evidence limits before freezing the candidate image pair for bundle packaging.
+The reviewed `baseline` and `patched` image pair is frozen for read-only
+consumption by bundle packaging, community contribution, and candidate replay.
