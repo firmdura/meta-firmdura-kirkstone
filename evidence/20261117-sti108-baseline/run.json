@@ -1,0 +1,3154 @@
+{
+  "schema_version": 1,
+  "run_id": "20261117-sti108-baseline",
+  "issue": "STI-108",
+  "status": "blocked",
+  "scope": "Actual baseline build, system-mode boot/library identity, durable artifacts and unsuccessful scanner preflight; no repair or vulnerability reproduction.",
+  "started_at": "2026-11-17T21:32:47.603595+00:00",
+  "finished_at": "2026-11-18T00:24:25.371690+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "source_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+    "configuration_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+    "test_commit": "b5f1902618e0c23f1be38fac8c690ae91b7aab72",
+    "test_commit_reason": "Committed boot/library identity helper, replayed at this exact revision; the vulnerability harness is not implemented.",
+    "provenance": "Image built at 209222b. Build inputs remain byte-identical. The later boot helper is separately committed; pending edits at its replay were documentation only. Effective recipe dumps are post-build introspection, not regenerated image identities.",
+    "source_file_sha256": {
+      "conf/layer.conf": "0db7333de22c5c7a4c55eb3622f93255513d527a8a145ed801f9fa03056f77a3",
+      "kas/baseline.yml": "0da53535fc26b1d77f60ce4702da8d885e7c03ee880620cda7f0ec27d3956652",
+      "kas/builder-image.txt": "724b1461299f361e1b23354d230dc2e463082b12d3abbd104abcd1658bc5e901",
+      "kas/common.yml": "c963dc518cb5243858366dce7b34a0afb8201d8189bc47070f71f9b092ca4dfd",
+      "kas/patched.yml": "8f53d97ae594be6283d5b397a27013c357adcc6cb8d4a9f9d75ff0f3caf15844",
+      "kas/run": "51c77a033e869db2c54982d83d3a4030ba6f6457bb3af81b39d5bf70dc93989d",
+      "meta-firmdura-tests/conf/layer.conf": "061e62a0736fc93214fd4f6dddd40fc4267a734f3f7441df858ebca13945e747",
+      "meta-firmdura-tests/recipes-core/images/firmdura-reference-image.bb": "924221cb4dc5222933149d1aec58bb46ef0c510f737b8cb5f897f3ce668955d9"
+    },
+    "repositories": {
+      "sample": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
+      "poky": "93431249a6260da7bd29ee3ca32145d89e5b8259",
+      "meta-openembedded": "ce8539c941f6fcbecaca4d16640ac105c0595589",
+      "meta-lts-collab": "e127ed67e74ca6b7e0fdc6cbda572302886c00a0"
+    },
+    "builder_image": "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+    "builder": {
+      "profile": "firmdura-kirkstone",
+      "docker_context": "colima-firmdura-kirkstone",
+      "architecture": "aarch64",
+      "virtual_cpus": 4,
+      "memory_gib": 8,
+      "data_disk_gib": 55,
+      "root_disk_gib": 10,
+      "vm_os": "Ubuntu 24.04.4 LTS",
+      "kernel": "6.8.0-100-generic",
+      "container_os": "Debian GNU/Linux 12",
+      "colima": "0.10.1",
+      "lima": "2.1.1",
+      "docker_server": "29.2.1",
+      "kas": "4.8",
+      "git": "2.39.5",
+      "python": "3.11.2",
+      "gcc": "12.2.0",
+      "make": "4.3",
+      "tar": "1.34"
+    },
+    "external_repository_cache_reused_for_clean_check": false,
+    "download_or_sstate_cache_reused_for_clean_check": false,
+    "test_file_sha256": {
+      "tests/boot-reference.py": "5a60fecd324b28db8bfaa6182c6f005a2f6b488f5d92066be863d6d4c43011bf"
+    },
+    "work_volume": "firmdura-kirkstone-baseline",
+    "build_directory": "/work/build-baseline",
+    "toolchain": {
+      "cross_compiler": {
+        "FILE": "/work/build-baseline/../poky/meta/recipes-devtools/gcc/gcc-cross_11.5.bb",
+        "PN": "gcc-cross-aarch64",
+        "PV": "11.5.0",
+        "S": "/work/build-baseline/tmp/work-shared/gcc-11.5.0-r0/gcc-11.5.0"
+      },
+      "cmake": "3.22.3",
+      "qemu": "6.2.0",
+      "pexpect": "4.8.0"
+    },
+    "scanner": {
+      "version": "0.122.0",
+      "source_commit": "4419483072181b643c3efde0fd15b9113d88887f",
+      "image": "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+      "syft": "1.57.2",
+      "database": {
+        "schemaVersion": "v6.1.10",
+        "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-11-17T00:22:24Z_1794896458.tar.zst?checksum=sha256:3f0cbdbc9d40fb69eaeacec1869b27a8c74f1894108804ace8b7468513e2df07",
+        "built": "2026-11-17T06:20:58Z",
+        "path": "/cache/db/6/vulnerability.db",
+        "valid": true
+      },
+      "database_vendor_archive_sha256": "3f0cbdbc9d40fb69eaeacec1869b27a8c74f1894108804ace8b7468513e2df07",
+      "network": "none during scans",
+      "database_read_only": true,
+      "vex_documents": [],
+      "distro_override": null,
+      "automatic_cpe_generation": false,
+      "user_ignore_rules": [],
+      "builtin_kernel_header_ignore_rules": 4,
+      "configuration": "Complete effective configurations are retained in each scanner JSON artifact."
+    }
+  },
+  "command_path_aliases": {
+    "<checkout>": "Sample checkout on the approved control host",
+    "<store>": "Owner-approved local://firmdura-kirkstone/ storage root",
+    "<monitor-workspace>": "Build monitor workspace; resource monitoring only, not an image/test runtime dependency",
+    "note": "Only host-specific paths are sanitized. Command argv, dates, exit codes and hashes retain the measured results; expand aliases before replay."
+  },
+  "commands": [
+    {
+      "label": "sti-108-volume-create",
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--label",
+        "org.firmdura.sample=kirkstone",
+        "--label",
+        "org.firmdura.issue=STI-108",
+        "firmdura-kirkstone-baseline"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:30:10.888488+00:00",
+      "finished_at": "2026-11-17T21:30:10.938326+00:00",
+      "elapsed_seconds": 0.049838,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-volume-create.log",
+      "log_sha256": "6053efc2c3a9d15be24cb7681aa0336edff5cc7e20381858d228b569a5101f1d",
+      "log_size": 28,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-clean-volume-preflight",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "python3",
+        "-c",
+        "import json,pathlib,shutil; entries=list(pathlib.Path(\"/work\").iterdir()); assert not entries, \"Baseline volume must be empty\"; disk=shutil.disk_usage(\"/work\"); print(json.dumps({\"volume\":\"firmdura-kirkstone-baseline\",\"entries\":[],\"build_directory_preexists\":False,\"downloads_or_sstate_reused\":False,\"total_bytes\":disk.total,\"free_bytes\":disk.free},indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:32:47.603595+00:00",
+      "finished_at": "2026-11-17T21:32:47.807279+00:00",
+      "elapsed_seconds": 0.203684,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-clean-volume-preflight.log",
+      "log_sha256": "b4df6f53e61aa654873e2a62014c5eb0b001639e8b422a327992d6c1c155a41c",
+      "log_size": 199,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-baseline-build-01",
+      "argv": [
+        "env",
+        "FIRMDURA_WORK_VOLUME=firmdura-kirkstone-baseline",
+        "sh",
+        "kas/run",
+        "baseline",
+        "build"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:33:05.855424+00:00",
+      "finished_at": "2026-11-17T23:02:32.564738+00:00",
+      "elapsed_seconds": 5366.709314,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-baseline-build-01.log",
+      "log_sha256": "f915cc57509b05a2e0f47ca62fa3ac47df14ceb03f68699ba11b94076b7636be",
+      "log_size": 1798735,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-build-space-watch-01",
+      "argv": [
+        "python3",
+        "<monitor-workspace>/files/watch-build-space.py",
+        "b0de2aa711effb0c3edb61bb141d4aed428398e027b8e45d2a6d8ab682be8d49"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:33:13.220415+00:00",
+      "finished_at": "2026-11-17T23:02:38.099066+00:00",
+      "elapsed_seconds": 5364.878651,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-build-space-watch-01.log",
+      "log_sha256": "1909031b7bb810349d9b29ac4653cf6ece07386abcb48cd5be1645de2a876785",
+      "log_size": 76130,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Final inspection after successful build removal did not recognize Docker's lowercase no-such-object message. Sampling continued through the build; the corrected finalizer was checked separately."
+    },
+    {
+      "label": "sti-108-grype-manifest",
+      "argv": [
+        "docker",
+        "manifest",
+        "inspect",
+        "--verbose",
+        "docker.io/anchore/grype:v0.122.0"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:36:40.249735+00:00",
+      "finished_at": "2026-11-17T21:36:45.649946+00:00",
+      "elapsed_seconds": 5.400211,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-manifest.log",
+      "log_sha256": "8da4b3caaab8bf950689a27c3229d0cee56dbafce42f87cc7fbe609e6f323d49",
+      "log_size": 10329,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-version",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "version",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:38:29.820039+00:00",
+      "finished_at": "2026-11-17T21:38:33.978716+00:00",
+      "elapsed_seconds": 4.158677,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-version.log",
+      "log_sha256": "a185a31c5cb333556cd2c238de73e07dc35f7ee658ac79f9b7ca834f52f2965e",
+      "log_size": 1018,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-volume-create",
+      "argv": [
+        "docker",
+        "volume",
+        "create",
+        "--label",
+        "org.firmdura.sample=kirkstone",
+        "--label",
+        "org.firmdura.issue=STI-108",
+        "firmdura-kirkstone-scanner"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:39:44.610660+00:00",
+      "finished_at": "2026-11-17T21:39:44.622195+00:00",
+      "elapsed_seconds": 0.011535,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-volume-create.log",
+      "log_sha256": "db3ee1bdc678e2cd0f50cc7bca4754494afb7b1ddd4c79f8f54545b443c2fc55",
+      "log_size": 27,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-cache-init",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "root",
+        "--entrypoint",
+        "/bin/sh",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "mkdir /cache/db /cache/outputs && chown 501:20 /cache/db /cache/outputs"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:39:44.648261+00:00",
+      "finished_at": "2026-11-17T21:39:44.748603+00:00",
+      "elapsed_seconds": 0.100342,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-cache-init.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-config",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "config",
+        "--load"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:40:50.536916+00:00",
+      "finished_at": "2026-11-17T21:40:50.650499+00:00",
+      "elapsed_seconds": 0.113583,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-config.log",
+      "log_sha256": "23d71515bf8d82f8308bf1a240bec3109c650f23f203491adcc4701ff6ff3746",
+      "log_size": 12998,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-db-list",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "list",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:40:50.542646+00:00",
+      "finished_at": "2026-11-17T21:40:50.706218+00:00",
+      "elapsed_seconds": 0.163572,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-db-list.log",
+      "log_sha256": "c06ef7754e6d3476dd0c081fbc140bfcd68746fe7297230541e8866b45199940",
+      "log_size": 140,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Read-only /tmp; retried with a dedicated writable TMPDIR."
+    },
+    {
+      "label": "sti-108-grype-temp-init",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "root",
+        "--entrypoint",
+        "/bin/sh",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "mkdir /cache/tmp && chown 501:20 /cache/tmp"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:41:46.172720+00:00",
+      "finished_at": "2026-11-17T21:41:46.423974+00:00",
+      "elapsed_seconds": 0.251254,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-temp-init.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-db-list-v2",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "list",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:42:23.339226+00:00",
+      "finished_at": "2026-11-17T21:42:23.975956+00:00",
+      "elapsed_seconds": 0.63673,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-db-list-v2.log",
+      "log_sha256": "d9cf1340103fb9ef2322124e8d936c7a052c0f4ca9d85b0e75433a00cd63a7be",
+      "log_size": 263,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-home-init",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "root",
+        "--entrypoint",
+        "/bin/sh",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "mkdir /cache/home && chown 501:20 /cache/home"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:45:12.387493+00:00",
+      "finished_at": "2026-11-17T21:45:12.753126+00:00",
+      "elapsed_seconds": 0.365633,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-home-init.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-db-import",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "import",
+        "https://grype.anchore.io/databases/vulnerability-db_v6.1.10_2026-11-17T00:22:24Z_1794896458.tar.zst?checksum=sha256:3f0cbdbc9d40fb69eaeacec1869b27a8c74f1894108804ace8b7468513e2df07"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:45:12.785634+00:00",
+      "finished_at": "2026-11-17T21:45:13.532032+00:00",
+      "elapsed_seconds": 0.746398,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-db-import.log",
+      "log_sha256": "f138ae9c839df069fbae56305c6cfebe34aa3454a5b3678d5d7d049cc045e8df",
+      "log_size": 141,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Incorrect archive URL returned 404; retried with Grype's exact listed URL."
+    },
+    {
+      "label": "sti-108-grype-db-list-urls",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "list"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:45:59.017116+00:00",
+      "finished_at": "2026-11-17T21:45:59.677672+00:00",
+      "elapsed_seconds": 0.660556,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-db-list-urls.log",
+      "log_sha256": "ae18b4d29e5b314e2ebcb85b976f5caa7a505f8c56906030c01e9ddec4b7ac8c",
+      "log_size": 321,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-config-v2",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "config",
+        "--load"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:45:59.023047+00:00",
+      "finished_at": "2026-11-17T21:45:59.239465+00:00",
+      "elapsed_seconds": 0.216418,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-config-v2.log",
+      "log_sha256": "1b0d97eb19ad7df804f7d9c7db77f4574ee8736d1798129775386398a05d38ca",
+      "log_size": 12998,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-db-import-v2",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "import",
+        "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.10_2026-11-17T00:22:24Z_1794896458.tar.zst?checksum=sha256:3f0cbdbc9d40fb69eaeacec1869b27a8c74f1894108804ace8b7468513e2df07"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:46:17.914696+00:00",
+      "finished_at": "2026-11-17T21:47:11.341651+00:00",
+      "elapsed_seconds": 53.426955,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-db-import-v2.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-db-status",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "status",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:48:21.067729+00:00",
+      "finished_at": "2026-11-17T21:48:23.241345+00:00",
+      "elapsed_seconds": 2.173616,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-db-status.log",
+      "log_sha256": "1658e904213967a60af4eeccea24a3031119a141a786f796ba0d7da75b8383ce",
+      "log_size": 319,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-target-db-query",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "search",
+        "--vuln",
+        "CVE-2026-19773",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:48:21.072044+00:00",
+      "finished_at": "2026-11-17T21:48:23.297159+00:00",
+      "elapsed_seconds": 2.225115,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-target-db-query.log",
+      "log_sha256": "0d564e068c660f74351ae1c786314f5ae563c472bd5fca48471a501efe8192c1",
+      "log_size": 11231,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-nvd-record",
+      "argv": [
+        "python3",
+        "-c",
+        "import json,urllib.request; url=\"https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-19773\"; request=urllib.request.Request(url,headers={\"Accept\":\"application/json\"}); data=json.load(urllib.request.urlopen(request,timeout=60)); assert data[\"totalResults\"] == 1, \"Expected one authoritative CVE record\"; cve=data[\"vulnerabilities\"][0][\"cve\"]; print(json.dumps({\"url\":url,\"id\":cve[\"id\"],\"published\":cve[\"published\"],\"lastModified\":cve[\"lastModified\"],\"vulnStatus\":cve[\"vulnStatus\"],\"configurations\":cve.get(\"configurations\"),\"references\":cve.get(\"references\")},indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:53:47.776644+00:00",
+      "finished_at": "2026-11-17T21:53:48.451705+00:00",
+      "elapsed_seconds": 0.675061,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-nvd-record.log",
+      "log_sha256": "6c45877a88dd6cea905ec18440f75845268b785fffe44282ff3ea2dc449594df",
+      "log_size": 585,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-grype-nvd-vulnerability",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "search",
+        "vuln",
+        "CVE-2026-19773",
+        "--provider",
+        "nvd",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:56:15.718043+00:00",
+      "finished_at": "2026-11-17T21:56:17.842829+00:00",
+      "elapsed_seconds": 2.124786,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-grype-nvd-vulnerability.log",
+      "log_sha256": "00e704f443459b955da3aa026c771b77bf40da959d2994d49343083797c2bf6f",
+      "log_size": 1692,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-db-source-hashes",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--read-only",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "256m",
+        "--entrypoint",
+        "python3",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import hashlib,json,pathlib; root=pathlib.Path(\"/cache/db\"); result=[]\nfor path in sorted(root.rglob(\"*\")):\n if path.is_symlink(): raise SystemExit(\"Unexpected symlink in frozen DB\")\n if not path.is_file(): continue\n with path.open(\"rb\") as source: digest=hashlib.file_digest(source,\"sha256\").hexdigest()\n result.append({\"path\":str(path.relative_to(root)),\"size\":path.stat().st_size,\"sha256\":digest})\nprint(json.dumps(result,indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:59:06.437006+00:00",
+      "finished_at": "2026-11-17T21:59:09.327668+00:00",
+      "elapsed_seconds": 2.890662,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-db-source-hashes.log",
+      "log_sha256": "3fdfdb9374da74fe9a7ca82114997b432ca1dc616d48b04e2d2e534336ca85f2",
+      "log_size": 287,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-db-export-container",
+      "argv": [
+        "docker",
+        "create",
+        "--name",
+        "firmdura-kirkstone-sti108-db-export",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache,readonly",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "version",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:59:06.438487+00:00",
+      "finished_at": "2026-11-17T21:59:06.836118+00:00",
+      "elapsed_seconds": 0.397631,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-db-export-container.log",
+      "log_sha256": "9351602b69d149dc9bb86b67f903eff954323b9c5bef466f77712cb148c317c7",
+      "log_size": 65,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-db-export",
+      "argv": [
+        "docker",
+        "cp",
+        "-a",
+        "397f2bbd5701274db627793d35fe3543e36b6840c58abd80a6dc1bcc7cee707e:/cache/db",
+        "<store>/artifacts/20261117-sti108-baseline/grype-db"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T21:59:28.549663+00:00",
+      "finished_at": "2026-11-17T21:59:40.558589+00:00",
+      "elapsed_seconds": 12.008926,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-db-export.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-db-export-verify",
+      "argv": [
+        "python3",
+        "-c",
+        "import datetime,hashlib,json,pathlib; store=pathlib.Path(\"<store>\"); root=store/\"artifacts/20261117-sti108-baseline/grype-db\"; expected=json.loads((store/\"logs/sti-108-db-source-hashes.log\").read_text()); actual=[]\nfor path in sorted(root.rglob(\"*\")):\n if path.is_symlink(): raise SystemExit(\"Unexpected symlink in DB export\")\n if not path.is_file(): continue\n with path.open(\"rb\") as source: digest=hashlib.file_digest(source,\"sha256\").hexdigest()\n actual.append({\"path\":str(path.relative_to(root)),\"size\":path.stat().st_size,\"sha256\":digest})\nassert actual == expected, \"Exported database differs from the frozen source\"\nresult={\"status\":\"passed\",\"scope\":\"database export integrity only; no target scan\",\"at\":datetime.datetime.now(datetime.timezone.utc).isoformat(),\"database_status\":json.loads((store/\"logs/sti-108-grype-db-status.log\").read_text()),\"files\":[dict(item,location=\"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/grype-db/\"+item[\"path\"]) for item in actual]}\noutput=store/\"runs/sti-108-grype-db.json\"\nwith output.open(\"x\") as destination: destination.write(json.dumps(result,indent=2)+\"\\n\")\nprint(json.dumps(result,indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T22:01:07.746811+00:00",
+      "finished_at": "2026-11-17T22:01:09.578064+00:00",
+      "elapsed_seconds": 1.831253,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-db-export-verify.log",
+      "log_sha256": "5187c680742319c76e503482e1b07b450adee4141d59fe927dd15db4fbbd8dfc",
+      "log_size": 1026,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-libwebsockets-db-candidates",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "db",
+        "search",
+        "--pkg",
+        "libwebsockets",
+        "--provider",
+        "nvd",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T22:11:18.890266+00:00",
+      "finished_at": "2026-11-17T22:11:21.099079+00:00",
+      "elapsed_seconds": 2.208813,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-libwebsockets-db-candidates.log",
+      "log_sha256": "9e2e7e0aef8a97305f17eab8e467b80d54df84ac0829a315305bc3b23db44e3c",
+      "log_size": 2305,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-library-package-layout",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "find",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/work/build-baseline/tmp/deploy/ipk",
+        "-maxdepth",
+        "2",
+        "-type",
+        "f",
+        "-name",
+        "*libwebsockets*.ipk",
+        "-printf",
+        "%s %p\\n"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:04:59.247770+00:00",
+      "finished_at": "2026-11-17T23:04:59.424498+00:00",
+      "elapsed_seconds": 0.176728,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-library-package-layout.log",
+      "log_sha256": "2908f5ed250ea374643cb73307b0c7ccabf1a10c4cd4f121f1026cfe038abfd4",
+      "log_size": 571,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-library-sbom-layout",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "find",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/work/build-baseline/tmp/deploy/spdx",
+        "-maxdepth",
+        "4",
+        "-type",
+        "f",
+        "-name",
+        "*libwebsockets*.spdx.json",
+        "-printf",
+        "%s %p\\n"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:04:59.247796+00:00",
+      "finished_at": "2026-11-17T23:04:59.443338+00:00",
+      "elapsed_seconds": 0.195542,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-library-sbom-layout.log",
+      "log_sha256": "b0808441c644615bc9482be12343b270f1826ff410cf506104226343eb2f8d80",
+      "log_size": 1224,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-image-layout",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "find",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64",
+        "-maxdepth",
+        "1",
+        "-printf",
+        "%y %s %f -> %l\\n"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:04:59.247816+00:00",
+      "finished_at": "2026-11-17T23:04:59.409584+00:00",
+      "elapsed_seconds": 0.161768,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-image-layout.log",
+      "log_sha256": "e0f141b16f83969697bdeab95c1f202d9569cabc52045c6185fdc606ae0d846d",
+      "log_size": 2127,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-watch-removed-container-check",
+      "argv": [
+        "python3",
+        "<monitor-workspace>/files/watch-build-space.py",
+        "b0de2aa711effb0c3edb61bb141d4aed428398e027b8e45d2a6d8ab682be8d49"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:12:07.056976+00:00",
+      "finished_at": "2026-11-17T23:12:07.121708+00:00",
+      "elapsed_seconds": 0.064732,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-watch-removed-container-check.log",
+      "log_sha256": "1b108e9afeddd4b7aa18f53d3c1671844652a3b18f648af3a410873824c63db5",
+      "log_size": 76,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-library-scan",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/work/build-baseline/tmp/deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-libwebsockets-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:12:07.066776+00:00",
+      "finished_at": "2026-11-17T23:12:11.012913+00:00",
+      "elapsed_seconds": 3.946137,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-library-scan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-image-scan",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-image-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:12:07.077321+00:00",
+      "finished_at": "2026-11-17T23:12:11.013936+00:00",
+      "elapsed_seconds": 3.936615,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-image-scan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-compiled-library-features",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "grep",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-E",
+        "^(LWS_WITH_HTTP2|LWS_WITH_SERVER|LWS_WITH_CLIENT|LWS_WITH_SHARED|LWS_WITH_STATIC|LWS_WITH_LIBUV|LWS_WITH_SSL|LWS_WITHOUT_TESTAPPS|LWS_LINK_TESTAPPS_DYNAMIC|CMAKE_BUILD_TYPE|CMAKE_C_COMPILER|CMAKE_C_FLAGS)",
+        "/work/build-baseline/tmp/work/cortexa57-poky-linux/libwebsockets/4.2.2-r0/build/CMakeCache.txt"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:16:20.862129+00:00",
+      "finished_at": "2026-11-17T23:16:20.954398+00:00",
+      "elapsed_seconds": 0.092269,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-compiled-library-features.log",
+      "log_sha256": "04e83c6b8d6619f51c0f883ddb42f99f9cd74b4ba98a165378b963b8b193eb7b",
+      "log_size": 1914,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-deploy-export",
+      "argv": [
+        "docker",
+        "cp",
+        "-a",
+        "efcc0f28346863668b6e7a5365c1072ebcfe2c190272c076668ca16766592380:/work/build-baseline/tmp/deploy",
+        "<store>/artifacts/20261117-sti108-baseline/deploy"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:17:47.294660+00:00",
+      "finished_at": "2026-11-17T23:17:58.974295+00:00",
+      "elapsed_seconds": 11.679635,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-deploy-export.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-scan-export",
+      "argv": [
+        "docker",
+        "cp",
+        "-a",
+        "efcc0f28346863668b6e7a5365c1072ebcfe2c190272c076668ca16766592380:/cache/outputs",
+        "<store>/artifacts/20261117-sti108-baseline/scans"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:17:47.304158+00:00",
+      "finished_at": "2026-11-17T23:17:58.976218+00:00",
+      "elapsed_seconds": 11.67206,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-scan-export.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-qemu-version",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "--version"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:19:53.105955+00:00",
+      "finished_at": "2026-11-17T23:19:53.233910+00:00",
+      "elapsed_seconds": 0.127955,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-qemu-version.log",
+      "log_sha256": "7d00d30018b3f1161e948b1215f83bba37693ef44e3b19e01e098ee16ef88984",
+      "log_size": 100,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-baseline-boot-01",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "1g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=bind,source=<checkout>,target=/repo,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/repo/tests/boot-reference.py",
+        "--qemu",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--kernel",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+        "--rootfs",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+        "--library-sha256",
+        "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+        "--library-version",
+        "4.2.1-v4.2.2"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:26:57.131152+00:00",
+      "finished_at": "2026-11-17T23:27:35.012973+00:00",
+      "elapsed_seconds": 37.881821,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-baseline-boot-01.log",
+      "log_sha256": "2600dd4c67bf2f983d4d079897251142403c8ac467c6507c07cdc9d3eb961362",
+      "log_size": 17582,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Serial CR/CRLF framing failed; the image booted but the check did not pass."
+    },
+    {
+      "label": "sti-108-deploy-source-hashes",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "python3",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import hashlib, json, os, sys; from pathlib import Path\nroot = Path(sys.argv[1])\nfor path in sorted(root.rglob(\"*\")):\n    item = {\"path\": str(path.relative_to(root))}\n    if path.is_symlink():\n        item.update(type=\"symlink\", target=os.readlink(path))\n    elif path.is_file():\n        with path.open(\"rb\") as stream:\n            digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n        item.update(type=\"file\", size=path.stat().st_size, sha256=digest)\n    elif path.is_dir():\n        continue\n    else:\n        raise RuntimeError(f\"Unsupported artifact: {path}\")\n    print(json.dumps(item, sort_keys=True))",
+        "/work/build-baseline/tmp/deploy"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:26:57.143914+00:00",
+      "finished_at": "2026-11-17T23:26:58.800734+00:00",
+      "elapsed_seconds": 1.65682,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-deploy-source-hashes.log",
+      "log_sha256": "97ad7f94118600db2390061cfd6f5cf889c993f47365e0f657e83924ab67098c",
+      "log_size": 5062182,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-baseline-boot-02",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "1g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=bind,source=<checkout>,target=/repo,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/repo/tests/boot-reference.py",
+        "--qemu",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--kernel",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+        "--rootfs",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+        "--library-sha256",
+        "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+        "--library-version",
+        "4.2.1-v4.2.2"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:30:09.728622+00:00",
+      "finished_at": "2026-11-17T23:30:17.886049+00:00",
+      "elapsed_seconds": 8.157427,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-baseline-boot-02.log",
+      "log_sha256": "5bc20751ddc04cc68ebbc280a8c2cc75645fadf1a78a8ae96d22abcc541a3e44",
+      "log_size": 15972,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "The minimal target has no /etc/os-release; changed the check to its actual /etc/issue."
+    },
+    {
+      "label": "sti-108-deploy-export-verify",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, os; from pathlib import Path\nstore = Path(\"<store>\")\nroot = store / \"artifacts/20261117-sti108-baseline/deploy\"\nsource = store / \"logs/sti-108-deploy-source-hashes.log\"\nentries = [json.loads(line) for line in source.read_text().splitlines()]\nexpected = {item[\"path\"]: item for item in entries}\nif len(expected) != len(entries):\n    raise RuntimeError(\"Duplicate source paths\")\nactual = {str(path.relative_to(root)) for path in root.rglob(\"*\") if path.is_symlink() or not path.is_dir()}\nif actual != set(expected):\n    raise RuntimeError({\"missing\": sorted(set(expected) - actual), \"extra\": sorted(actual - set(expected))})\nfor relative, item in expected.items():\n    path = root / relative\n    if item[\"type\"] == \"symlink\":\n        if not path.is_symlink() or os.readlink(path) != item[\"target\"]:\n            raise RuntimeError(f\"Symlink mismatch: {relative}\")\n        if not path.resolve(strict=True).is_relative_to(root):\n            raise RuntimeError(f\"External symlink target: {relative}\")\n    else:\n        if path.is_symlink() or not path.is_file() or path.stat().st_size != item[\"size\"]:\n            raise RuntimeError(f\"File mismatch: {relative}\")\n        with path.open(\"rb\") as stream:\n            digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n        if digest != item[\"sha256\"]:\n            raise RuntimeError(f\"Digest mismatch: {relative}\")\nresult = {\"status\": \"verified\", \"files\": sum(item[\"type\"] == \"file\" for item in entries), \"symlinks\": sum(item[\"type\"] == \"symlink\" for item in entries), \"logical_file_bytes\": sum(item.get(\"size\", 0) for item in entries), \"source_index_sha256\": hashlib.sha256(source.read_bytes()).hexdigest(), \"locator\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy/\"}\nwith (store / \"runs/sti-108-deploy-integrity.json\").open(\"x\") as stream:\n    json.dump(result, stream, indent=2)\n    stream.write(\"\\n\")\nprint(json.dumps(result, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:30:09.738685+00:00",
+      "finished_at": "2026-11-17T23:30:10.161811+00:00",
+      "elapsed_seconds": 0.423126,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-deploy-export-verify.log",
+      "log_sha256": "5927dac0367a32538cae071565d64030b74e917ade824d8e0b7051e54bc5cd09",
+      "log_size": 292,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Case-insensitive directory export lost two distinct licence filenames; this directory is non-canonical."
+    },
+    {
+      "label": "sti-108-library-package-provenance",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "python3",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import hashlib, io, json, subprocess, tarfile\npackage = \"/work/build-baseline/tmp/deploy/ipk/cortexa57/libwebsockets18_4.2.2-r0_cortexa57.ipk\"\ncontrol = subprocess.check_output([\"ar\", \"p\", package, \"control.tar.gz\"])\ndata = subprocess.check_output([\"ar\", \"p\", package, \"data.tar.xz\"])\nwith tarfile.open(fileobj=io.BytesIO(control), mode=\"r:gz\") as archive:\n    metadata = archive.extractfile(\"./control\").read().decode()\nwith tarfile.open(fileobj=io.BytesIO(data), mode=\"r:xz\") as archive:\n    library = archive.extractfile(\"./usr/lib/libwebsockets.so.18\").read()\ndigest = hashlib.sha256(library).hexdigest()\nif digest != \"77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a\":\n    raise RuntimeError(\"Packaged library differs from the actual rootfs archive\")\nprint(json.dumps({\"control\": metadata, \"library_sha256\": digest, \"library_size\": len(library), \"matches_rootfs_archive\": True}, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:30:09.744111+00:00",
+      "finished_at": "2026-11-17T23:30:09.878299+00:00",
+      "elapsed_seconds": 0.134188,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-library-package-provenance.log",
+      "log_sha256": "a61a31ef06bb21deed9cf69cf8358b0cb660bccc059f41a09dd638427c434f25",
+      "log_size": 688,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-baseline-boot-03",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "1g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=bind,source=<checkout>,target=/repo,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/repo/tests/boot-reference.py",
+        "--qemu",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--kernel",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+        "--rootfs",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+        "--library-sha256",
+        "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+        "--library-version",
+        "4.2.1-v4.2.2"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:35:37.859066+00:00",
+      "finished_at": "2026-11-17T23:35:54.617999+00:00",
+      "elapsed_seconds": 16.758933,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-baseline-boot-03.log",
+      "log_sha256": "84c5858e76b865671b83a177346efbb1d722a2ca0300f10dbcb19c844e36f472",
+      "log_size": 25354,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-deploy-tar-export",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, shutil, subprocess; from pathlib import Path\npath = Path(\"<store>/artifacts/20261117-sti108-baseline/deploy.tar\")\nfree = shutil.disk_usage(path.parent).free\nif free < 32 * 1024**3:\n    raise RuntimeError(f\"Insufficient host headroom for archive export: {free}\")\ncommand = [\"docker\", \"cp\", \"efcc0f28346863668b6e7a5365c1072ebcfe2c190272c076668ca16766592380:/work/build-baseline/tmp/deploy\", \"-\"]\nwith path.open(\"xb\") as output:\n    subprocess.run(command, stdout=output, check=True)\nwith path.open(\"rb\") as stream:\n    digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\nprint(json.dumps({\"status\": \"exported_not_yet_verified\", \"argv\": command, \"size\": path.stat().st_size, \"sha256\": digest, \"host_free_before\": free, \"host_free_after\": shutil.disk_usage(path.parent).free, \"locator\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar\"}, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:35:37.873732+00:00",
+      "finished_at": "2026-11-17T23:35:48.478071+00:00",
+      "elapsed_seconds": 10.604339,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-deploy-tar-export.log",
+      "log_sha256": "7a497c1d96cfb2e2070e1d682ed8a978456867914907eb024357d30f9c2e416e",
+      "log_size": 457,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-cpe-reference-diagnostic-input",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "python3",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import copy, hashlib, json; from pathlib import Path\nsource = Path(\"/work/build-baseline/tmp/deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json\")\noriginal = json.loads(source.read_text())\ndocument = copy.deepcopy(original)\nreference = document[\"packages\"][0][\"externalRefs\"][0]\nif reference[\"referenceType\"] != \"http://spdx.org/rdf/references/cpe23Type\":\n    raise RuntimeError(\"Unexpected original CPE reference type\")\nreference[\"referenceType\"] = \"cpe23Type\"\noutput = Path(\"/cache/outputs/libwebsockets-reference-type-normalized.spdx.json\")\nwith output.open(\"x\") as stream:\n    json.dump(document, stream, indent=2)\n    stream.write(\"\\n\")\nprint(json.dumps({\"scope\": \"component-only-diagnostic\", \"source_sha256\": hashlib.sha256(source.read_bytes()).hexdigest(), \"diagnostic_sha256\": hashlib.sha256(output.read_bytes()).hexdigest(), \"json_change\": {\"pointer\": \"/packages/0/externalRefs/0/referenceType\", \"from\": original[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"], \"to\": reference[\"referenceType\"]}, \"unchanged_cpe\": reference[\"referenceLocator\"], \"package_name\": document[\"packages\"][0][\"name\"], \"package_version\": document[\"packages\"][0][\"versionInfo\"]}, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:41:17.746314+00:00",
+      "finished_at": "2026-11-17T23:41:17.902056+00:00",
+      "elapsed_seconds": 0.155742,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-cpe-reference-diagnostic-input.log",
+      "log_sha256": "d42435e44f64a789bd9d0b7ef84ec179bf0a1ce7152f3262405e57dd85f130fe",
+      "log_size": 515,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-deploy-tar-verify",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, posixpath, tarfile; from pathlib import Path\nstore = Path(\"<store>\")\npath = store / \"artifacts/20261117-sti108-baseline/deploy.tar\"\nsource = store / \"logs/sti-108-deploy-source-hashes.log\"\nentries = [json.loads(line) for line in source.read_text().splitlines()]\nexpected = {item[\"path\"]: item for item in entries}\nwith tarfile.open(path, \"r:\") as archive:\n    members = archive.getmembers()\n    names = {member.name.rstrip(\"/\") for member in members}\n    actual = {}\n    for member in members:\n        if member.isdir():\n            continue\n        if not member.name.startswith(\"deploy/\"):\n            raise RuntimeError(f\"Unexpected archive path: {member.name}\")\n        relative = member.name[len(\"deploy/\"):]\n        if relative in actual:\n            raise RuntimeError(f\"Duplicate archive path: {relative}\")\n        actual[relative] = member\n    if set(actual) != set(expected):\n        raise RuntimeError({\"missing\": sorted(set(expected) - set(actual)), \"extra\": sorted(set(actual) - set(expected))})\n    for relative, item in expected.items():\n        member = actual[relative]\n        if item[\"type\"] == \"symlink\":\n            if not member.issym() or member.linkname != item[\"target\"]:\n                raise RuntimeError(f\"Symlink mismatch: {relative}\")\n            target = posixpath.normpath(posixpath.join(posixpath.dirname(member.name), member.linkname))\n            if not target.startswith(\"deploy/\") or target not in names:\n                raise RuntimeError(f\"Unresolved archive symlink: {relative} -> {target}\")\n        else:\n            if not (member.isfile() or member.islnk()):\n                raise RuntimeError(f\"File type mismatch: {relative}\")\n            with archive.extractfile(member) as stream:\n                digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n                size = stream.tell()\n            if digest != item[\"sha256\"] or size != item[\"size\"]:\n                raise RuntimeError(f\"Content mismatch: {relative}\")\nwith path.open(\"rb\") as stream:\n    archive_digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\nresult = {\"status\": \"verified\", \"files\": sum(item[\"type\"] == \"file\" for item in entries), \"symlinks\": sum(item[\"type\"] == \"symlink\" for item in entries), \"logical_file_bytes\": sum(item.get(\"size\", 0) for item in entries), \"archive_size\": path.stat().st_size, \"archive_sha256\": archive_digest, \"source_index_sha256\": hashlib.sha256(source.read_bytes()).hexdigest(), \"locator\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar\", \"directory_export_is_canonical\": False}\nwith (store / \"runs/sti-108-deploy-integrity.json\").open(\"x\") as stream:\n    json.dump(result, stream, indent=2)\n    stream.write(\"\\n\")\nprint(json.dumps(result, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:41:17.760079+00:00",
+      "finished_at": "2026-11-17T23:41:18.648925+00:00",
+      "elapsed_seconds": 0.888846,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-deploy-tar-verify.log",
+      "log_sha256": "c0e3e24137df9e2582e0311e898d14c14efc56ee5656e4a85c0d0b264698a9eb",
+      "log_size": 339,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "The first verifier rejected a preserved absolute licence alias; the final verifier checks its included original-root target without rewriting it."
+    },
+    {
+      "label": "sti-108-effective-build-metadata",
+      "argv": [
+        "env",
+        "FIRMDURA_WORK_VOLUME=firmdura-kirkstone-baseline",
+        "sh",
+        "kas/run",
+        "baseline",
+        "shell",
+        "-c",
+        "mkdir -p /work/records/sti-108 && bitbake -e libwebsockets > /work/records/sti-108/libwebsockets.env && bitbake -e virtual/kernel > /work/records/sti-108/kernel.env && bitbake -e gcc-cross-aarch64 > /work/records/sti-108/gcc-cross.env"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:41:17.770862+00:00",
+      "finished_at": "2026-11-17T23:41:29.828541+00:00",
+      "elapsed_seconds": 12.057679,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-effective-build-metadata.log",
+      "log_sha256": "140d7c357bb8d63cc4458fa91c80050b4896a9886e004a5f5b002b0817553f70",
+      "log_size": 963,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-deploy-tar-verify-v2",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, posixpath, tarfile; from pathlib import Path\nstore = Path(\"<store>\")\npath = store / \"artifacts/20261117-sti108-baseline/deploy.tar\"\nsource = store / \"logs/sti-108-deploy-source-hashes.log\"\nsource_root = \"/work/build-baseline/tmp/deploy/\"\nentries = [json.loads(line) for line in source.read_text().splitlines()]\nexpected = {item[\"path\"]: item for item in entries}\nabsolute_aliases = []\nwith tarfile.open(path, \"r:\") as archive:\n    members = archive.getmembers()\n    names = {member.name.rstrip(\"/\") for member in members}\n    actual = {}\n    for member in members:\n        if member.isdir():\n            continue\n        if not member.name.startswith(\"deploy/\"):\n            raise RuntimeError(f\"Unexpected archive path: {member.name}\")\n        relative = member.name[len(\"deploy/\"):]\n        if relative in actual:\n            raise RuntimeError(f\"Duplicate archive path: {relative}\")\n        actual[relative] = member\n    if set(actual) != set(expected):\n        raise RuntimeError({\"missing\": sorted(set(expected) - set(actual)), \"extra\": sorted(set(actual) - set(expected))})\n    for relative, item in expected.items():\n        member = actual[relative]\n        if item[\"type\"] == \"symlink\":\n            if not member.issym() or member.linkname != item[\"target\"]:\n                raise RuntimeError(f\"Symlink mismatch: {relative}\")\n            if member.linkname.startswith(source_root):\n                target = \"deploy/\" + member.linkname[len(source_root):]\n                absolute_aliases.append({\"path\": relative, \"target\": member.linkname, \"archive_member\": target})\n            else:\n                target = posixpath.normpath(posixpath.join(posixpath.dirname(member.name), member.linkname))\n            if not target.startswith(\"deploy/\") or target not in names:\n                raise RuntimeError(f\"Unresolved archive symlink: {relative} -> {target}\")\n        else:\n            if not (member.isfile() or member.islnk()):\n                raise RuntimeError(f\"File type mismatch: {relative}\")\n            with archive.extractfile(member) as stream:\n                digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n                size = stream.tell()\n            if digest != item[\"sha256\"] or size != item[\"size\"]:\n                raise RuntimeError(f\"Content mismatch: {relative}\")\nwith path.open(\"rb\") as stream:\n    archive_digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\nresult = {\"status\": \"verified\", \"files\": sum(item[\"type\"] == \"file\" for item in entries), \"symlinks\": sum(item[\"type\"] == \"symlink\" for item in entries), \"logical_file_bytes\": sum(item.get(\"size\", 0) for item in entries), \"archive_size\": path.stat().st_size, \"archive_sha256\": archive_digest, \"source_index_sha256\": hashlib.sha256(source.read_bytes()).hexdigest(), \"locator\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar\", \"directory_export_is_canonical\": False, \"absolute_aliases\": absolute_aliases, \"restore_root\": source_root, \"relocatable_without_alias_handling\": False}\nwith (store / \"runs/sti-108-deploy-integrity.json\").open(\"x\") as stream:\n    json.dump(result, stream, indent=2)\n    stream.write(\"\\n\")\nprint(json.dumps(result, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:50:07.995094+00:00",
+      "finished_at": "2026-11-17T23:50:10.392633+00:00",
+      "elapsed_seconds": 2.397539,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-deploy-tar-verify-v2.log",
+      "log_sha256": "ee78ae6bab2dae19c2449d2153e5303a2791b984ad986c531949a45d48ac1e35",
+      "log_size": 857,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-cpe-reference-diagnostic-scan",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "--env",
+        "GRYPE_INCLUDE_MATCHER_SUPPRESSIONS=true",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/cache/outputs/libwebsockets-reference-type-normalized.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-library-normalized-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:50:08.000537+00:00",
+      "finished_at": "2026-11-17T23:50:11.049706+00:00",
+      "elapsed_seconds": 3.049169,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-cpe-reference-diagnostic-scan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-built-cpe-diagnostic-scan",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "--env",
+        "GRYPE_INCLUDE_MATCHER_SUPPRESSIONS=true",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "cpe:2.3:a:*:libwebsockets:4.2.2:*:*:*:*:*:*:*",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-built-cpe-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:50:08.018990+00:00",
+      "finished_at": "2026-11-17T23:50:11.022984+00:00",
+      "elapsed_seconds": 3.003994,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-built-cpe-diagnostic-scan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-build-metadata-export",
+      "argv": [
+        "docker",
+        "cp",
+        "-a",
+        "efcc0f28346863668b6e7a5365c1072ebcfe2c190272c076668ca16766592380:/work/records/sti-108",
+        "<store>/artifacts/20261117-sti108-baseline/build-metadata"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:50:08.042257+00:00",
+      "finished_at": "2026-11-17T23:50:08.107086+00:00",
+      "elapsed_seconds": 0.064829,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-build-metadata-export.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-baseline-boot-04",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "1g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=bind,source=<checkout>,target=/repo,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/repo/tests/boot-reference.py",
+        "--qemu",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--kernel",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+        "--rootfs",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+        "--library-sha256",
+        "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+        "--library-version",
+        "4.2.1-v4.2.2"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:50:08.065591+00:00",
+      "finished_at": "2026-11-17T23:50:23.895793+00:00",
+      "elapsed_seconds": 15.830202,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-baseline-boot-04.log",
+      "log_sha256": "293d891dfa2b04cf63ddbd9b6cb93f70ef7da582ca327d4e267b6e5f76b6b317",
+      "log_size": 26281,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-boot-rejects-wrong-library",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "1g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=bind,source=<checkout>,target=/repo,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/repo/tests/boot-reference.py",
+        "--qemu",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--kernel",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+        "--rootfs",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+        "--library-sha256",
+        "0000000000000000000000000000000000000000000000000000000000000000",
+        "--library-version",
+        "4.2.1-v4.2.2"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:50:23.934913+00:00",
+      "finished_at": "2026-11-17T23:50:32.317296+00:00",
+      "elapsed_seconds": 8.382383,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-boot-rejects-wrong-library.log",
+      "log_sha256": "e814fcd71feac7b2f848b36c21dcdb227280d93218938633c68e6150995575f2",
+      "log_size": 17114,
+      "expected_exit_code": 1,
+      "outcome": "expected_negative_control"
+    },
+    {
+      "label": "sti-108-scanner-results-summary",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "python3",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import hashlib, json; from pathlib import Path\nresults = []\nfor path in sorted(Path(\"/cache/outputs\").glob(\"*-grype.json\")):\n    doc = json.loads(path.read_text())\n    matches = doc[\"matches\"]\n    results.append({\"file\": path.name, \"size\": path.stat().st_size, \"sha256\": hashlib.sha256(path.read_bytes()).hexdigest(), \"match_count\": len(matches), \"target_count\": sum(item[\"vulnerability\"][\"id\"] == \"CVE-2026-19773\" for item in matches), \"ignored_count\": len(doc.get(\"ignoredMatches\", [])), \"vulnerability_ids\": sorted({item[\"vulnerability\"][\"id\"] for item in matches}), \"matched_packages\": [{\"name\": item[\"artifact\"][\"name\"], \"version\": item[\"artifact\"][\"version\"], \"cpes\": item[\"artifact\"].get(\"cpes\")} for item in matches], \"vex_documents\": doc[\"descriptor\"][\"configuration\"][\"vex-documents\"], \"effective_builtin_ignore_rules\": len(doc[\"descriptor\"][\"configuration\"][\"ignore\"]), \"include_matcher_suppressions\": doc[\"descriptor\"][\"configuration\"][\"include-matcher-suppressions\"]})\nprint(json.dumps({\"preflight\": \"blocked\", \"required_cve\": \"CVE-2026-19773\", \"results\": results}, indent=2))\nif not any(item[\"target_count\"] for item in results):\n    raise RuntimeError(\"Required target finding is absent from every actual and diagnostic scan\")"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-17T23:53:05.356719+00:00",
+      "finished_at": "2026-11-17T23:53:05.467339+00:00",
+      "elapsed_seconds": 0.11062,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-108-scanner-results-summary.log",
+      "log_sha256": "e01ef72665a84896a4e6ec50e4d6f80c360563ec4d8e0a192dabb1747982dd83",
+      "log_size": 2337,
+      "expected_exit_code": 0,
+      "outcome": "blocked",
+      "observation": "Required CVE-2026-19773 was absent. This acceptance failure remains unresolved."
+    },
+    {
+      "label": "sti-108-final-scan-export",
+      "argv": [
+        "python3",
+        "-c",
+        "import subprocess; from pathlib import Path\nroot = Path(\"<store>/artifacts/20261117-sti108-baseline/scans\")\nfor name in (\"libwebsockets-reference-type-normalized.spdx.json\", \"baseline-library-normalized-grype.json\", \"baseline-built-cpe-grype.json\"):\n    if (root / name).exists():\n        raise RuntimeError(f\"Refusing to overwrite {name}\")\n    subprocess.run([\"docker\", \"cp\", \"-a\", \"efcc0f28346863668b6e7a5365c1072ebcfe2c190272c076668ca16766592380:/cache/outputs/\" + name, str(root / name)], check=True)\n    print(\"Exported \" + name)"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:00:25.620417+00:00",
+      "finished_at": "2026-11-18T00:00:25.700024+00:00",
+      "elapsed_seconds": 0.079607,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-final-scan-export.log",
+      "log_sha256": "1d125c690db3ffd2148d87f894bad68019bbff020355a65162a5f702bdfaddd9",
+      "log_size": 146,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-component-task-log-export",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, subprocess; from pathlib import Path\npath = Path(\"<store>/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar\")\ncommand = [\"docker\", \"cp\", \"efcc0f28346863668b6e7a5365c1072ebcfe2c190272c076668ca16766592380:/work/build-baseline/tmp/work/cortexa57-poky-linux/libwebsockets/4.2.2-r0/temp\", \"-\"]\nwith path.open(\"xb\") as output:\n    subprocess.run(command, stdout=output, check=True)\nwith path.open(\"rb\") as stream:\n    digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\nprint(json.dumps({\"size\": path.stat().st_size, \"sha256\": digest, \"locator\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar\"}, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:06:53.036266+00:00",
+      "finished_at": "2026-11-18T00:06:53.144797+00:00",
+      "elapsed_seconds": 0.108531,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-component-task-log-export.log",
+      "log_sha256": "1518cadc80decee5e504efb2f2d4b0150b392ae89055124a2867da91bc46b6b2",
+      "log_size": 208,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-native-cpe-controlled-scan",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "1g",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,volume-subpath=db,target=/cache/db,readonly",
+        "--env",
+        "HOME=/cache/home",
+        "--env",
+        "TMPDIR=/cache/tmp",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/cache/db",
+        "--env",
+        "GRYPE_INCLUDE_MATCHER_SUPPRESSIONS=true",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/work/build-baseline/tmp/deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json",
+        "-o",
+        "json",
+        "--file",
+        "/cache/outputs/baseline-library-native-all-grype.json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:06:53.042982+00:00",
+      "finished_at": "2026-11-18T00:06:54.217216+00:00",
+      "elapsed_seconds": 1.174234,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-native-cpe-controlled-scan.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-supplemental-source-hashes",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--entrypoint",
+        "python3",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-scanner,target=/cache,readonly",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import hashlib, json, os, subprocess; from pathlib import Path\nwork = Path(\"/work/build-baseline/tmp/work/cortexa57-poky-linux/libwebsockets/4.2.2-r0\")\ncommit = subprocess.check_output([\"git\", \"-C\", str(work / \"git\"), \"rev-parse\", \"HEAD\"], text=True).strip()\nstatus = subprocess.check_output([\"git\", \"-C\", str(work / \"git\"), \"status\", \"--porcelain\"], text=True)\nif commit != \"8d605f0649ed1ab6d27a443c7688598ea21fdb75\" or status:\n    raise RuntimeError(\"Component source identity or cleanliness changed\")\napplied = work / \"git/.pc/applied-patches\"\npatches = applied.read_text().splitlines() if applied.exists() else []\nif patches:\n    raise RuntimeError(\"Unexpected local component patches\")\npaths = {\"libwebsockets-CMakeCache.txt\": work / \"build/CMakeCache.txt\", \"libwebsockets-CMakeCCompiler.cmake\": work / \"build/CMakeFiles/3.22.3/CMakeCCompiler.cmake\", \"libwebsockets-lws_config.h\": work / \"build/include/lws_config.h\"}\nfor path in Path(\"/work/records/sti-108\").iterdir():\n    paths[\"build-metadata/\" + path.name] = path\nfor path in Path(\"/cache/outputs\").iterdir():\n    paths[\"scans/\" + path.name] = path\nfor name in (\"import.json\", \"vulnerability.db\"):\n    paths[\"grype-db/6/\" + name] = Path(\"/cache/db/6\") / name\nitems = []\nfor relative, path in sorted(paths.items()):\n    with path.open(\"rb\") as stream:\n        digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n    items.append({\"path\": relative, \"size\": path.stat().st_size, \"sha256\": digest})\nstat = os.statvfs(\"/work\")\nprint(json.dumps({\"component_source_commit\": commit, \"component_worktree_clean\": True, \"existing_component_patch_order\": patches, \"quilt_state_present\": applied.exists(), \"linux_filesystem_available_bytes\": stat.f_bavail * stat.f_frsize, \"files\": items}, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:07:48.764130+00:00",
+      "finished_at": "2026-11-18T00:07:50.307457+00:00",
+      "elapsed_seconds": 1.543327,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-supplemental-source-hashes.log",
+      "log_sha256": "e2de40b8a2bf34234e609c7e4f259545e0c6dd25867cd6ec9f229e520772b878",
+      "log_size": 2614,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-supplemental-export-verify",
+      "argv": [
+        "python3",
+        "-c",
+        "import copy, hashlib, json, shutil; from pathlib import Path\nstore = Path(\"<store>\")\nroot = store / \"artifacts/20261117-sti108-baseline\"\nsource = json.loads((store / \"logs/sti-108-supplemental-source-hashes.log\").read_text())\nfor item in source[\"files\"]:\n    path = root / item[\"path\"]\n    with path.open(\"rb\") as stream:\n        digest = hashlib.file_digest(stream, \"sha256\").hexdigest()\n    if path.stat().st_size != item[\"size\"] or digest != item[\"sha256\"]:\n        raise RuntimeError(\"Supplemental artifact mismatch: \" + item[\"path\"])\noriginal = json.loads((root / \"deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json\").read_text())\nnormalized = json.loads((root / \"scans/libwebsockets-reference-type-normalized.spdx.json\").read_text())\nrestored = copy.deepcopy(normalized)\nrestored[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"] = original[\"packages\"][0][\"externalRefs\"][0][\"referenceType\"]\nif restored != original:\n    raise RuntimeError(\"The CPE diagnostic changed more than the declared reference-type field\")\nraw = json.loads((root / \"scans/baseline-library-native-all-grype.json\").read_text())\nfixed = json.loads((root / \"scans/baseline-library-normalized-grype.json\").read_text())\na = copy.deepcopy(raw[\"descriptor\"][\"configuration\"])\nb = copy.deepcopy(fixed[\"descriptor\"][\"configuration\"])\na.pop(\"file\")\nb.pop(\"file\")\nif a != b or raw[\"matches\"] or len(fixed[\"matches\"]) != 1:\n    raise RuntimeError(\"Controlled CPE diagnostic did not preserve configuration or expected observed counts\")\nif fixed[\"matches\"][0][\"vulnerability\"][\"id\"] != \"CVE-2025-1866\":\n    raise RuntimeError(\"Unexpected diagnostic finding\")\nreport = {\"status\": \"verified\", \"file_count\": len(source[\"files\"]), \"component_source_commit\": source[\"component_source_commit\"], \"component_worktree_clean\": source[\"component_worktree_clean\"], \"existing_component_patch_order\": source[\"existing_component_patch_order\"], \"controlled_scanner_configuration_equal_except_output_path\": True, \"diagnostic_semantic_changes\": [\"/packages/0/externalRefs/0/referenceType\"], \"source_inventory_sha256\": hashlib.sha256((store / \"logs/sti-108-supplemental-source-hashes.log\").read_bytes()).hexdigest(), \"linux_filesystem_available_bytes\": source[\"linux_filesystem_available_bytes\"], \"host_free_bytes\": shutil.disk_usage(root).free}\nwith (store / \"runs/sti-108-supplemental-integrity.json\").open(\"x\") as output:\n    json.dump(report, output, indent=2)\n    output.write(\"\\n\")\nprint(json.dumps(report, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:09:26.791265+00:00",
+      "finished_at": "2026-11-18T00:09:28.596477+00:00",
+      "elapsed_seconds": 1.805212,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-supplemental-export-verify.log",
+      "log_sha256": "3f2298508d673d41782ca12f2b04a811d522565a273283977cfc13afd04743c2",
+      "log_size": 534,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-baseline-boot-committed",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "1g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--mount",
+        "type=bind,source=<checkout>,target=/repo,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "/repo/tests/boot-reference.py",
+        "--qemu",
+        "/work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64",
+        "--kernel",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+        "--rootfs",
+        "/work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+        "--library-sha256",
+        "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+        "--library-version",
+        "4.2.1-v4.2.2"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:12:39.252769+00:00",
+      "finished_at": "2026-11-18T00:12:54.714788+00:00",
+      "elapsed_seconds": 15.462019,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-baseline-boot-committed.log",
+      "log_sha256": "6325d09cd780d8d03399898cae0e71fd6e7e1190f90f688ea856f6dc154b9f10",
+      "log_size": 26287,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-component-logs-source-hashes",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "1",
+        "--memory",
+        "256m",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import hashlib, json, os; from pathlib import Path\nroot = Path(\"/work/build-baseline/tmp/work/cortexa57-poky-linux/libwebsockets/4.2.2-r0/temp\")\nitems = []\nfor path in sorted(root.rglob(\"*\")):\n    relative = path.relative_to(root).as_posix()\n    if path.is_symlink():\n        items.append({\"path\": relative, \"type\": \"symlink\", \"target\": os.readlink(path)})\n    elif path.is_file():\n        with path.open(\"rb\") as stream:\n            sha = hashlib.file_digest(stream, \"sha256\").hexdigest()\n        items.append({\"path\": relative, \"type\": \"file\", \"size\": path.stat().st_size, \"sha256\": sha})\n    elif not path.is_dir():\n        raise RuntimeError(\"Unsupported source member: \" + relative)\nif not items:\n    raise RuntimeError(\"No component task logs found\")\nprint(json.dumps({\"source_root\": str(root), \"archive_prefix\": \"temp/\", \"members\": items}, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:23:26.001455+00:00",
+      "finished_at": "2026-11-18T00:23:26.137706+00:00",
+      "elapsed_seconds": 0.136251,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-component-logs-source-hashes.log",
+      "log_sha256": "bcad4c9942941bce721857aa9d2cf07d493bccef130b86089806ffc78c8f8d5d",
+      "log_size": 36697,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-108-component-logs-export-verify",
+      "argv": [
+        "python3",
+        "-c",
+        "import hashlib, json, tarfile; from pathlib import Path\nstore = Path(\"<store>\")\nsource_path = store / \"logs/sti-108-component-logs-source-hashes.log\"\nsource = json.loads(source_path.read_text())\nexpected = {item[\"path\"]: item for item in source[\"members\"]}\narchive = store / \"artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar\"\nseen = set()\nwith tarfile.open(archive, \"r:\") as stream:\n    for member in stream:\n        if member.isdir():\n            continue\n        if not member.name.startswith(source[\"archive_prefix\"]):\n            raise RuntimeError(\"Unexpected archive prefix: \" + member.name)\n        name = member.name[len(source[\"archive_prefix\"]):]\n        if name in seen or name not in expected:\n            raise RuntimeError(\"Unexpected or duplicate member: \" + name)\n        seen.add(name)\n        item = expected[name]\n        if item[\"type\"] == \"file\":\n            if not member.isfile() or member.size != item[\"size\"]:\n                raise RuntimeError(\"Incorrect file type/size: \" + name)\n            with stream.extractfile(member) as data:\n                if hashlib.file_digest(data, \"sha256\").hexdigest() != item[\"sha256\"]:\n                    raise RuntimeError(\"Incorrect file bytes: \" + name)\n        elif item[\"type\"] == \"symlink\":\n            if not member.issym() or member.linkname != item[\"target\"]:\n                raise RuntimeError(\"Incorrect link target: \" + name)\n        else:\n            raise RuntimeError(\"Unexpected source member type: \" + name)\nif seen != set(expected):\n    raise RuntimeError(\"Incomplete component task-log handoff\")\nwith archive.open(\"rb\") as data:\n    sha = hashlib.file_digest(data, \"sha256\").hexdigest()\nresult = {\"status\": \"verified\", \"archive\": \"local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar\", \"archive_size\": archive.stat().st_size, \"archive_sha256\": sha, \"source_index_sha256\": hashlib.sha256(source_path.read_bytes()).hexdigest(), \"regular_files\": sum(item[\"type\"] == \"file\" for item in expected.values()), \"symlinks\": sum(item[\"type\"] == \"symlink\" for item in expected.values()), \"logical_file_bytes\": sum(item[\"size\"] for item in expected.values() if item[\"type\"] == \"file\")}\nwith (store / \"runs/sti-108-component-logs-integrity.json\").open(\"x\") as output:\n    json.dump(result, output, indent=2)\n    output.write(\"\\n\")\nprint(json.dumps(result, indent=2))"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T00:24:25.332087+00:00",
+      "finished_at": "2026-11-18T00:24:25.371690+00:00",
+      "elapsed_seconds": 0.039603,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-108-component-logs-export-verify.log",
+      "log_sha256": "6835adf6163abef137557a74d1c308d7724fd68ab3f44b046cb231eefe3b976b",
+      "log_size": 416,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin",
+      "size": 20648448,
+      "sha256": "4866e9a8df7c5be803372af05fc187b35792ef170fd2d8745053f18f6af6d36c",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.qemuboot.conf",
+      "size": 1827,
+      "sha256": "3e361dea0f56d0768173303e9f3a4fecc5f038cf50adbfb79cf9d3fd4fb5cf7a",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.qemuboot.conf"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4",
+      "size": 25911296,
+      "sha256": "07e2abd01189da6a977eb0ae0c07136079d3a67f260e2c27aef2bb8d311a5e83",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.ext4"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.manifest",
+      "size": 1295,
+      "sha256": "25ced8ee904266fae310ae61fa30736718e9303183ab43c90936e5d9746488fd",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.manifest"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.tar.bz2",
+      "size": 8227303,
+      "sha256": "737f75a31fc213ef3155846a50274042cc2e825e500ad3f0235c0d3b9ddb9df8",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.rootfs.tar.bz2"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.index.json",
+      "size": 41453,
+      "sha256": "d91e5ddfc8d29baea8a11febcae48cd0f61cd126f1ec37aa9e076d20cc6b7db3",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.index.json"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.json",
+      "size": 44674,
+      "sha256": "b3adf92dd8cc1cb27823f41c5982f0f72eb41883b0c0eaf24e7201e96f2a5f72",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.json"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.tar.zst",
+      "size": 155674,
+      "sha256": "a77bdedba9cfe7a5182ec2ec1fec7a385ea836c24c61b9e93b64109f8d2dc88f",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.spdx.tar.zst"
+    },
+    {
+      "path": "images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.testdata.json",
+      "size": 283396,
+      "sha256": "5098f12fc83877fac7450a1b1242dee8aa6cafb435441524efbea59549e2f58b",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261117213416.testdata.json"
+    },
+    {
+      "path": "images/qemuarm64/modules--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.tgz",
+      "size": 2046537,
+      "sha256": "37d6dce5dca0ef1622297b29a4983de6566789c832b754450dc9626ede2c2e8f",
+      "role": "image-build-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/images/qemuarm64/modules--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.tgz"
+    },
+    {
+      "path": "ipk/cortexa57/libwebsockets-dbg_4.2.2-r0_cortexa57.ipk",
+      "size": 624914,
+      "sha256": "83c18ce4f62b674aae9816722fd18a0f10acf9ce714d07a256d7bb0bcdbfdf73",
+      "role": "component-package",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/ipk/cortexa57/libwebsockets-dbg_4.2.2-r0_cortexa57.ipk"
+    },
+    {
+      "path": "ipk/cortexa57/libwebsockets-dev_4.2.2-r0_cortexa57.ipk",
+      "size": 149336,
+      "sha256": "4ea6207c9481ece651cf3730af71a525767cbea915a595f686f514e71fb72c27",
+      "role": "component-package",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/ipk/cortexa57/libwebsockets-dev_4.2.2-r0_cortexa57.ipk"
+    },
+    {
+      "path": "ipk/cortexa57/libwebsockets-evlib-uv_4.2.2-r0_cortexa57.ipk",
+      "size": 6986,
+      "sha256": "59ad1d2cf4f06f6a56992f97262c7f28ad8096c496bf1843f407971842ef7d09",
+      "role": "component-package",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/ipk/cortexa57/libwebsockets-evlib-uv_4.2.2-r0_cortexa57.ipk"
+    },
+    {
+      "path": "ipk/cortexa57/libwebsockets-src_4.2.2-r0_cortexa57.ipk",
+      "size": 391026,
+      "sha256": "1d73019ca5cf3ddca6c22a32080537d049610cb268e9f781626ccec908f50527",
+      "role": "component-package",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/ipk/cortexa57/libwebsockets-src_4.2.2-r0_cortexa57.ipk"
+    },
+    {
+      "path": "ipk/cortexa57/libwebsockets-testapps_4.2.2-r0_cortexa57.ipk",
+      "size": 2945590,
+      "sha256": "cb7d0a085b8acbf8b775ab8c90e2a04d787e538227aeead14d65959bdc949556",
+      "role": "component-package",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/ipk/cortexa57/libwebsockets-testapps_4.2.2-r0_cortexa57.ipk"
+    },
+    {
+      "path": "ipk/cortexa57/libwebsockets18_4.2.2-r0_cortexa57.ipk",
+      "size": 162314,
+      "sha256": "b0f1c1a3cab4842fa31bc5a6032db995950293ab8886f2335521c801ff0f7bf0",
+      "role": "component-package",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/ipk/cortexa57/libwebsockets18_4.2.2-r0_cortexa57.ipk"
+    },
+    {
+      "path": "sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/libwebsockets-4.2.2-r0-recipe.tar.xz",
+      "size": 1324,
+      "sha256": "8f06b4bff8c5e9a2e6281946b77bbd0f546c2b3b15b2bb44f32a0285712af51f",
+      "role": "component-source-and-recipe-archive",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/libwebsockets-4.2.2-r0-recipe.tar.xz"
+    },
+    {
+      "path": "sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/libwebsockets-4.2.2-r0.tar.xz",
+      "size": 12865244,
+      "sha256": "857fe47f5f9da7f8b5f2659748a71e10414f908496b997fbb37d8c84e0865564",
+      "role": "component-source-and-recipe-archive",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/libwebsockets-4.2.2-r0.tar.xz"
+    },
+    {
+      "path": "spdx/qemuarm64/packages/libwebsockets18.spdx.json",
+      "size": 56772,
+      "sha256": "611b6b72cd44f81d4a451e23f2c9e8fd0af6b772315e2c94b742a213845fd2f3",
+      "role": "component-build-sbom",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/spdx/qemuarm64/packages/libwebsockets18.spdx.json"
+    },
+    {
+      "path": "spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json",
+      "size": 26430,
+      "sha256": "bef10b30955a32d0b42fa60c0ec56f9a9fe2beb20594d759eb2a925017c62abd",
+      "role": "component-build-sbom",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "archive_member": "deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json"
+    },
+    {
+      "path": "build-metadata/gcc-cross.env",
+      "size": 2122435,
+      "sha256": "f1a14d12dcd7dc3208803732af440b69c2b6991f91a6d404748acbcd0601511b",
+      "role": "effective-build-metadata",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/build-metadata/gcc-cross.env"
+    },
+    {
+      "path": "build-metadata/kernel.env",
+      "size": 2646878,
+      "sha256": "06391420e5811c3f37520698f3af66c03facf30a4908562d975b10a80e89c182",
+      "role": "effective-build-metadata",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/build-metadata/kernel.env"
+    },
+    {
+      "path": "build-metadata/libwebsockets.env",
+      "size": 1898446,
+      "sha256": "f86ab295b4ef34adbc67cdedeef3d7d0e4ec3536db1f3c4f21f75bb358bbbcdf",
+      "role": "effective-build-metadata",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/build-metadata/libwebsockets.env"
+    },
+    {
+      "path": "grype-db/6/import.json",
+      "size": 268,
+      "sha256": "12f4a2f25f0d3c4d1dda30c16b4be19a17eb1ab25378862692e837541938de17",
+      "role": "frozen-scanner-database",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/grype-db/6/import.json"
+    },
+    {
+      "path": "grype-db/6/vulnerability.db",
+      "size": 3478642688,
+      "sha256": "303ba44739343769e0e15bd0d50af62e142491b256bb533a8cfaf13ab00ca1b7",
+      "role": "frozen-scanner-database",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/grype-db/6/vulnerability.db"
+    },
+    {
+      "path": "libwebsockets-CMakeCCompiler.cmake",
+      "size": 4161,
+      "sha256": "9d62f083e469cf161a2a1dc46ff426c9f8ddd4e432fbf0d1c3d51a17e048eece",
+      "role": "effective-build-metadata",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-CMakeCCompiler.cmake"
+    },
+    {
+      "path": "libwebsockets-CMakeCache.txt",
+      "size": 52864,
+      "sha256": "c307f71467ba56306d090c2072b91d4cf2ffead9724c518a75c62a63f7131042",
+      "role": "effective-build-metadata",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-CMakeCache.txt"
+    },
+    {
+      "path": "libwebsockets-lws_config.h",
+      "size": 7331,
+      "sha256": "e3ecd90ffe8fd43f7f391c0d356f7af5eee12a783931573b26622e6dd32cfa86",
+      "role": "effective-build-metadata",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-lws_config.h"
+    },
+    {
+      "path": "scans/baseline-built-cpe-grype.json",
+      "size": 8091,
+      "sha256": "c4cbe0a7a2612a96a254f525f2098cd2e75e177387f9af8c8a76657a2dc0699f",
+      "role": "scanner-input-or-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/scans/baseline-built-cpe-grype.json"
+    },
+    {
+      "path": "scans/baseline-image-grype.json",
+      "size": 5851,
+      "sha256": "edb7989a614856be5e0ed62c8d44daa6690fa277f2ba23ff02968ddf1b89b33e",
+      "role": "scanner-input-or-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/scans/baseline-image-grype.json"
+    },
+    {
+      "path": "scans/baseline-library-native-all-grype.json",
+      "size": 5837,
+      "sha256": "1c15125b225dfdb9598576ad8424cd00a8aeea5deeebe589f7e4258104ea4aa9",
+      "role": "scanner-input-or-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/scans/baseline-library-native-all-grype.json"
+    },
+    {
+      "path": "scans/baseline-library-normalized-grype.json",
+      "size": 8175,
+      "sha256": "d10f772a8d45dbc2fc1d254c0ebc537729cec56919f80be825df9bb927f603bb",
+      "role": "scanner-input-or-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/scans/baseline-library-normalized-grype.json"
+    },
+    {
+      "path": "scans/baseline-libwebsockets-grype.json",
+      "size": 5833,
+      "sha256": "2d35f324fd1464b040f406373fd6343e9830f67cd8c1c96ed2ab691cc96c229f",
+      "role": "scanner-input-or-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/scans/baseline-libwebsockets-grype.json"
+    },
+    {
+      "path": "scans/libwebsockets-reference-type-normalized.spdx.json",
+      "size": 26400,
+      "sha256": "17a65a4a461f6bc9aec0fec76e543227c813b3bce25266b322abfa709f4c4115",
+      "role": "scanner-input-or-output",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/scans/libwebsockets-reference-type-normalized.spdx.json"
+    },
+    {
+      "path": "deploy.tar",
+      "size": 1977942016,
+      "sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "role": "canonical-complete-build-handoff",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar"
+    },
+    {
+      "path": "libwebsockets-task-logs.tar",
+      "size": 2025984,
+      "sha256": "9c4a51113d9625dc467ad9157c006f7d872c3ff27b95e31577908eba6936505c",
+      "role": "component-task-logs-and-run-scripts",
+      "variant": "baseline",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar"
+    },
+    {
+      "path": "logs/sti-108-deploy-source-hashes.log",
+      "role": "complete-deploy-member-index",
+      "variant": "baseline",
+      "size": 5062182,
+      "sha256": "97ad7f94118600db2390061cfd6f5cf889c993f47365e0f657e83924ab67098c",
+      "locator": "local://firmdura-kirkstone/logs/sti-108-deploy-source-hashes.log"
+    }
+  ],
+  "results": {
+    "image_build": {
+      "status": "passed",
+      "executed_tasks": 4921,
+      "tasks_not_rerun": 0,
+      "warnings": [
+        "gnu-config-native-20211108+gitAUTOINC+191bcb948f-r0 do_fetch: Failed to fetch URL git://git.savannah.gnu.org/git/config.git;protocol=https;branch=master, attempting MIRRORS if available",
+        "xmlto-native-0.0.28-r0 do_fetch: Failed to fetch URL https://releases.pagure.org/xmlto/xmlto-0.0.28.tar.gz, attempting MIRRORS if available",
+        "curl-7.82.0-r0 do_package_qa: QA Issue: supports ptests but is not included in oe-core's ptest-packagelists.inc [missing-ptest]",
+        "virglrenderer-native-0.9.1-r0 do_fetch: Failed to fetch URL git://anongit.freedesktop.org/git/virglrenderer;branch=branch-0.9.1;protocol=https, attempting MIRRORS if available"
+      ]
+    },
+    "effective_library": {
+      "FILE": "/work/build-baseline/../meta-openembedded/meta-oe/recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bb",
+      "PN": "libwebsockets",
+      "PV": "4.2.2",
+      "SRCREV": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+      "SRC_URI": "git://github.com/warmcat/libwebsockets.git;protocol=https;branch=v4.2-stable",
+      "PACKAGECONFIG": "libuv client server http2 ssl",
+      "EXTRA_OECMAKE": "      -DLIB_SUFFIX=   -DLWS_WITHOUT_CLIENT=OFF -DLWS_WITH_HTTP2=ON -DLWS_IPV6=OFF -DLWS_WITH_LIBEV=OFF -DLWS_WITH_LIBEVENT=OFF -DLWS_WITH_LIBUV=ON -DLWS_WITHOUT_SERVER=OFF -DLWS_WITH_SSL=ON -DLWS_WITH_STATIC=OFF -DLWS_LINK_TESTAPPS_DYNAMIC=ON",
+      "MACHINE": "qemuarm64",
+      "TARGET_SYS": "aarch64-poky-linux",
+      "BUILD_SYS": "aarch64-linux",
+      "DISTRO_VERSION": "4.0.35",
+      "BB_VERSION": "2.0.0"
+    },
+    "effective_kernel": {
+      "FILE": "/work/build-baseline/../meta-lts-collab/meta-core/recipes-kernel/linux/linux-yocto_5.15.bb",
+      "PV": "5.15.211+gitAUTOINC+73e7c4ea36_e3ab4c73da",
+      "LINUX_VERSION": "5.15.211",
+      "SRCREV_FORMAT": "meta_machine",
+      "SRCREV_machine": "e3ab4c73da88d36e404b7dfc1d64ba2342036b97",
+      "SRCREV_meta": "73e7c4ea36642d31ee39ec35ab6b5cf55f139ed1",
+      "SRC_URI": "git://git.yoctoproject.org/linux-yocto.git;protocol=https;name=machine;branch=v5.15/standard/qemuarm64;            git://git.yoctoproject.org/yocto-kernel-cache;protocol=https;type=kmeta;name=meta;branch=yocto-5.15;destsuffix=kernel-meta",
+      "KBRANCH": "v5.15/standard/qemuarm64",
+      "KMACHINE": "qemuarm64"
+    },
+    "compiled_library_features": {
+      "LWS_WITH_HTTP2": "ON",
+      "LWS_WITH_SHARED": "ON",
+      "LWS_WITH_STATIC": "OFF",
+      "LWS_LINK_TESTAPPS_DYNAMIC": "ON",
+      "LWS_WITHOUT_SERVER": "OFF",
+      "LWS_WITHOUT_CLIENT": "OFF",
+      "LWS_WITH_LIBUV": "ON",
+      "LWS_WITH_SSL": "ON"
+    },
+    "existing_component_patch_order": [],
+    "component_source_worktree_clean": true,
+    "installed_packages": [
+      {
+        "name": "base-files",
+        "architecture": "qemuarm64",
+        "version": "3.0.14-r89"
+      },
+      {
+        "name": "base-passwd",
+        "architecture": "cortexa57",
+        "version": "3.5.52-r0"
+      },
+      {
+        "name": "busybox",
+        "architecture": "cortexa57",
+        "version": "1.35.0-r0"
+      },
+      {
+        "name": "busybox-hwclock",
+        "architecture": "cortexa57",
+        "version": "1.35.0-r0"
+      },
+      {
+        "name": "busybox-syslog",
+        "architecture": "cortexa57",
+        "version": "1.35.0-r0"
+      },
+      {
+        "name": "busybox-udhcpc",
+        "architecture": "cortexa57",
+        "version": "1.35.0-r0"
+      },
+      {
+        "name": "eudev",
+        "architecture": "cortexa57",
+        "version": "3.2.10-r0"
+      },
+      {
+        "name": "init-ifupdown",
+        "architecture": "qemuarm64",
+        "version": "1.0-r7"
+      },
+      {
+        "name": "init-system-helpers-service",
+        "architecture": "cortexa57",
+        "version": "1.62-r0"
+      },
+      {
+        "name": "initscripts",
+        "architecture": "cortexa57",
+        "version": "1.0-r155"
+      },
+      {
+        "name": "initscripts-functions",
+        "architecture": "cortexa57",
+        "version": "1.0-r155"
+      },
+      {
+        "name": "ldconfig",
+        "architecture": "cortexa57",
+        "version": "2.35-r0"
+      },
+      {
+        "name": "libblkid1",
+        "architecture": "cortexa57",
+        "version": "2.37.4-r0"
+      },
+      {
+        "name": "libc6",
+        "architecture": "cortexa57",
+        "version": "2.35-r0"
+      },
+      {
+        "name": "libcrypto3",
+        "architecture": "cortexa57",
+        "version": "3.0.22-r0"
+      },
+      {
+        "name": "libgcc1",
+        "architecture": "cortexa57",
+        "version": "11.5.0-r0"
+      },
+      {
+        "name": "libkmod2",
+        "architecture": "cortexa57",
+        "version": "29-r0"
+      },
+      {
+        "name": "liblzma5",
+        "architecture": "cortexa57",
+        "version": "5.2.6-r0"
+      },
+      {
+        "name": "libssl3",
+        "architecture": "cortexa57",
+        "version": "3.0.22-r0"
+      },
+      {
+        "name": "libtinfo5",
+        "architecture": "cortexa57",
+        "version": "6.3+20220423-r0"
+      },
+      {
+        "name": "libuv1",
+        "architecture": "cortexa57",
+        "version": "1.44.2-r0"
+      },
+      {
+        "name": "libwebsockets-evlib-uv",
+        "architecture": "cortexa57",
+        "version": "4.2.2-r0"
+      },
+      {
+        "name": "libwebsockets-testapps",
+        "architecture": "cortexa57",
+        "version": "4.2.2-r0"
+      },
+      {
+        "name": "libwebsockets18",
+        "architecture": "cortexa57",
+        "version": "4.2.2-r0"
+      },
+      {
+        "name": "libz1",
+        "architecture": "cortexa57",
+        "version": "1.2.11-r0"
+      },
+      {
+        "name": "modutils-initscripts",
+        "architecture": "cortexa57",
+        "version": "1.0-r7"
+      },
+      {
+        "name": "ncurses-terminfo-base",
+        "architecture": "cortexa57",
+        "version": "6.3+20220423-r0"
+      },
+      {
+        "name": "netbase",
+        "architecture": "all",
+        "version": "1:6.3-r0"
+      },
+      {
+        "name": "openssl-conf",
+        "architecture": "cortexa57",
+        "version": "3.0.22-r0"
+      },
+      {
+        "name": "openssl-ossl-module-legacy",
+        "architecture": "cortexa57",
+        "version": "3.0.22-r0"
+      },
+      {
+        "name": "packagegroup-core-boot",
+        "architecture": "qemuarm64",
+        "version": "1.0-r17"
+      },
+      {
+        "name": "pstree",
+        "architecture": "cortexa57",
+        "version": "23.4-r0"
+      },
+      {
+        "name": "ptest-runner",
+        "architecture": "cortexa57",
+        "version": "2.4.2+git0+bcb82804da-r0"
+      },
+      {
+        "name": "run-postinsts",
+        "architecture": "all",
+        "version": "1.0-r10"
+      },
+      {
+        "name": "sysvinit",
+        "architecture": "cortexa57",
+        "version": "3.01-r0"
+      },
+      {
+        "name": "sysvinit-inittab",
+        "architecture": "qemuarm64",
+        "version": "2.88dsf-r10"
+      },
+      {
+        "name": "sysvinit-pidof",
+        "architecture": "cortexa57",
+        "version": "3.01-r0"
+      },
+      {
+        "name": "update-alternatives-opkg",
+        "architecture": "cortexa57",
+        "version": "0.5.0-r0"
+      },
+      {
+        "name": "update-rc.d",
+        "architecture": "all",
+        "version": "0.8-r0"
+      }
+    ],
+    "library_package_provenance": {
+      "control": "Package: libwebsockets18\nVersion: 4.2.2-r0\nDescription: Canonical libwebsockets.org websocket library\n Canonical libwebsockets.org websocket library.\nSection: base\nPriority: optional\nMaintainer: Poky <poky@lists.yoctoproject.org>\nLicense: MIT & Zlib & BSD-3-Clause & Apache-2.0\nArchitecture: cortexa57\nOE: libwebsockets\nHomepage: https://libwebsockets.org/\nDepends: libc6 (>= 2.35), libcrypto3 (>= 3.0.22), libssl3 (>= 3.0.22), libwebsockets-evlib-uv\nProvides: libwebsockets\nSource: libwebsockets_4.2.2.bb\n",
+      "library_sha256": "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+      "library_size": 436448,
+      "matches_rootfs_archive": true
+    },
+    "library_spdx_file": {
+      "SPDXID": "SPDXRef-PackagedFile-libwebsockets18-1",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "b5138861fb6b7c10312dc752d635dcad58c01fde"
+        },
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a"
+        }
+      ],
+      "copyrightText": "NOASSERTION",
+      "fileName": "usr/lib/libwebsockets.so.18",
+      "fileTypes": [
+        "BINARY"
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "licenseInfoInFiles": [
+        "NOASSERTION"
+      ]
+    },
+    "boot_check": {
+      "status": "passed",
+      "scope": "boot-and-library-identity-only",
+      "elapsed_seconds": 15.235729891999654,
+      "observations": {
+        "architecture": "aarch64",
+        "kernel": "uname -r; rc=$?; printf '\\n__FIRMDURA_RC_2__=%s\\n' \"$rc\"\n5.15.211-yocto-standard\n\n",
+        "distro_banner": "cat /etc/issue; rc=$?; printf '\\n__FIRMDURA_RC_3__=%s\\n' \"$r\nc\"\nPoky (Yocto Project Reference Distro) 4.0.35 \\n \\l\n\n\n",
+        "library_sha256": "77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a",
+        "library_version": "4.2.1-v4.2.2",
+        "runtime_features": "NET CLI SRV H1 H2 WS",
+        "loaded_library": "grep -F /usr/lib/libwebsockets.so.18 /proc/\"$lws_pid\"/maps; \nrc=$?; printf '\\n__FIRMDURA_RC_7__=%s\\n' \"$rc\"\n7f9baa0000-7f9bb07000 r-xp 00000000 fd:00 495                            /usr/lib/libwebsockets.so.18\n7f9bb07000-7f9bb17000 ---p 00067000 fd:00 495                            /usr/lib/libwebsockets.so.18\n7f9bb17000-7f9bb1a000 r--p 00067000 fd:00 495                            /usr/lib/libwebsockets.so.18\n7f9bb1a000-7f9bb1b000 rw-p 0006a000 fd:00 495                            /usr/lib/libwebsockets.so.18\n\n"
+      },
+      "originals_unchanged": true
+    },
+    "wrong_library_negative_control": {
+      "driver_sha256": "5a60fecd324b28db8bfaa6182c6f005a2f6b488f5d92066be863d6d4c43011bf",
+      "positive_run": "sti-108-baseline-boot-04",
+      "positive_exit": 0,
+      "negative_run": "sti-108-boot-rejects-wrong-library",
+      "negative_expected_exit": 1,
+      "negative_actual_exit": 1,
+      "negative_guard": "exact guest library SHA-256"
+    },
+    "canonical_artifact_integrity": {
+      "status": "verified",
+      "files": 16851,
+      "symlinks": 9618,
+      "logical_file_bytes": 1963428739,
+      "archive_size": 1977942016,
+      "archive_sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "source_index_sha256": "97ad7f94118600db2390061cfd6f5cf889c993f47365e0f657e83924ab67098c",
+      "locator": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/deploy.tar",
+      "directory_export_is_canonical": false,
+      "absolute_aliases": [
+        {
+          "path": "licenses/firmdura-reference-baseline-qemuarm64",
+          "target": "/work/build-baseline/tmp/deploy/licenses/firmdura-reference-baseline-qemuarm64-20261117213416",
+          "archive_member": "deploy/licenses/firmdura-reference-baseline-qemuarm64-20261117213416"
+        }
+      ],
+      "restore_root": "/work/build-baseline/tmp/deploy/",
+      "relocatable_without_alias_handling": false
+    },
+    "component_task_log_integrity": {
+      "status": "verified",
+      "archive": "local://firmdura-kirkstone/artifacts/20261117-sti108-baseline/libwebsockets-task-logs.tar",
+      "archive_size": 2025984,
+      "archive_sha256": "9c4a51113d9625dc467ad9157c006f7d872c3ff27b95e31577908eba6936505c",
+      "source_index_sha256": "bcad4c9942941bce721857aa9d2cf07d493bccef130b86089806ffc78c8f8d5d",
+      "regular_files": 163,
+      "symlinks": 49,
+      "logical_file_bytes": 1870837
+    },
+    "supplemental_artifact_integrity": {
+      "status": "verified",
+      "file_count": 14,
+      "component_source_commit": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+      "component_worktree_clean": true,
+      "existing_component_patch_order": [],
+      "controlled_scanner_configuration_equal_except_output_path": true,
+      "diagnostic_semantic_changes": [
+        "/packages/0/externalRefs/0/referenceType"
+      ],
+      "source_inventory_sha256": "e2de40b8a2bf34234e609c7e4f259545e0c6dd25867cd6ec9f229e520772b878",
+      "linux_filesystem_available_bytes": 27374813184,
+      "host_free_bytes": 48782565376
+    },
+    "scanner_preflight": {
+      "status": "blocked",
+      "required_cve": "CVE-2026-19773",
+      "actual_scans": [
+        {
+          "path": "scans/baseline-built-cpe-grype.json",
+          "matches": 1,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "vulnerability_ids": [
+            "CVE-2025-1866"
+          ],
+          "vex_documents": [],
+          "builtin_kernel_header_ignore_rules": 4,
+          "include_matcher_suppressions": true
+        },
+        {
+          "path": "scans/baseline-image-grype.json",
+          "matches": 0,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "vulnerability_ids": [],
+          "vex_documents": [],
+          "builtin_kernel_header_ignore_rules": 4,
+          "include_matcher_suppressions": false
+        },
+        {
+          "path": "scans/baseline-library-native-all-grype.json",
+          "matches": 0,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "vulnerability_ids": [],
+          "vex_documents": [],
+          "builtin_kernel_header_ignore_rules": 4,
+          "include_matcher_suppressions": true
+        },
+        {
+          "path": "scans/baseline-library-normalized-grype.json",
+          "matches": 1,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "vulnerability_ids": [
+            "CVE-2025-1866"
+          ],
+          "vex_documents": [],
+          "builtin_kernel_header_ignore_rules": 4,
+          "include_matcher_suppressions": true
+        },
+        {
+          "path": "scans/baseline-libwebsockets-grype.json",
+          "matches": 0,
+          "required_cve_matches": 0,
+          "ignored_matches": 0,
+          "vulnerability_ids": [],
+          "vex_documents": [],
+          "builtin_kernel_header_ignore_rules": 4,
+          "include_matcher_suppressions": false
+        }
+      ],
+      "native_image_spdx_packages": 1,
+      "native_image_external_document_references": 78,
+      "native_image_scan_is_complete_inventory": false,
+      "cpe_interoperability": "Full-URI reference type is not decoded by this released Syft version. Changing only that JSON field to cpe23Type identifies the actual component; matcher settings were controlled.",
+      "diagnostic_scope": "Component-only diagnosis. Original SBOM graph is unchanged; no distro/package/CVE mapping was injected.",
+      "nvd_record": {
+        "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-19773",
+        "id": "CVE-2026-19773",
+        "published": "2026-09-15T19:17:17.747",
+        "lastModified": "2026-09-18T19:10:46.443",
+        "vulnStatus": "Awaiting Analysis",
+        "configurations": null,
+        "references": [
+          {
+            "url": "https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b",
+            "source": "zdi-disclosures@trendmicro.com"
+          },
+          {
+            "url": "https://www.zerodayinitiative.com/advisories/ZDI-26-590/",
+            "source": "zdi-disclosures@trendmicro.com"
+          }
+        ]
+      },
+      "grype_nvd_status": "analyzing",
+      "grype_nvd_affected_packages": 0,
+      "observed_target_affected_package_providers": [
+        "debian",
+        "echo",
+        "ubuntu"
+      ],
+      "other_finding": "CVE-2025-1866 is Win32-only; retained in raw output, not accepted as a Linux replacement or suppressed with VEX."
+    },
+    "resources": {
+      "host_free_space_sample_count": 357,
+      "host_minimum_sampled_free_bytes": 36186894336,
+      "host_floor_bytes": 26843545600,
+      "resource_monitor_exit_code": 1,
+      "resource_monitor_finalization_note": "Final inspection after successful build removal did not recognize Docker's lowercase no-such-object message. Sampling continued through the build; the corrected finalizer was checked separately.",
+      "linux_available_bytes_before": 51068682240,
+      "linux_available_bytes_after": 27374813184,
+      "host_available_bytes_after_exports": 48782565376,
+      "peak_memory_bytes": null
+    },
+    "cve_reproduction": "not_run",
+    "repair": "not_applied",
+    "ptest_suites": "not_run",
+    "paired_image_validation": "not_run",
+    "human_repair_review": "not_run",
+    "release": "not_published"
+  },
+  "resolved_observations": [
+    {
+      "command": "sti-108-grype-db-list",
+      "observation": "Read-only /tmp; retried with a dedicated writable TMPDIR."
+    },
+    {
+      "command": "sti-108-grype-db-import",
+      "observation": "Incorrect archive URL returned 404; retried with Grype's exact listed URL."
+    },
+    {
+      "command": "sti-108-build-space-watch-01",
+      "observation": "Final inspection after successful build removal did not recognize Docker's lowercase no-such-object message. Sampling continued through the build; the corrected finalizer was checked separately."
+    },
+    {
+      "command": "sti-108-baseline-boot-01",
+      "observation": "Serial CR/CRLF framing failed; the image booted but the check did not pass."
+    },
+    {
+      "command": "sti-108-baseline-boot-02",
+      "observation": "The minimal target has no /etc/os-release; changed the check to its actual /etc/issue."
+    },
+    {
+      "command": "sti-108-deploy-export-verify",
+      "observation": "Case-insensitive directory export lost two distinct licence filenames; this directory is non-canonical."
+    },
+    {
+      "command": "sti-108-deploy-tar-verify",
+      "observation": "The first verifier rejected a preserved absolute licence alias; the final verifier checks its included original-root target without rewriting it."
+    }
+  ],
+  "limitations": [
+    "STI-108 is not Done: required scanner finding is absent. Owner reassessment is required before STI-109.",
+    "Library configuration and source inspection do not prove runtime CVE applicability; no vulnerability test or repair has run.",
+    "The native image SPDX root is not a flattened Grype inventory. The component-only diagnostic is not full-image SBOM/VEX integration.",
+    "libwebsockets package 4.2.2-r0 has upstream runtime/header version 4.2.1-v4.2.2; both identities are preserved.",
+    "No target package-manager database or os-release file is installed; provenance is tied through package, manifest, native SBOM and exact runtime bytes.",
+    "The raw macOS deploy directory is non-canonical due to case collisions. The complete tar preserves one absolute licence alias requiring its original Linux root or explicit handling.",
+    "Storage is durable on the approved local host, not an off-host backup or public download service.",
+    "Source/licence collection does not complete the STI-112 redistribution review.",
+    "No physical-board, independent replay, human repair-review, or release-approval result is claimed."
+  ],
+  "timing": {
+    "elapsed_image_build_seconds": 5366.709314,
+    "elapsed_committed_boot_check_seconds": 15.462019
+  }
+}
