@@ -1,1 +1,0 @@
-release approval policy blocked: Command ['gh', 'api', 'repos/firmdura/meta-firmdura-kirkstone/environments/release-signing'] returned non-zero exit status 1.

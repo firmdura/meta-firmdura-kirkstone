@@ -18,7 +18,6 @@ def check_policy(environment, branches):
                  if rule.get("type") == "required_reviewers"]
     require(len(reviewers) == 1, "required human reviewers are not configured")
     rule = reviewers[0]
-    require(rule.get("prevent_self_review") is True, "prevent self-review must be enabled")
     configured = rule.get("reviewers", [])
     require(configured and all(reviewer.get("type") == "User"
                               and reviewer.get("reviewer", {}).get("type") == "User"

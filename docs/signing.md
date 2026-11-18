@@ -9,8 +9,8 @@ signing, publication and public-download verification.
 ## Frozen manifest v1
 
 The [build/ownership contract](build.md#ownership-and-evidence-interface) remains
-authoritative. The signing worker proposes this concrete interface for lead
-review before packaging workers consume it:
+authoritative. The lead accepted this concrete interface on 2026-11-18 for
+STI-112, STI-113 and STI-116 consumption:
 
 - `schema_version`: integer `1`.
 - `release`: exactly `kind` (`release` or `fixture`) and `id` (the planned release
@@ -78,8 +78,15 @@ non-OIDC preflight requires the exact repository, `refs/heads/main`, and an
 existing `release-signing` environment with:
 
 1. Explicit human user reviewers (not bots or a team-only surrogate).
-2. Prevent self-review enabled.
-3. Exactly one custom deployment policy: branch `main`, not a tag or wildcard.
+2. Exactly one custom deployment policy: branch `main`, not a tag or wildcard.
+
+Explicit human environment approval is mandatory in every case. Prevent
+self-review is recommended when separate authorized dispatcher and reviewer
+accounts exist, but is not required by the preflight. With a single human
+maintainer, enabling it prevents that maintainer from approving a run dispatched
+under the same GitHub identity. The lead confirmed that `Azhovan` (Jabar Asadi)
+is the sole human collaborator/reviewer; `prevent_self_review: false` permits
+that arrangement without removing the required human approval gate.
 
 Only the subsequent environment-gated signing job gets `id-token: write`.
 Its other permissions are `contents: read` and `actions: read`; it has no release
@@ -92,10 +99,10 @@ fail the workflow, rather than silently skipping signing successfully.
 2026-11-18. The owner must configure the protection, disable administrator
 approval bypass, and verify the settings before the lead dispatches anything.
 The read API does not expose the bypass checkbox; its human readback is still
-required. With prevent-self-review, a run dispatched as the sole reviewer's
-account cannot be approved by that same account: arrange distinct authorized
-dispatcher/reviewer identities, do not weaken the rule. This worker has not
-created environments, changed permissions, dispatched workflows or published tags.
+required. The owner chooses the self-review setting appropriate to the available
+accounts, while retaining explicit human reviewers and main-only deployment.
+This worker has not created environments, changed permissions, dispatched
+workflows or published tags.
 
 The lead must review/integrate this code into trusted main **before** a fixture
 dispatch. Do not run signing code from this unreviewed topic branch.
@@ -174,6 +181,11 @@ store before expiry, obtain exact-release human approval, publish all assets,
 and run the complete public-download verifier. This workflow never publishes.
 
 ## Focused validation and the next trusted run
+
+Only the small sanitized `run.json` is committed under each evidence run
+directory. Raw command logs are retained in the approved
+`local://firmdura-kirkstone/logs/` store, with byte sizes and SHA-256 values in the
+run record. Its `<checkout>` and `<store>` aliases keep host paths out of Git.
 
 ```sh
 python3 -m unittest discover -s tests -p release_test.py -v
