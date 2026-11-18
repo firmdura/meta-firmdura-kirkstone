@@ -1,0 +1,509 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti116-release",
+  "issue": "STI-116",
+  "status": "completed",
+  "started_at": "2026-11-18T16:40:56.710052+00:00",
+  "finished_at": "2026-11-18T19:06:51.900583+00:00",
+  "release": {
+    "tag": "v0.1.0",
+    "url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0",
+    "source_commit": "4e15e71a54e32e63bfafaf3b79c99d8bbe6a0e35",
+    "paired_build_commit": "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+    "frozen_test_commit": "6e3e70b94281c8f75f52f90e77152deba7372c83",
+    "manifest_sha256": "ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3",
+    "manifest_bytes": 2489,
+    "sigstore_bundle_sha256": "952746a316c0892c8cded527f60b77ba4ab59edb0caf67111a5f15b3ad7100fc",
+    "sigstore_bundle_bytes": 11063,
+    "fulcio_leaf_cert_der_sha256": "6b955b5a82a982cb958d1fab4b19e49b294d2e625ddd6b63addd227642b7d43b",
+    "certificate_identity": "https://github.com/firmdura/meta-firmdura-kirkstone/.github/workflows/release.yml@refs/heads/main",
+    "certificate_oidc_issuer": "https://token.actions.githubusercontent.com",
+    "stage_workflow_run_id": 44372854449,
+    "staged_unsigned_artifact_id": 14460645429,
+    "signing_workflow_run_id": 44372975734,
+    "signing_workflow_url": "https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44372975734",
+    "signed_actions_artifact_id": 14461260676,
+    "deployment_id": 7892852402,
+    "retained_failed_initial_run_id": 44370405253,
+    "retained_failed_initial_run_reason": "GitHub REST API hides unpublished draft=true releases from contents:read tokens; resolved without altering candidate bytes by adding non-OIDC stage-candidate.yml (PR #17) to emit immutable ARTIFACT_ID 14460645429."
+  },
+  "human_approval": {
+    "approver_name": "Jabar Asadi",
+    "approver_github_login": "Azhovan",
+    "approver_github_user_id": 19530589,
+    "candidate_approval": "Explicit human approval recorded for v0.1.0, source.commit=4e15e71a54e32e63bfafaf3b79c99d8bbe6a0e35, manifest_sha256=ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3, and all 11 frozen payloads prior to staging/signing.",
+    "environment_deployment_approval": "Explicit human authorization on protected GitHub Environment release-signing (id 27724746813, deployment 7892852402 on run 44372975734)."
+  },
+  "published_assets": [
+    {
+      "path": "manifest.json",
+      "role": "manifest",
+      "size": 2489,
+      "sha256": "ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/manifest.json"
+    },
+    {
+      "path": "manifest.sigstore.json",
+      "role": "sigstore-bundle",
+      "size": 11063,
+      "sha256": "952746a316c0892c8cded527f60b77ba4ab59edb0caf67111a5f15b3ad7100fc",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/manifest.sigstore.json"
+    },
+    {
+      "path": "firmdura-kirkstone-cve-2026-19773.openvex.json",
+      "role": "vex",
+      "size": 2970,
+      "sha256": "68850d630989bd25002f495c43b9cd4090cefde299774274f0d1b80e348b906e",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-cve-2026-19773.openvex.json"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz",
+      "role": "qemu-bundle",
+      "size": 16416902,
+      "sha256": "ca423ae7d57f411c44916651413b6d6f3ad45d39aac4abb70498800ecd8891b0",
+      "variant": "baseline",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-baseline.spdx.json",
+      "role": "sbom",
+      "size": 262387,
+      "sha256": "050eb32b37945ded03465de1f1f178cb433d7a37c408ee1a0fc83327292e3765",
+      "variant": "baseline",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-baseline.spdx.json"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-corresponding-source.tar.gz",
+      "role": "corresponding-source",
+      "size": 436645082,
+      "sha256": "ad8bded335da769b16cf66a4b3279e93e9667e6839c1dd82cce3f8a24c86c3ef",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-corresponding-source.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-licenses-and-notices.tar.gz",
+      "role": "licenses",
+      "size": 250996,
+      "sha256": "351d071eae6de20bd95af40356ba98c353953e7fcfaa4129c4bb5a06c5f15a76",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-licenses-and-notices.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz",
+      "role": "qemu-bundle",
+      "size": 16419741,
+      "sha256": "aa04251544a1ff48e690620591255f029ca361871acc48af63ee785b462c8678",
+      "variant": "patched",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-patched.spdx.json",
+      "role": "sbom",
+      "size": 262415,
+      "sha256": "f050a6e085b2c61afa3507cd35e977252f3fcf9836f91148c099189e20009110",
+      "variant": "patched",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-patched.spdx.json"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-redistribution-inventory.json",
+      "role": "redistribution-inventory",
+      "size": 169376,
+      "sha256": "e66a37683054d0c70963e6f171e271d2530fdcc0f793687fb4959d9e7d635427",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-redistribution-inventory.json"
+    },
+    {
+      "path": "firmdura-kirkstone-v0.1.0-raw-evidence-logs.tar.gz",
+      "role": "evidence-logs",
+      "size": 6406380,
+      "sha256": "614781d570c067180d5efe86f7b24136577bb90f22f294b096145c80f494c1f5",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-v0.1.0-raw-evidence-logs.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-v0.1.0-release-notes.md",
+      "role": "release-notes",
+      "size": 5491,
+      "sha256": "982626ee2225d0dd596b6ef389c136297c27023e0e60a9c733e4cfec44278eee",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-v0.1.0-release-notes.md"
+    },
+    {
+      "path": "firmdura-kirkstone-v0.1.0-source-and-evidence.tar.gz",
+      "role": "source-layer",
+      "size": 243796,
+      "sha256": "6dd961876f76cfe21dad69815316149c144e72a1c4213fee955b10e59fecc5d6",
+      "public_url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-v0.1.0-source-and-evidence.tar.gz"
+    }
+  ],
+  "results": {
+    "pre_publish_draft_verification": "passed (verify.py draft-release, Cosign v3.1.4)",
+    "post_publish_complete_download_verification": "passed (verify.py github-release, Cosign v3.1.4, 13/13 assets)",
+    "unauthenticated_public_https_verification": "passed (curl -fsSL + verify.py verify)",
+    "public_baseline_bundle_qemu_eval": "passed expected vulnerable reproduction (oob_reproduced_subchecks=7, clean_blocked_subchecks=0, verdict=vulnerable-oob-write-reproduced, exit_code=1, ptest_exit_code=1)",
+    "public_patched_bundle_qemu_eval": "passed expected repaired bounds enforcement (oob_reproduced_subchecks=0, clean_blocked_subchecks=7, verdict=bounds-enforced-secure, post_attack_h2_alive=1, exit_code=0, ptest_exit_code=0)"
+  },
+  "limitations": [
+    "Experimental isolated evaluation sample for qemuarm64 on Poky 4.0.35 (debug-tweaks enabled); not production firmware.",
+    "NIST NVD still lists CVE-2026-19773 as Awaiting Analysis (0 stock Anchore CPE rows in DB v6.1.10); bridged truthfully via offline OSV Git provenance and isolated labelled CPE test DB.",
+    "Upstream PR garmin/meta-lts-collab#283 remains open awaiting maintainer review/CI workflow approval."
+  ],
+  "commands": [
+    {
+      "label": "sti-116-prep-unit-tests",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T17:02:47.156194+00:00",
+      "finished_at": "2026-11-18T17:02:47.410898+00:00",
+      "elapsed_seconds": 0.25453008292242885,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-prep-unit-tests.log",
+      "log_sha256": "98bb2d0d8b72942b89036a5c05fcd7ef867fd3bea310e5257f6af0b2bc23be0c",
+      "log_size": 6842
+    },
+    {
+      "label": "sti-116-assemble-v0-1-0",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T17:06:05.088822+00:00",
+      "finished_at": "2026-11-18T17:06:07.449040+00:00",
+      "elapsed_seconds": 2.3600919579621404,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-assemble-v0-1-0.log",
+      "log_sha256": "42044d8ef03d591edcd4c4de17a25a1c0d2c4dd412400df2acc8a364a1480f92",
+      "log_size": 3000
+    },
+    {
+      "label": "sti-116-check-unsigned-candidate",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T17:06:09.592774+00:00",
+      "finished_at": "2026-11-18T17:06:09.801335+00:00",
+      "elapsed_seconds": 0.20840120897628367,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-check-unsigned-candidate.log",
+      "log_sha256": "889c5b1c94cabc93f7a7d0a6c4098764e75fca81a612fc89948e5de6d8a42638",
+      "log_size": 421
+    },
+    {
+      "label": "sti-116-create-draft-release",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:12:44.189425+00:00",
+      "finished_at": "2026-11-18T18:19:11.433968+00:00",
+      "elapsed_seconds": 387.24069812498055,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-create-draft-release.log",
+      "log_sha256": "79dd0c55c20494fe01fc48cf59c1a649d5f9ccbd573a90fadb58d4947554adc4",
+      "log_size": 95
+    },
+    {
+      "label": "sti-116-verify-stage-download",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:19:11.493095+00:00",
+      "finished_at": "2026-11-18T18:30:11.936405+00:00",
+      "elapsed_seconds": 660.4368833329063,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-verify-stage-download.log",
+      "log_sha256": "889c5b1c94cabc93f7a7d0a6c4098764e75fca81a612fc89948e5de6d8a42638",
+      "log_size": 421
+    },
+    {
+      "label": "sti-116-dispatch-release-yml",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:30:12.002587+00:00",
+      "finished_at": "2026-11-18T18:30:14.489400+00:00",
+      "elapsed_seconds": 2.4866774999536574,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-dispatch-release-yml.log",
+      "log_sha256": "5f656508ec19c09a428a6facd97bebe384f27b09acd16effd7b743a3f3e37cdb",
+      "log_size": 77
+    },
+    {
+      "label": "sti-116-approve-deployment-44370405253",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:38:17.392778+00:00",
+      "finished_at": "2026-11-18T18:38:18.622912+00:00",
+      "elapsed_seconds": 1.2299881670624018,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-approve-deployment-44370405253.log",
+      "log_sha256": "f686042b05e030906a1e2291cb675e5ba47d554a51ba5336533e44717908aee8",
+      "log_size": 3862
+    },
+    {
+      "label": "sti-116-failed-run-44370405253-log",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:40:02.574286+00:00",
+      "finished_at": "2026-11-18T18:40:05.927575+00:00",
+      "elapsed_seconds": 3.353114124853164,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-failed-run-44370405253-log.log",
+      "log_sha256": "5a3ea1e05201e9ae2af42bede74cc77710dfbd7cfb5e84f0230cbf955c9fabe8",
+      "log_size": 3284
+    },
+    {
+      "label": "sti-116-dispatch-stage-candidate",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:43:47.596049+00:00",
+      "finished_at": "2026-11-18T18:43:49.660581+00:00",
+      "elapsed_seconds": 2.0643727499991655,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-dispatch-stage-candidate.log",
+      "log_sha256": "dc397e250af3118890d5a479061be40d93e3394c946402c1165e1658ac7df860",
+      "log_size": 77
+    },
+    {
+      "label": "sti-116-stage-run-44372854449-log",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:44:25.187349+00:00",
+      "finished_at": "2026-11-18T18:44:27.469966+00:00",
+      "elapsed_seconds": 2.2824689589906484,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-stage-run-44372854449-log.log",
+      "log_sha256": "ab9598f66b80c30a9336ca53046e21ac4a5eb74b670a745bdc6ee28a5933cd28",
+      "log_size": 41612
+    },
+    {
+      "label": "sti-116-dispatch-release-yml-with-artifact",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:44:27.994007+00:00",
+      "finished_at": "2026-11-18T18:44:30.009890+00:00",
+      "elapsed_seconds": 2.015737625071779,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-dispatch-release-yml-with-artifact.log",
+      "log_sha256": "db9f0c438db82df97cb0f262f9e8f3faf004ef810c062bf6400fe95390bb39dc",
+      "log_size": 77
+    },
+    {
+      "label": "sti-116-approve-deployment-44372975734",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:46:50.867446+00:00",
+      "finished_at": "2026-11-18T18:46:52.428953+00:00",
+      "elapsed_seconds": 1.5613278748933226,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-approve-deployment-44372975734.log",
+      "log_sha256": "81900117700ab3c9512f70d111da55f94a5bf4cd1d53769c0df9d5cf17e633b3",
+      "log_size": 3862
+    },
+    {
+      "label": "sti-116-fetch-run-44372975734-logs",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:47:24.745678+00:00",
+      "finished_at": "2026-11-18T18:47:27.494868+00:00",
+      "elapsed_seconds": 2.7488821248989552,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-fetch-run-44372975734-logs.log",
+      "log_sha256": "a24404e47eeb660bc6b4ba2fa9194285e6673c541e0e90a8e296c2a012b74b43",
+      "log_size": 126739
+    },
+    {
+      "label": "sti-116-download-signed-artifact",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:47:27.991882+00:00",
+      "finished_at": "2026-11-18T18:48:46.808293+00:00",
+      "elapsed_seconds": 78.81585625000298,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-download-signed-artifact.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0
+    },
+    {
+      "label": "sti-116-verify-local-signed-candidate",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:48:46.852449+00:00",
+      "finished_at": "2026-11-18T18:48:46.897326+00:00",
+      "elapsed_seconds": 0.044702416053041816,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-116-verify-local-signed-candidate.log",
+      "log_sha256": "e8acb8be638d3c6a16f54d456df22dad955792c479ba4908c333fdbe1a8d99b8",
+      "log_size": 75
+    },
+    {
+      "label": "sti-116-verify-local-signed-candidate-v2",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:51:03.548188+00:00",
+      "finished_at": "2026-11-18T18:51:04.812449+00:00",
+      "elapsed_seconds": 1.2640903329011053,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-verify-local-signed-candidate-v2.log",
+      "log_sha256": "cf00fdfdf14b9715b7040e213a2b071dc89ee5cf490c804d351c3b5bd73b8717",
+      "log_size": 610
+    },
+    {
+      "label": "sti-116-upload-bundle-to-draft",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:51:04.873418+00:00",
+      "finished_at": "2026-11-18T18:51:06.556125+00:00",
+      "elapsed_seconds": 1.6825320411007851,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-upload-bundle-to-draft.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0
+    },
+    {
+      "label": "sti-116-verify-signed-draft-before-publish",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:51:06.592656+00:00",
+      "finished_at": "2026-11-18T18:51:36.877549+00:00",
+      "elapsed_seconds": 30.284585249843076,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-verify-signed-draft-before-publish.log",
+      "log_sha256": "cf00fdfdf14b9715b7040e213a2b071dc89ee5cf490c804d351c3b5bd73b8717",
+      "log_size": 610
+    },
+    {
+      "label": "sti-116-publish-github-release",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:51:36.941071+00:00",
+      "finished_at": "2026-11-18T18:51:38.944635+00:00",
+      "elapsed_seconds": 2.0033999169245362,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-publish-github-release.log",
+      "log_sha256": "7223f163af20bd774ed63055092824df60bec0b9d80548038ccf5cb964bd5f49",
+      "log_size": 72
+    },
+    {
+      "label": "sti-116-verify-published-github-release",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:51:38.981995+00:00",
+      "finished_at": "2026-11-18T18:52:09.472712+00:00",
+      "elapsed_seconds": 30.49037616699934,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-verify-published-github-release.log",
+      "log_sha256": "cf00fdfdf14b9715b7040e213a2b071dc89ee5cf490c804d351c3b5bd73b8717",
+      "log_size": 610
+    },
+    {
+      "label": "sti-116-unauth-https-head-corresponding-source",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:57:38.750297+00:00",
+      "finished_at": "2026-11-18T18:57:39.599538+00:00",
+      "elapsed_seconds": 0.8491067499853671,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-unauth-https-head-corresponding-source.log",
+      "log_sha256": "d1f72a450c78b34fc5b5974c3dac76751e8828249c86348118625554f3d944d5",
+      "log_size": 6655
+    },
+    {
+      "label": "sti-116-verify-unauth-public-https-assets",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:57:39.754080+00:00",
+      "finished_at": "2026-11-18T18:57:40.958035+00:00",
+      "elapsed_seconds": 1.2037820420227945,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-verify-unauth-public-https-assets.log",
+      "log_sha256": "cf00fdfdf14b9715b7040e213a2b071dc89ee5cf490c804d351c3b5bd73b8717",
+      "log_size": 610
+    },
+    {
+      "label": "sti-116-public-bundle-boot-baseline",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:57:40.989184+00:00",
+      "finished_at": "2026-11-18T18:57:41.471171+00:00",
+      "elapsed_seconds": 0.4818260830361396,
+      "exit_code": 2,
+      "log": "local://firmdura-kirkstone/logs/sti-116-public-bundle-boot-baseline.log",
+      "log_sha256": "1d0fe1dbf207de2a1bce1bc0d12f983a723bbf82e29e0bbf7b309263c34c608a",
+      "log_size": 237
+    },
+    {
+      "label": "sti-116-public-bundle-boot-baseline-v2",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:58:40.929108+00:00",
+      "finished_at": "2026-11-18T18:58:56.815879+00:00",
+      "elapsed_seconds": 15.886552083073184,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-public-bundle-boot-baseline-v2.log",
+      "log_sha256": "8648219006435d36333efcbd03f908a7f6422b55b8a7c2507fd695a50ad37c10",
+      "log_size": 22700
+    },
+    {
+      "label": "sti-116-public-bundle-boot-patched-v2",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T18:59:35.566556+00:00",
+      "finished_at": "2026-11-18T18:59:51.196848+00:00",
+      "elapsed_seconds": 15.630081749986857,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-116-public-bundle-boot-patched-v2.log",
+      "log_sha256": "4c6b0b7f69d9f19c26d3e45ec38f5581a7b1a52692207a1ecfc6cc7b9481daa3",
+      "log_size": 22563
+    }
+  ],
+  "timing": {
+    "effort_ledger": "local://firmdura-kirkstone/runs/20261118-successor-sti116-effort.jsonl",
+    "started_at": "2026-11-18T16:40:56.710052+00:00",
+    "measured_through": "2026-11-18T19:06:51.900583+00:00",
+    "active_assistant_session_seconds": 2582.518531666,
+    "separately_recorded_wait_seconds": 6172.655286168,
+    "initial_brief_command_seconds": null,
+    "state": "paused",
+    "method": "Prospective, manually bracketed supervised assistant-session wall time; not human labor or CPU time. Explicit command/build/user waits are excluded from active intervals. Historical effort remains unknown.",
+    "ledger_sha256": "c6cce4195df2bc41a1f2f2734d540f50293036651de887b39a8cc7d8e51cd05c"
+  }
+}

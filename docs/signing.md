@@ -230,4 +230,7 @@ upon local archive download and re-verification:
 Full run metadata, approval records, durable bundle locators, and local
 re-verification logs are indexed in
 [`evidence/20261118-sti111-oidc-fixture/run.json`](../evidence/20261118-sti111-oidc-fixture/run.json).
-This fixture signature is **not** production release evidence.
+This fixture signature is **not** production release evidence; production
+signing, pre-publication draft verification, and public-download verification
+for release [`v0.1.0`](release.md) are recorded in
+[`evidence/20261118-sti116-release/run.json`](../evidence/20261118-sti116-release/run.json).
