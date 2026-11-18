@@ -735,5 +735,107 @@ class NormalizeSpdxTests(unittest.TestCase):
         self.assertEqual(bad_rc, 1)
 
 
+class DualTrackProvenanceAndAuxDbTests(unittest.TestCase):
+    def test_osv_git_provenance_detects_affected_and_remediated_backport(self) -> None:
+        import io
+        import sqlite3
+        import osv_git_provenance as ogp
+        import build_aux_grype_db as bag
+
+        with tempfile.TemporaryDirectory() as td:
+            base = Path(td)
+            osv_path = base / "osv.json"
+            osv_path.write_text(json.dumps({
+                "id": "CVE-2026-19773",
+                "affected": [{
+                    "ranges": [{
+                        "type": "GIT",
+                        "repo": "https://github.com/warmcat/libwebsockets",
+                        "events": [
+                            {"introduced": "b4b5aed3903eaff09cd76a410f69bbe5dff66f8e"},
+                            {"fixed": "824151862f37bc72f46d9a3e01d5b9408d313a0b"},
+                        ],
+                    }],
+                }],
+            }))
+
+            def make_deploy(tar_file: Path, with_patch: bool, incomplete_patch: bool = False) -> None:
+                src_buf = io.BytesIO()
+                with tarfile.open(fileobj=src_buf, mode="w:xz") as stf:
+                    c_bytes = (
+                        "static int lws_frag_append(struct lws *wsi, unsigned char c)\n"
+                        "{\n"
+                        "\tstruct allocated_headers *ah = wsi->http.ah;\n\n"
+                        "\tah->data[ah->pos++] = (char)c;\n"
+                        "\treturn 0;\n"
+                        "}\n"
+                    ).encode("utf-8")
+                    ti = tarfile.TarInfo("git/lib/roles/h2/hpack.c")
+                    ti.size = len(c_bytes)
+                    stf.addfile(ti, io.BytesIO(c_bytes))
+                src_xz = src_buf.getvalue()
+
+                with tarfile.open(tar_file, "w:") as dtf:
+                    def put(name: str, raw: bytes) -> None:
+                        info = tarfile.TarInfo(name)
+                        info.size = len(raw)
+                        dtf.addfile(info, io.BytesIO(raw))
+
+                    put("deploy/images/qemuarm64/img.rootfs.manifest",
+                        b"libwebsockets18 cortexa57 4.2.2-r0\n")
+                    put("deploy/spdx/qemuarm64/recipes/recipe-libwebsockets.spdx.json",
+                        json.dumps({"packages": [{"downloadLocation": "git+https://github.com/warmcat/libwebsockets.git@8d605f0649ed1ab6d27a443c7688598ea21fdb75"}]}).encode("utf-8"))
+                    put("deploy/sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/libwebsockets-4.2.2-r0.tar.xz", src_xz)
+                    if with_patch:
+                        guard = "==" if incomplete_patch else ">="
+                        patch_txt = (
+                            f"CVE: CVE-2026-19773\n"
+                            f"Upstream-Status: Backport [https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b]\n"
+                            f"--- a/lib/roles/h2/hpack.c\n+++ b/lib/roles/h2/hpack.c\n"
+                            f"+\tif ((unsigned int)ah->pos {guard} wsi->a.context->max_http_header_data)\n+\t\treturn 1;\n"
+                        ).encode("utf-8")
+                        put("deploy/sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/CVE-2026-19773-1.patch", patch_txt)
+
+            vuln_tar = base / "vuln.tar"
+            make_deploy(vuln_tar, with_patch=False)
+            r_vuln = ogp.evaluate_deploy_tar(vuln_tar, None, osv_path)
+            self.assertEqual(r_vuln["status"], "affected")
+            self.assertEqual(r_vuln["unfiltered_match_count"], 1)
+
+            inc_tar = base / "incomplete.tar"
+            make_deploy(inc_tar, with_patch=True, incomplete_patch=True)
+            r_inc = ogp.evaluate_deploy_tar(inc_tar, None, osv_path)
+            self.assertEqual(r_inc["status"], "affected")
+
+            fix_tar = base / "fixed.tar"
+            make_deploy(fix_tar, with_patch=True, incomplete_patch=False)
+            r_fix = ogp.evaluate_deploy_tar(fix_tar, None, osv_path)
+            self.assertEqual(r_fix["status"], "fixed_by_verified_backport")
+            self.assertEqual(r_fix["unfiltered_match_count"], 0)
+
+            # Test auxiliary SQLite builder label guard & stock immutability
+            stock_db = base / "stock.db"
+            con = sqlite3.connect(stock_db)
+            with con:
+                con.execute("CREATE TABLE vulnerability_handles (id INTEGER PRIMARY KEY, name TEXT, provider_id TEXT)")
+                con.execute("CREATE TABLE cpes (id INTEGER PRIMARY KEY, part TEXT, vendor TEXT, product TEXT)")
+                con.execute("CREATE TABLE blobs (id INTEGER PRIMARY KEY, value TEXT)")
+                con.execute("CREATE TABLE affected_cpe_handles (id INTEGER PRIMARY KEY, vulnerability_id INT, cpe_id INT, blob_id INT)")
+                con.execute("INSERT INTO vulnerability_handles VALUES (10, 'CVE-2026-19773', 'nvd')")
+                con.execute("INSERT INTO cpes VALUES (20, 'a', 'warmcat', 'libwebsockets')")
+            con.close()
+
+            with self.assertRaises(bag.AuxDbError):
+                bag.build_auxiliary_db(stock_db_path=stock_db, expected_stock_db_sha256=None, output_dir=base / "unlabelled-db")
+
+            notice = bag.build_auxiliary_db(
+                stock_db_path=stock_db,
+                expected_stock_db_sha256=bag.sha256_file(stock_db),
+                output_dir=base / "test-only-aux-db",
+            )
+            self.assertFalse(notice["official_anchore_feed"])
+            self.assertNotEqual(notice["stock_db_sha256"], notice["aux_db_sha256"])
+
+
 if __name__ == "__main__":
     unittest.main()
