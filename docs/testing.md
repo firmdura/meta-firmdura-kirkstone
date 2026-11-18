@@ -1,13 +1,18 @@
-# Baseline checks and scanner preflight
+# Baseline checks, target reproduction, and scanner preflight
 
-The clean image build, boot/library checks and retained inventory are verified.
+The clean image build, boot/library checks, retained inventory, and target
+`CVE-2026-19773` vulnerability reproduction are verified on the baseline
+`qemuarm64` image (`libwebsockets` 4.2.2-r0, shared library SHA-256
+`77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a`).
 The [handoff review](../evidence/20261118-sti108-handoff/run.json) rechecked
-their identities, logs and canonical archive contents. The historical
-[run record](../evidence/20261117-sti108-baseline/run.json) remains unchanged:
-its `blocked` status describes the original combined build/scanner gate.
-Scanner interoperability is now separate from runtime reproduction and repair.
-No vulnerability reproduction, repair, security regression result, paired-image
-freeze, VEX statement or release is claimed.
+the build/boot identities and canonical archive contents, and the
+[target reproduction record](../evidence/20261118-sti109-reproduction/run.json)
+freezes the target security and normal-path HTTP/2 test contract. The historical
+[baseline run record](../evidence/20261117-sti108-baseline/run.json) remains
+unchanged: its `blocked` status describes the original combined build/scanner
+gate. Scanner interoperability is tracked separately in
+[the scanner guide](scanner.md). No repair, paired-image freeze, OpenVEX
+statement, or release is claimed here.
 
 ## Boot and identify the actual library
 
@@ -123,14 +128,162 @@ CVE-2025-1866 is explicitly **Win32-only** in its advisory/database
 description. Its version-only match is retained as unresolved scanner output,
 not accepted as a replacement Linux case or removed through VEX.
 
-The earlier scanner-only hold was superseded on 2026-11-18 by an approved
-separation of the runtime and scanner work. The verified baseline can be used
-for target reproduction and repair without waiting for a scanner match.
-The selected case has not changed, and applicability still requires actual
-target evidence; never remove an existing fix or weaken the test.
+The earlier scanner-only hold was superseded on 2026-11-18 by separating
+runtime verification from scanner feed coverage. Full-image SPDX 2.2 graph
+consolidation and the bounded 2026-11-18 Grype feed check are documented in
+[the scanner guide](scanner.md). External vulnerability feed gaps still gate
+OpenVEX consumer acceptance and public release, while target reproduction and
+repair verification proceed on the built image.
 
-The scanner blocker remains open in STI-119. It prevents VEX acceptance and
-publication, not runtime work. A new supported normalization or database check
-must retain new inputs and results rather than overwrite this snapshot.
-Signing preparation is independent. Human engineering/release review, genuine
-scanner findings and the paired-artifact VEX controls remain mandatory.
+## Target reproduction and frozen test contract (`CVE-2026-19773`)
+
+### HTTP/2 HPACK `:path` boundary and upstream repair analysis
+
+[ZDI-26-590](https://www.zerodayinitiative.com/advisories/ZDI-26-590/)
+(`CVE-2026-19773`) affects server-side HTTP/2 HPACK `:path` header decoding in
+`libwebsockets`. Each HTTP stream attaches a pooled `struct allocated_headers`
+whose `ah->data` heap buffer has length `context->max_http_header_data`.
+In `libwebsockets` 4.2.2 (`8d605f0649ed1ab6d27a443c7688598ea21fdb75`),
+`lws_frag_append()` (`lib/roles/h2/hpack.c:273`) writes the incoming byte
+**before** checking whether `ah->pos` has already reached or exceeded
+`max_http_header_data`:
+
+```c
+static int lws_frag_append(struct lws *wsi, unsigned char c)
+{
+    struct allocated_headers *ah = wsi->http.ah;
+
+    ah->data[ah->pos++] = (char)c;
+    ah->frags[ah->nfrag].len++;
+
+    return (unsigned int)ah->pos >= wsi->a.context->max_http_header_data;
+}
+```
+
+During HPACK `:path` value decoding (`lws_hpack_interpret()`,
+`lib/roles/h2/hpack.c:1148`), every decoded character first passes through
+`lws_parse_urldecode()` (`lib/roles/http/parsers.c:774`). When `:path` contains
+`'?'` (`parsers.c:942`) or unescaped `'&'` / `';'` (`parsers.c:842`),
+`lws_parse_urldecode()` writes a terminating NUL via `issue_char(wsi, '\0')`
+(allowed whenever `ah->pos < max_http_header_data`), then executes
+`ah->frags[ah->nfrag].offset = ++ah->pos;` without a bounds check and returns
+`LPUR_SWALLOW`:
+
+- If `ah->pos == max_http_header_data - 2` before `'?'`, `issue_char()` writes
+  `ah->data[max_http_header_data - 2] = '\0'` and `++ah->pos` advances
+  `ah->pos` to **`max_http_header_data`** (`+0` past the buffer).
+- If `ah->pos == max_http_header_data - 1` before `'?'` or `';'`, `issue_char()`
+  writes `ah->data[max_http_header_data - 1] = '\0'` and `++ah->pos` advances
+  `ah->pos` to **`max_http_header_data + 1`** (`+1` past the buffer).
+
+On the next `:path` character (or the trailing NUL in `lws_frag_end()`),
+`lws_frag_append()` writes attacker-controlled byte `c` out of bounds at
+`ah->data[max_http_header_data]` or `ah->data[max_http_header_data + 1]`.
+
+Upstream repair analysis across `v4.2.2` through `main`:
+
+- **Primary fix**
+  ([`824151862f37bc72f46d9a3e01d5b9408d313a0b`](https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b)):
+  guards `lws_frag_append()` prior to storing `c` with
+  `if ((unsigned int)ah->pos >= wsi->a.context->max_http_header_data) return 1;`.
+  `lws_frag_append()` in 4.2.2 matches the commit's parent without missing
+  structural prerequisites.
+- **Related URI-parser follow-ups**:
+  [`0c6cef0922c531f2662e87e74e17c191fa18162b`](https://github.com/warmcat/libwebsockets/commit/0c6cef0922c531f2662e87e74e17c191fa18162b)
+  checks `ah->pos >= max_http_header_data` right after `++ah->pos` on `'?'`, and
+  [`523b6f2efdeb36e1e0a4f4004862a216624e9f8f`](https://github.com/warmcat/libwebsockets/commit/523b6f2efdeb36e1e0a4f4004862a216624e9f8f)
+  bounds the parallel `'&'` / `';'` split so `ah->frags[ah->nfrag].offset` is
+  never left pointing past `ah->data` before `lws_dynamic_token_insert()` or
+  `lws_frag_end()`.
+
+### Packaged C harness, normal controls, and incomplete-fix controls
+
+The test-only recipe
+[`firmdura-lws-h2-tests_1.0.bb`](../meta-firmdura-tests/recipes-connectivity/firmdura-lws-h2-tests/firmdura-lws-h2-tests_1.0.bb)
+installs `/usr/bin/firmdura-h2-cve-2026-19773` and its `ptest-runner` wrapper
+`/usr/lib/firmdura-lws-h2-tests/ptest/run-ptest` into
+`firmdura-reference-image`. At startup the binary resolves `lws_create_context`
+via `dladdr()` and `/proc/self/maps` to verify that
+`/usr/lib/libwebsockets.so.18` is mapped in-process. Each scenario forks an
+isolated `LWS_SERVER_OPTION_H2_PRIOR_KNOWLEDGE` server bound to loopback `lo`
+with `max_http_header_data = 1048` (`0x418`, allocating a `0x420`-byte chunk
+above glibc 2.35's `0x410` tcache ceiling):
+
+1. **Normal-path HTTP/2 controls (`--mode normal-only`)**: Exchanges valid
+   HTTP/2 client preface, `SETTINGS`, and HPACK `GET /health?ok=1&case=...`
+   frames over loopback TCP, requiring HTTP/2 `200` headers and body echo both
+   under the stock allocator and with an in-bounds near-limit `:path` under a
+   `PROT_NONE` guard page. Any normal-control, linkage, or socket failure exits
+   `2` (`infrastructure` error), never `0` or `1`.
+2. **Vector 1 (`v1_query_at_limit_minus_2`, OOB offset `+0`)**: Positions
+   `ah->pos` at `1046` before `'?'` followed by `'Z'` (`0x5a`), checking both
+   trailing canary corruption (`canary[0] == 0x5a`) and hardware `PROT_NONE`
+   guard-page `SIGSEGV` (`SEGV_ACCERR` at `ah_end + 0`).
+3. **Vector 2 (`v2_query_past_limit_incomplete_eq_control`, OOB offset `+1`)**:
+   Positions `ah->pos` at `1047` before `"?Z"` so `++ah->pos` jumps to `1049`,
+   catching an incomplete repair that checks `ah->pos == max_http_header_data`
+   instead of `>=`.
+4. **Vector 3 (`v3_semicolon_delimiter_incomplete_qmark_control`, OOB offset `+1`)**:
+   Uses `";Z"` without `'?'` at `ah->pos == 1047`, catching an incomplete
+   repair that patches only `'?'` in `lws_parse_urldecode()` without guarding
+   `lws_frag_append()` and `;`/`&`.
+5. **Unhooked stock glibc allocator check (`stock_glibc_allocator`)**: Runs
+   without `lws_set_allocator()`, proving that writing `0x5a` (`PREV_INUSE` bit
+   cleared) at `ah->data[1048]` corrupts adjacent glibc 2.35 chunk metadata and
+   aborts (`SIGABRT`: `munmap_chunk(): invalid pointer`) on `lws_context_destroy()`.
+
+Exit-code contract:
+
+- `0`: Normal HTTP/2 controls passed AND all 7 security subchecks rejected the
+  oversized `:path` frames cleanly with zero out-of-bounds writes, zero crashes,
+  and verified post-attack HTTP/2 `200` liveness (expected on repaired target).
+- `1`: Normal HTTP/2 controls passed AND all 7 security subchecks positively
+  reproduced the targeted out-of-bounds write inside `libwebsockets.so.18`
+  (expected on vulnerable baseline).
+- `2`: Broken setup, library mismatch, failed normal HTTP/2 control, timeout, or
+  off-target fault.
+
+### Recorded baseline target execution
+
+Build and run from a clean standalone checkout of the frozen test commit
+(`6e3e70b94281c8f75f52f90e77152deba7372c83`):
+
+```sh
+FIRMDURA_WORK_VOLUME=firmdura-kirkstone-baseline sh kas/run baseline build
+
+docker --context colima-firmdura-kirkstone run --rm --init \
+  --read-only --network none --user "$(id -u):$(id -g)" \
+  --cpus 2 --memory 1g --pids-limit 256 \
+  --cap-drop ALL --security-opt no-new-privileges \
+  --tmpfs /tmp:rw,nosuid,nodev,mode=1777,size=128m \
+  --mount type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly \
+  --mount "type=bind,source=$PWD,target=/repo,readonly" \
+  --entrypoint python3 "$(cat kas/builder-image.txt)" \
+  /repo/tests/run-cve-2026-19773.py \
+  --qemu /work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64 \
+  --kernel /work/build-baseline/tmp/deploy/images/qemuarm64/Image--5.15.211+git0+73e7c4ea36_e3ab4c73da-r0-qemuarm64-20261117213416.bin \
+  --rootfs /work/build-baseline/tmp/deploy/images/qemuarm64/firmdura-reference-baseline-qemuarm64-20261118113155.rootfs.ext4 \
+  --library-sha256 77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a \
+  --library-version 4.2.1-v4.2.2 \
+  --harness-sha256 774de9bf7a48e6f750886015c9ef8260c483cfd049187e19369eede1489f7795 \
+  --expected-security-outcome vulnerable
+```
+
+Observed results in
+[`evidence/20261118-sti109-reproduction/run.json`](../evidence/20261118-sti109-reproduction/run.json):
+
+- `/usr/lib/libwebsockets.so.18` remained byte-identical to the initial baseline
+  build (`77809db0b9f6a1f97917292a5976e332de130bed90c21eb219e8032cfe3ae05a`).
+- Normal HTTP/2 controls passed (`exit 0`) inside the booted `qemuarm64` guest.
+- All three HPACK `:path` boundary vectors wrote `0x5a` out of bounds (`+0`,
+  `+1`, `+1`) and faulted on the `PROT_NONE` guard page at relative instruction
+  offset `0x4049c` inside `/usr/lib/libwebsockets.so.18`, resolved by
+  `aarch64-poky-linux-addr2line` to `lws_frag_append` at
+  `lib/roles/h2/hpack.c:277` inlined by `lws_hpack_interpret` at
+  `lib/roles/h2/hpack.c:1168`.
+- The unhooked stock glibc 2.35 scenario terminated with `SIGABRT` (`6`), and
+  `ptest-runner firmdura-lws-h2-tests` reported `PASS: firmdura-h2-normal-controls`
+  and `FAIL: firmdura-cve-2026-19773-bounds-enforced`.
+- Demanding `--expected-security-outcome repaired` or passing an all-zero
+  `--library-sha256` each exited `1` as negative controls while leaving the
+  frozen kernel and rootfs SHA-256 digests unchanged.
