@@ -1,0 +1,395 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti119-dual-track",
+  "issue": "STI-119",
+  "status": "verified",
+  "scope": "Owner-approved dual-track baseline scanner resolution: preserves truthful stock offline Grype 0.122.0 results (0 stock CPE matches while NVD is Awaiting Analysis), adds offline OSV CVE-2026-19773 Git/source provenance detection reporting 3 unfiltered baseline matches, and adds isolated test-only auxiliary Grype v6 CPE fixture DB verification for STI-113 OpenVEX consumer testing.",
+  "started_at": "2026-11-18T14:06:31.677124+00:00",
+  "finished_at": "2026-11-18T14:47:02.487581+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "base_main_commit": "8aaa96232dbd47ad14c52dcaae688f2ba235a3ec",
+    "baseline_39pkg_deploy_tar_sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+    "stock_grype_db_sqlite_sha256": "efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506",
+    "retained_osv_feed_sha256": "340046eb3f2517f0c5cb198aaa666cceaede6b33f83dd51d8f50b02e278ed7e4",
+    "tool_sha256": {
+      "scripts/vex/normalize_spdx.py": "ee6338f0fae2786a79ff9793a589b85c2700f1af9b10ec5f80da0989fe77eb33",
+      "scripts/vex/osv_git_provenance.py": "ea1391ebae5646e633ba629a3f6749131b5d6edc988516aa6bafcb8f9d155da4",
+      "scripts/vex/build_aux_grype_db.py": "881a601de75a9f4d835a0b0ef8cd53ca2037d86547b3983ca1a37c5deb521f3c",
+      "tests/scanner_test.py": "69fc358a8d3542fce5372962d7d8676884522d3dc8f87071ad1f20f10d197b4c",
+      "docs/scanner.md": "0d76ee23a77e2d6bbf2c8bbef4fa58f84c43f28b747886e5fa894b28f0d0bd83"
+    }
+  },
+  "command_path_aliases": {
+    "<checkout>": "Isolated STI-119 sample repository worktree",
+    "<store>": "Durable local://firmdura-kirkstone/ storage root on the control host"
+  },
+  "commands": [
+    {
+      "label": "sti-119-dual-unit-tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "scanner_test.py",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:34:41.960325+00:00",
+      "finished_at": "2026-11-18T14:34:42.106039+00:00",
+      "elapsed_seconds": 0.14554262487217784,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-119-dual-unit-tests.log",
+      "log_sha256": "eda8ba470f28789f923c6b3ab4ab0155383b202de3f30e2e61c82c2f38f9a56a",
+      "log_size": 1627,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-119-osv-git-baseline-39pkg",
+      "argv": [
+        "python3",
+        "scripts/vex/osv_git_provenance.py",
+        "--deploy-tar",
+        "<store>/artifacts/20261117-sti108-baseline/deploy.tar",
+        "--expected-deploy-tar-sha256",
+        "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+        "--osv-json",
+        "<store>/artifacts/20261118-sti119-scanner-preflight/feeds/20261118-feed-check.json",
+        "--output",
+        "<store>/artifacts/20261118-sti119-dual-track/osv-git-baseline-39pkg.json",
+        "--expect-status",
+        "affected"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:34:42.143695+00:00",
+      "finished_at": "2026-11-18T14:34:43.685396+00:00",
+      "elapsed_seconds": 1.541416124906391,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-119-osv-git-baseline-39pkg.log",
+      "log_sha256": "9621c0d64484cb7b3b3d5bff82eff7107b2c3d9268d576df0a6455d49b277461",
+      "log_size": 199,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-119-build-aux-grype-db",
+      "argv": [
+        "python3",
+        "scripts/vex/build_aux_grype_db.py",
+        "--stock-db",
+        "<store>/artifacts/20261118-sti119-scanner-preflight/grype-db/6/vulnerability.db",
+        "--expected-stock-db-sha256",
+        "efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506",
+        "--output-dir",
+        "<store>/artifacts/20261118-sti119-dual-track/test-only-aux-cpe-db"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:34:43.720413+00:00",
+      "finished_at": "2026-11-18T14:34:49.017694+00:00",
+      "elapsed_seconds": 5.297103124903515,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-119-build-aux-grype-db.log",
+      "log_sha256": "4bc08b64a712fffc13118525d011cd454b68c8587d1c6abc72facbd2851827b0",
+      "log_size": 927,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded",
+      "observation": "Initial sha256 import.json format check before switching import.json digest to Grype v6 xxh64 format."
+    },
+    {
+      "label": "sti-119-aux-db-offline-grype-scan",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "2g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-vex-db,target=/v,readonly",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/v/test-only-aux",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_VALIDATE_BY_HASH_ON_START=true",
+        "--env",
+        "GRYPE_DB_VALIDATE_AGE=true",
+        "--env",
+        "GRYPE_ADD_CPES_IF_NONE=false",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/v/inputs/baseline-consolidated-normalized.spdx.json",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:36:38.907338+00:00",
+      "finished_at": "2026-11-18T14:36:39.071395+00:00",
+      "elapsed_seconds": 0.1638258749153465,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-119-aux-db-offline-grype-scan.log",
+      "log_sha256": "b29931da93f3774f801e9b59fba1ff5b71fab0a87cd499fb9baf11db50d85eb8",
+      "log_size": 99,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Grype v6 import.json requires xxh64:<16-hex> digest format rather than sha256:<64-hex>; resolved in v2."
+    },
+    {
+      "label": "sti-119-build-aux-grype-db-v2",
+      "argv": [
+        "python3",
+        "scripts/vex/build_aux_grype_db.py",
+        "--stock-db",
+        "<store>/artifacts/20261118-sti119-scanner-preflight/grype-db/6/vulnerability.db",
+        "--expected-stock-db-sha256",
+        "efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506",
+        "--output-dir",
+        "<store>/artifacts/20261118-sti119-dual-track/test-only-aux-cpe-db"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:40:41.991583+00:00",
+      "finished_at": "2026-11-18T14:40:48.450254+00:00",
+      "elapsed_seconds": 6.458511083154008,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-119-build-aux-grype-db-v2.log",
+      "log_sha256": "345c491807c461e4fed88e1b0c5e996a14e071dc57331bc3c6f83f24bc89fbf1",
+      "log_size": 971,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-119-aux-db-offline-grype-scan-v2",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cpus",
+        "2",
+        "--memory",
+        "2g",
+        "--pids-limit",
+        "256",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--tmpfs",
+        "/tmp:rw,nosuid,nodev,mode=1777,size=128m",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-vex-db,target=/v,readonly",
+        "--env",
+        "GRYPE_DB_CACHE_DIR=/v/test-only-aux",
+        "--env",
+        "GRYPE_DB_AUTO_UPDATE=false",
+        "--env",
+        "GRYPE_DB_VALIDATE_BY_HASH_ON_START=true",
+        "--env",
+        "GRYPE_DB_VALIDATE_AGE=true",
+        "--env",
+        "GRYPE_ADD_CPES_IF_NONE=false",
+        "--env",
+        "GRYPE_CHECK_FOR_APP_UPDATE=false",
+        "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+        "sbom:/v/inputs/baseline-consolidated-normalized.spdx.json",
+        "-o",
+        "json"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:40:48.714952+00:00",
+      "finished_at": "2026-11-18T14:40:51.138276+00:00",
+      "elapsed_seconds": 2.422979250084609,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-119-aux-db-offline-grype-scan-v2.log",
+      "log_sha256": "bdc13d323f28f533a7bb454be9e3fc492ecb7c9fbeb1f3cd5885e7825d6c4cf0",
+      "log_size": 412714,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "osv-git-baseline-39pkg.json",
+      "role": "osv-git-provenance-baseline-report",
+      "variant": "baseline",
+      "size": 2610,
+      "sha256": "8c8b9edb5e12743f02f847b8e11390050e58f468e157a1c6013ae9fed2785f1d",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-dual-track/osv-git-baseline-39pkg.json"
+    },
+    {
+      "path": "test-only-aux-cpe-db/AUXILIARY-TEST-DB-NOTICE.json",
+      "role": "auxiliary-test-db-notice",
+      "variant": "baseline",
+      "size": 971,
+      "sha256": "e59c970314f7ca2a5dd001612cd9c222f9f195ab48d05d6acba3891fec31f20f",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-dual-track/test-only-aux-cpe-db/AUXILIARY-TEST-DB-NOTICE.json"
+    },
+    {
+      "path": "test-only-aux-cpe-db/6/import.json",
+      "role": "auxiliary-test-db-import-metadata",
+      "variant": "baseline",
+      "size": 142,
+      "sha256": "4210c2c803528863210e444b58c9ca28136ebed67ad7fb16405289bf7181c2b1",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-dual-track/test-only-aux-cpe-db/6/import.json"
+    },
+    {
+      "path": "test-only-aux-cpe-db/6/vulnerability.db",
+      "role": "auxiliary-test-db-sqlite",
+      "variant": "baseline",
+      "size": 3486994432,
+      "sha256": "fa7123d0774cd8ae88ad884ea86150d027ccd42b762a888b0cdbfd4df32cc9d8",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-dual-track/test-only-aux-cpe-db/6/vulnerability.db"
+    },
+    {
+      "path": "baseline-39pkg-aux-grype.json",
+      "role": "auxiliary-test-db-unfiltered-grype-scan",
+      "variant": "baseline",
+      "size": 412714,
+      "sha256": "bdc13d323f28f533a7bb454be9e3fc492ecb7c9fbeb1f3cd5885e7825d6c4cf0",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti119-dual-track/baseline-39pkg-aux-grype.json"
+    }
+  ],
+  "results": {
+    "stock_grype_scan_preserved_unchanged": true,
+    "stock_grype_cve_2026_19773_matches": 0,
+    "osv_git_provenance_baseline": {
+      "archived_source_member": "deploy/sources/aarch64-poky-linux/libwebsockets-4.2.2-r0/libwebsockets-4.2.2-r0.tar.xz",
+      "component": {
+        "archived_patches": [],
+        "download_location": "git://github.com/warmcat/libwebsockets.git",
+        "installed_packages": [
+          {
+            "arch": "cortexa57",
+            "name": "libwebsockets-evlib-uv",
+            "version": "4.2.2-r0"
+          },
+          {
+            "arch": "cortexa57",
+            "name": "libwebsockets-testapps",
+            "version": "4.2.2-r0"
+          },
+          {
+            "arch": "cortexa57",
+            "name": "libwebsockets18",
+            "version": "4.2.2-r0"
+          }
+        ],
+        "recipe": "libwebsockets",
+        "srcrev": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+        "upstream_source_tree_vulnerable": true,
+        "verified_backports": []
+      },
+      "deploy_tar_sha256": "8b96ae1c0d280cc50b4d1d699d14e4140c6ed81f6f9b4921cbc315ded476de43",
+      "detector": "firmdura-osv-git-source-provenance-v1",
+      "osv": {
+        "cve": "CVE-2026-19773",
+        "fixed_commit": "824151862f37bc72f46d9a3e01d5b9408d313a0b",
+        "introduced_event": "b4b5aed3903eaff09cd76a410f69bbe5dff66f8e",
+        "osv_file_sha256": "340046eb3f2517f0c5cb198aaa666cceaede6b33f83dd51d8f50b02e278ed7e4",
+        "repo": "https://github.com/warmcat/libwebsockets",
+        "vanir_targets": [
+          {
+            "file": "lib/roles/h2/hpack.c"
+          },
+          {
+            "file": "lib/roles/h2/hpack.c",
+            "function": "lws_frag_append"
+          }
+        ]
+      },
+      "schema_version": 1,
+      "status": "affected",
+      "unfiltered_match_count": 3,
+      "unfiltered_matches": [
+        {
+          "missing_fix_commit": "824151862f37bc72f46d9a3e01d5b9408d313a0b",
+          "package": "libwebsockets-evlib-uv",
+          "package_version": "4.2.2-r0",
+          "srcrev": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+          "status": "affected",
+          "target_function": "lib/roles/h2/hpack.c:lws_frag_append",
+          "vulnerability": "CVE-2026-19773"
+        },
+        {
+          "missing_fix_commit": "824151862f37bc72f46d9a3e01d5b9408d313a0b",
+          "package": "libwebsockets-testapps",
+          "package_version": "4.2.2-r0",
+          "srcrev": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+          "status": "affected",
+          "target_function": "lib/roles/h2/hpack.c:lws_frag_append",
+          "vulnerability": "CVE-2026-19773"
+        },
+        {
+          "missing_fix_commit": "824151862f37bc72f46d9a3e01d5b9408d313a0b",
+          "package": "libwebsockets18",
+          "package_version": "4.2.2-r0",
+          "srcrev": "8d605f0649ed1ab6d27a443c7688598ea21fdb75",
+          "status": "affected",
+          "target_function": "lib/roles/h2/hpack.c:lws_frag_append",
+          "vulnerability": "CVE-2026-19773"
+        }
+      ]
+    },
+    "auxiliary_test_db": {
+      "label": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED",
+      "official_anchore_feed": false,
+      "unfiltered_total_matches": 154,
+      "unfiltered_cve_2026_19773_packages": [
+        "libwebsockets-evlib-uv",
+        "libwebsockets-testapps",
+        "libwebsockets18"
+      ],
+      "stock_db_verified_unchanged": true
+    },
+    "unit_tests_passed": 10,
+    "baseline_deploy_tar_verified_unchanged": true
+  },
+  "limitations": [
+    "Stock Anchore Grype DB v6 still contains 0 CPE applicability rows for CVE-2026-19773 while NIST NVD remains Awaiting Analysis.",
+    "The auxiliary SQLite DB is strictly an isolated test fixture labelled TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED and is never shipped as an official feed."
+  ]
+}
