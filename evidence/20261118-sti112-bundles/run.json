@@ -1,0 +1,599 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti112-bundles",
+  "issue": "STI-112",
+  "status": "verified",
+  "scope": "Minimal baseline and patched QEMU evaluation bundles preserving frozen STI-110 inner payloads, isolated -nic none disposable-copy launchers, and complete corresponding-source/licence redistribution archives across all 41 distributed binary packages and Linux kernel.",
+  "started_at": "2026-11-18T13:09:48.052267+00:00",
+  "finished_at": "2026-11-18T13:52:44.044699+00:00",
+  "inputs": {
+    "repository": "https://github.com/firmdura/meta-firmdura-kirkstone",
+    "base_main_commit": "b3f34157700a5547f5829ed9124779bcf1f4587e",
+    "frozen_producer_build_commit": "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+    "frozen_baseline_deploy_tar_sha256": "2c86ce06bb56f07c01eae0d3fee277adeb6ec487ed93c23e5d4bca53a437ba3b",
+    "frozen_patched_deploy_tar_sha256": "7b53c6ea6a846b4182ec40134314d25f091b0b3a3cd2509922e13c5769e306e6",
+    "supplemental_glibc_git_archive": {
+      "srcrev": "bb59339d02faebac534a87eea50c83c948f35b77",
+      "sha256": "ac68b9aab785fabb7d6fc4aa0013e71c8532a75b3a1305b6b9c6f16e90d92ed2",
+      "size": 36008359,
+      "reason": "Poky glibc-2.35 uses shared downloads/git2 without an archiver mirror tarball; exported exact offline SRCREV_glibc archive so LGPL-2.1 source accompanies libc6/ldconfig."
+    },
+    "bundle_tool_sha256": {
+      "scripts/bundle/package_bundles.py": "24710ef0f7b4dea749f260761e66cc0f65bae80b251e7a7cef75a774b1fcc662",
+      "tests/bundle_test.py": "17eea272e9da81b1ecaf606801c99e20bb643fa8c1791223d53d7cef0cef3985",
+      "docs/evaluation.md": "0095fd921720b95a9678628841ecb1eb98e45c075373f783519275f1c34f893d"
+    }
+  },
+  "command_path_aliases": {
+    "<checkout>": "Isolated STI-112 sample repository worktree",
+    "<store>": "Durable local://firmdura-kirkstone/ storage root on the control host"
+  },
+  "commands": [
+    {
+      "label": "sti-112-glibc-git-archive-export",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--entrypoint",
+        "git",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "--git-dir=/work/downloads/git2/sourceware.org.git.glibc.git",
+        "archive",
+        "--format=tar.gz",
+        "--prefix=glibc-2.35/",
+        "bb59339d02faebac534a87eea50c83c948f35b77"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:35:18.464795+00:00",
+      "finished_at": "2026-11-18T13:35:22.037474+00:00",
+      "elapsed_seconds": 3.5724891249556094,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-112-glibc-git-archive-export.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_size": 0,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-112-pkggrp-recipe-export",
+      "argv": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--read-only",
+        "--network",
+        "none",
+        "--user",
+        "501:20",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--mount",
+        "type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly",
+        "--entrypoint",
+        "python3",
+        "ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7",
+        "-c",
+        "import pathlib; print(pathlib.Path(\"/work/poky/meta/recipes-core/packagegroups/packagegroup-core-boot.bb\").read_text(), end=\"\")"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:35:22.065996+00:00",
+      "finished_at": "2026-11-18T13:35:22.167127+00:00",
+      "elapsed_seconds": 0.10100291599519551,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-112-pkggrp-recipe-export.log",
+      "log_sha256": "d5a476a314082575e6aeb54c1f2bbfd4b522aa708076934deae6a6d7b319b70a",
+      "log_size": 1351,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-112-package-bundles",
+      "argv": [
+        "python3",
+        "scripts/bundle/package_bundles.py",
+        "--repo-root",
+        "<checkout>",
+        "--baseline-deploy-tar",
+        "<store>/artifacts/20261118-sti109-reproduction/deploy.tar",
+        "--baseline-deploy-tar-sha256",
+        "2c86ce06bb56f07c01eae0d3fee277adeb6ec487ed93c23e5d4bca53a437ba3b",
+        "--patched-deploy-tar",
+        "<store>/artifacts/20261118-sti110-patched/deploy.tar",
+        "--patched-deploy-tar-sha256",
+        "7b53c6ea6a846b4182ec40134314d25f091b0b3a3cd2509922e13c5769e306e6",
+        "--baseline-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-consolidated.spdx.json",
+        "--baseline-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-manifest.json",
+        "--patched-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-consolidated.spdx.json",
+        "--patched-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-manifest.json",
+        "--glibc-git-tar",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/glibc-2.35-bb59339d02faebac534a87eea50c83c948f35b77.tar.gz",
+        "--glibc-git-tar-sha256",
+        "ac68b9aab785fabb7d6fc4aa0013e71c8532a75b3a1305b6b9c6f16e90d92ed2",
+        "--pkggrp-bb",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/packagegroup-core-boot.bb",
+        "--pkggrp-bb-sha256",
+        "d5a476a314082575e6aeb54c1f2bbfd4b522aa708076934deae6a6d7b319b70a",
+        "--producer-commit",
+        "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+        "--output-dir",
+        "<store>/artifacts/20261118-sti112-bundles/bundles"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:42:16.444665+00:00",
+      "finished_at": "2026-11-18T13:42:27.138907+00:00",
+      "elapsed_seconds": 10.694150249939412,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-112-package-bundles.log",
+      "log_sha256": "4de5d4c9adf473f06259a5e8a1b51a970501a9fd1c28e7a161304f3add5a3121",
+      "log_size": 1579,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Fail-closed tar member type guard rejected tar LNKTYPE hard-linked licence entries; resolved in v2 by accepting LNKTYPE regular-file links."
+    },
+    {
+      "label": "sti-112-package-bundles-v2",
+      "argv": [
+        "python3",
+        "scripts/bundle/package_bundles.py",
+        "--repo-root",
+        "<checkout>",
+        "--baseline-deploy-tar",
+        "<store>/artifacts/20261118-sti109-reproduction/deploy.tar",
+        "--baseline-deploy-tar-sha256",
+        "2c86ce06bb56f07c01eae0d3fee277adeb6ec487ed93c23e5d4bca53a437ba3b",
+        "--patched-deploy-tar",
+        "<store>/artifacts/20261118-sti110-patched/deploy.tar",
+        "--patched-deploy-tar-sha256",
+        "7b53c6ea6a846b4182ec40134314d25f091b0b3a3cd2509922e13c5769e306e6",
+        "--baseline-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-consolidated.spdx.json",
+        "--baseline-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-manifest.json",
+        "--patched-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-consolidated.spdx.json",
+        "--patched-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-manifest.json",
+        "--glibc-git-tar",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/glibc-2.35-bb59339d02faebac534a87eea50c83c948f35b77.tar.gz",
+        "--glibc-git-tar-sha256",
+        "ac68b9aab785fabb7d6fc4aa0013e71c8532a75b3a1305b6b9c6f16e90d92ed2",
+        "--pkggrp-bb",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/packagegroup-core-boot.bb",
+        "--pkggrp-bb-sha256",
+        "d5a476a314082575e6aeb54c1f2bbfd4b522aa708076934deae6a6d7b319b70a",
+        "--producer-commit",
+        "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+        "--output-dir",
+        "<store>/artifacts/20261118-sti112-bundles/bundles"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:44:14.388513+00:00",
+      "finished_at": "2026-11-18T13:44:25.034040+00:00",
+      "elapsed_seconds": 10.64521479117684,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-112-package-bundles-v2.log",
+      "log_sha256": "f28ba755873e253fdc1771fd9ec7cd25c408a7abc17a65d4f550ba914182edb2",
+      "log_size": 2258,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "Source payload extension filter omitted extensionless local config files in base-files; resolved in v3 by requiring non-patch/non-recipe-metadata payloads."
+    },
+    {
+      "label": "sti-112-package-bundles-v3",
+      "argv": [
+        "python3",
+        "scripts/bundle/package_bundles.py",
+        "--repo-root",
+        "<checkout>",
+        "--baseline-deploy-tar",
+        "<store>/artifacts/20261118-sti109-reproduction/deploy.tar",
+        "--baseline-deploy-tar-sha256",
+        "2c86ce06bb56f07c01eae0d3fee277adeb6ec487ed93c23e5d4bca53a437ba3b",
+        "--patched-deploy-tar",
+        "<store>/artifacts/20261118-sti110-patched/deploy.tar",
+        "--patched-deploy-tar-sha256",
+        "7b53c6ea6a846b4182ec40134314d25f091b0b3a3cd2509922e13c5769e306e6",
+        "--baseline-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-consolidated.spdx.json",
+        "--baseline-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-manifest.json",
+        "--patched-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-consolidated.spdx.json",
+        "--patched-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-manifest.json",
+        "--glibc-git-tar",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/glibc-2.35-bb59339d02faebac534a87eea50c83c948f35b77.tar.gz",
+        "--glibc-git-tar-sha256",
+        "ac68b9aab785fabb7d6fc4aa0013e71c8532a75b3a1305b6b9c6f16e90d92ed2",
+        "--pkggrp-bb",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/packagegroup-core-boot.bb",
+        "--pkggrp-bb-sha256",
+        "d5a476a314082575e6aeb54c1f2bbfd4b522aa708076934deae6a6d7b319b70a",
+        "--producer-commit",
+        "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+        "--output-dir",
+        "<store>/artifacts/20261118-sti112-bundles/bundles"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:45:38.704352+00:00",
+      "finished_at": "2026-11-18T13:45:51.465569+00:00",
+      "elapsed_seconds": 12.760953666875139,
+      "exit_code": 1,
+      "log": "local://firmdura-kirkstone/logs/sti-112-package-bundles-v3.log",
+      "log_sha256": "a2f42dfd60d49422ea425d2a28bda67d1de01f6afbf333a589ffc98b7536a750",
+      "log_size": 789,
+      "expected_exit_code": 0,
+      "outcome": "failed_attempt",
+      "observation": "SPDX manifest used manifest_version/file_count field names; resolved in v4."
+    },
+    {
+      "label": "sti-112-package-bundles-v4",
+      "argv": [
+        "python3",
+        "scripts/bundle/package_bundles.py",
+        "--repo-root",
+        "<checkout>",
+        "--baseline-deploy-tar",
+        "<store>/artifacts/20261118-sti109-reproduction/deploy.tar",
+        "--baseline-deploy-tar-sha256",
+        "2c86ce06bb56f07c01eae0d3fee277adeb6ec487ed93c23e5d4bca53a437ba3b",
+        "--patched-deploy-tar",
+        "<store>/artifacts/20261118-sti110-patched/deploy.tar",
+        "--patched-deploy-tar-sha256",
+        "7b53c6ea6a846b4182ec40134314d25f091b0b3a3cd2509922e13c5769e306e6",
+        "--baseline-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-consolidated.spdx.json",
+        "--baseline-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/baseline-41pkg-manifest.json",
+        "--patched-spdx",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-consolidated.spdx.json",
+        "--patched-spdx-manifest",
+        "<store>/artifacts/20261118-sti110-patched/sbom/patched-41pkg-manifest.json",
+        "--glibc-git-tar",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/glibc-2.35-bb59339d02faebac534a87eea50c83c948f35b77.tar.gz",
+        "--glibc-git-tar-sha256",
+        "ac68b9aab785fabb7d6fc4aa0013e71c8532a75b3a1305b6b9c6f16e90d92ed2",
+        "--pkggrp-bb",
+        "<store>/artifacts/20261118-sti112-bundles/supplemental-sources/packagegroup-core-boot.bb",
+        "--pkggrp-bb-sha256",
+        "d5a476a314082575e6aeb54c1f2bbfd4b522aa708076934deae6a6d7b319b70a",
+        "--producer-commit",
+        "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+        "--output-dir",
+        "<store>/artifacts/20261118-sti112-bundles/bundles"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:48:03.069002+00:00",
+      "finished_at": "2026-11-18T13:48:15.167065+00:00",
+      "elapsed_seconds": 12.097808084217831,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-112-package-bundles-v4.log",
+      "log_sha256": "bee239ffcfcf4a9d6d4e84f0b8f6475baa1d064f3ab52c4a4dd51b756cca30f9",
+      "log_size": 1697,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-112-clean-extract-boot-baseline",
+      "argv": [
+        "sh",
+        "-c",
+        "docker --context colima-firmdura-kirkstone run --rm -i --init --read-only --network none --user 501:20 --cpus 2 --memory 1g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,exec,nosuid,nodev,mode=1777,size=256m --mount type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly --entrypoint /bin/sh ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7 -c \"mkdir /tmp/clean && tar -xzf - -C /tmp/clean && python3 /tmp/clean/firmdura-kirkstone-qemuarm64-baseline-eval/run-evaluation.py --qemu /work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64\" < \"<store>/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz\""
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:48:15.203348+00:00",
+      "finished_at": "2026-11-18T13:48:30.764915+00:00",
+      "elapsed_seconds": 15.561288458993658,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-112-clean-extract-boot-baseline.log",
+      "log_sha256": "04ed38a2122b62ba81bedd5b22b86a24fd5d8724bc69914bce9cc9fd3255e781",
+      "log_size": 22705,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-112-clean-extract-boot-patched",
+      "argv": [
+        "sh",
+        "-c",
+        "docker --context colima-firmdura-kirkstone run --rm -i --init --read-only --network none --user 501:20 --cpus 2 --memory 1g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,exec,nosuid,nodev,mode=1777,size=256m --mount type=volume,source=firmdura-kirkstone-baseline,target=/work,readonly --entrypoint /bin/sh ghcr.io/siemens/kas/kas@sha256:718b8f0dbf8174645ddb18c7979e7a635a4ed7bd55e750d75c1c8091454b8ce7 -c \"mkdir /tmp/clean && tar -xzf - -C /tmp/clean && python3 /tmp/clean/firmdura-kirkstone-qemuarm64-patched-eval/run-evaluation.py --qemu /work/build-baseline/tmp/work/aarch64-linux/qemu-helper-native/1.0-r1/recipe-sysroot-native/usr/bin/qemu-system-aarch64\" < \"<store>/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz\""
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:48:30.800831+00:00",
+      "finished_at": "2026-11-18T13:48:46.257143+00:00",
+      "elapsed_seconds": 15.456042582867667,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-112-clean-extract-boot-patched.log",
+      "log_sha256": "4fd09ff2480fb18537209328b57726a54637fa71495e1e56740d7749ec5b81ab",
+      "log_size": 22563,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    },
+    {
+      "label": "sti-112-bundle-unit-tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "bundle_test.py",
+        "-v"
+      ],
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T13:52:42.061137+00:00",
+      "finished_at": "2026-11-18T13:52:42.118841+00:00",
+      "elapsed_seconds": 0.05755320796743035,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-112-bundle-unit-tests.log",
+      "log_sha256": "6e6f57e2681af06f4d27d806d3c9996b91a4d0d4efa12654bd7cf72b458f56a4",
+      "log_size": 686,
+      "expected_exit_code": 0,
+      "outcome": "command_succeeded"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz",
+      "role": "qemu-bundle",
+      "size": 16416902,
+      "sha256": "ca423ae7d57f411c44916651413b6d6f3ad45d39aac4abb70498800ecd8891b0",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz",
+      "variant": "baseline"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz",
+      "role": "qemu-bundle",
+      "size": 16419741,
+      "sha256": "aa04251544a1ff48e690620591255f029ca361871acc48af63ee785b462c8678",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz",
+      "variant": "patched"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-corresponding-source.tar.gz",
+      "role": "corresponding-source",
+      "size": 436645082,
+      "sha256": "ad8bded335da769b16cf66a4b3279e93e9667e6839c1dd82cce3f8a24c86c3ef",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-corresponding-source.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-licenses-and-notices.tar.gz",
+      "role": "licenses",
+      "size": 250996,
+      "sha256": "351d071eae6de20bd95af40356ba98c353953e7fcfaa4129c4bb5a06c5f15a76",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-licenses-and-notices.tar.gz"
+    },
+    {
+      "path": "firmdura-kirkstone-qemuarm64-redistribution-inventory.json",
+      "role": "redistribution-inventory",
+      "size": 169376,
+      "sha256": "e66a37683054d0c70963e6f171e271d2530fdcc0f793687fb4959d9e7d635427",
+      "locator": "local://firmdura-kirkstone/artifacts/20261118-sti112-bundles/bundles/firmdura-kirkstone-qemuarm64-redistribution-inventory.json"
+    }
+  ],
+  "results": {
+    "clean_extraction_evaluations": {
+      "baseline": {
+        "status": "passed",
+        "variant": "baseline",
+        "expected_security_outcome": "vulnerable",
+        "elapsed_seconds": 15.025002459000461,
+        "originals_unchanged": true,
+        "observations": {
+          "variant": "baseline",
+          "expected_security_outcome": "vulnerable",
+          "normal_control": {
+            "mode": "normal-only",
+            "library_path": "/usr/lib/libwebsockets.so.18",
+            "library_version": "4.2.1-v4.2.2",
+            "normal_h2_control": "passed",
+            "guard_inbounds_control": "passed",
+            "verdict": "normal-controls-passed"
+          },
+          "full_security_exit_code": 1,
+          "full_security_suite": {
+            "mode": "full",
+            "library_path": "/usr/lib/libwebsockets.so.18",
+            "library_version": "4.2.1-v4.2.2",
+            "ah_data_limit": 1048,
+            "normal_h2_control": "passed",
+            "guard_inbounds_control": "passed",
+            "vectors": {
+              "v1_query_at_limit_minus_2": {
+                "canary_corrupted": 1,
+                "canary_offset": 0,
+                "canary_byte": "0x5a",
+                "canary_post_attack_h2_alive": 1,
+                "guard_faulted": 1,
+                "guard_oob_offset": 0,
+                "guard_pc_in_lws": 1,
+                "guard_pc_offset": "0x4049c",
+                "guard_post_attack_h2_alive": 0
+              },
+              "v2_query_past_limit_incomplete_eq_control": {
+                "canary_corrupted": 1,
+                "canary_offset": 1,
+                "canary_byte": "0x5a",
+                "canary_post_attack_h2_alive": 1,
+                "guard_faulted": 1,
+                "guard_oob_offset": 1,
+                "guard_pc_in_lws": 1,
+                "guard_pc_offset": "0x4049c",
+                "guard_post_attack_h2_alive": 0
+              },
+              "v3_semicolon_delimiter_incomplete_qmark_control": {
+                "canary_corrupted": 1,
+                "canary_offset": 1,
+                "canary_byte": "0x5a",
+                "canary_post_attack_h2_alive": 1,
+                "guard_faulted": 1,
+                "guard_oob_offset": 1,
+                "guard_pc_in_lws": 1,
+                "guard_pc_offset": "0x4049c",
+                "guard_post_attack_h2_alive": 0
+              },
+              "stock_glibc_allocator": {
+                "term_sig": 6,
+                "exit_code": 0,
+                "post_attack_h2_alive": 0
+              }
+            },
+            "oob_reproduced_subchecks": 7,
+            "clean_blocked_subchecks": 0,
+            "verdict": "vulnerable-oob-write-reproduced",
+            "exit_code": 1
+          },
+          "ptest_exit_code": 1
+        }
+      },
+      "patched": {
+        "status": "passed",
+        "variant": "patched",
+        "expected_security_outcome": "repaired",
+        "elapsed_seconds": 15.063833722999334,
+        "originals_unchanged": true,
+        "observations": {
+          "variant": "patched",
+          "expected_security_outcome": "repaired",
+          "normal_control": {
+            "mode": "normal-only",
+            "library_path": "/usr/lib/libwebsockets.so.18",
+            "library_version": "4.2.1-v4.2.2",
+            "normal_h2_control": "passed",
+            "guard_inbounds_control": "passed",
+            "verdict": "normal-controls-passed"
+          },
+          "full_security_exit_code": 0,
+          "full_security_suite": {
+            "mode": "full",
+            "library_path": "/usr/lib/libwebsockets.so.18",
+            "library_version": "4.2.1-v4.2.2",
+            "ah_data_limit": 1048,
+            "normal_h2_control": "passed",
+            "guard_inbounds_control": "passed",
+            "vectors": {
+              "v1_query_at_limit_minus_2": {
+                "canary_corrupted": 0,
+                "canary_offset": -1,
+                "canary_byte": "0x00",
+                "canary_post_attack_h2_alive": 1,
+                "guard_faulted": 0,
+                "guard_oob_offset": 0,
+                "guard_pc_in_lws": 0,
+                "guard_pc_offset": "0x0",
+                "guard_post_attack_h2_alive": 1
+              },
+              "v2_query_past_limit_incomplete_eq_control": {
+                "canary_corrupted": 0,
+                "canary_offset": -1,
+                "canary_byte": "0x00",
+                "canary_post_attack_h2_alive": 1,
+                "guard_faulted": 0,
+                "guard_oob_offset": 0,
+                "guard_pc_in_lws": 0,
+                "guard_pc_offset": "0x0",
+                "guard_post_attack_h2_alive": 1
+              },
+              "v3_semicolon_delimiter_incomplete_qmark_control": {
+                "canary_corrupted": 0,
+                "canary_offset": -1,
+                "canary_byte": "0x00",
+                "canary_post_attack_h2_alive": 1,
+                "guard_faulted": 0,
+                "guard_oob_offset": 0,
+                "guard_pc_in_lws": 0,
+                "guard_pc_offset": "0x0",
+                "guard_post_attack_h2_alive": 1
+              },
+              "stock_glibc_allocator": {
+                "term_sig": 0,
+                "exit_code": 0,
+                "post_attack_h2_alive": 1
+              }
+            },
+            "oob_reproduced_subchecks": 0,
+            "clean_blocked_subchecks": 7,
+            "verdict": "bounds-enforced-secure",
+            "exit_code": 0
+          },
+          "ptest_exit_code": 0
+        }
+      },
+      "repository_mount_used_during_bundle_boot": false,
+      "network_mode": "none (-nic none and --network none)"
+    },
+    "redistribution_completeness": {
+      "distributed_kernel_covered": true,
+      "baseline_binary_packages_covered": 41,
+      "patched_binary_packages_covered": 41,
+      "corresponding_source_members": 367,
+      "license_and_notice_members": 152,
+      "host_paths_or_secrets_detected": false
+    },
+    "frozen_sti110_inner_payload_hashes_unchanged": true,
+    "unit_tests_passed": 4
+  },
+  "timing": {
+    "active_assistant_session_seconds": 2494.637560959,
+    "explicitly_paused_command_wait_seconds": 81.311970749,
+    "elapsed_bundle_packaging_seconds": 12.097808084217831,
+    "elapsed_clean_baseline_boot_seconds": 15.561288458993658,
+    "elapsed_clean_patched_boot_seconds": 15.456042582867667,
+    "new_yocto_build_seconds": 0,
+    "measured_through": "2026-11-18T13:52:44.044699+00:00",
+    "method": "Prospective, manually bracketed supervised assistant-session wall time; not human labor or CPU time. Explicit command/build/user waits are excluded from active intervals. Historical effort remains unknown."
+  },
+  "limitations": [
+    "Deliverable tar.gz archives reside in durable local://firmdura-kirkstone/ storage awaiting STI-115 independent replay and STI-116 approved signed GitHub Release upload.",
+    "Extract corresponding-source and licence tar archives on a case-sensitive filesystem so case-distinct licence filenames remain preserved."
+  ]
+}
