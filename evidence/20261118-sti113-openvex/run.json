@@ -1,0 +1,377 @@
+{
+  "schema": "firmdura.kirkstone.evidence.v1",
+  "run_id": "20261118-sti113-openvex",
+  "ticket": "STI-113",
+  "recorded_at": "2026-11-18T15:06:30Z",
+  "status": "completed",
+  "base_commit": "1cdb73fe9a3056db5de30fc177b2b78092f99918",
+  "paired_build_commit": "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+  "openvex_document": {
+    "repo_path": "vex/firmdura-kirkstone-cve-2026-19773.openvex.json",
+    "store_uri": "local://firmdura-kirkstone/artifacts/20261118-sti113-openvex/firmdura-kirkstone-cve-2026-19773.openvex.json",
+    "sha256": "68850d630989bd25002f495c43b9cd4090cefde299774274f0d1b80e348b906e",
+    "bytes": 2970,
+    "context": "https://openvex.dev/ns/v0.2.0",
+    "fixed_product_purl": "pkg:generic/firmdura-reference-patched-qemuarm64-20261118120234@1.0-sha256.92a3d9f9aaf40de580590bff13774d39b51aab8b3494b1e14bea1963e344598d",
+    "affected_product_purl": "pkg:generic/firmdura-reference-baseline-qemuarm64-20261118113155@1.0-sha256.6f18018f84e0799faeb30a892f827500e209f7831305748eeb64f41813e197a2"
+  },
+  "inputs": {
+    "baseline_41pkg_spdx_sha256": "050eb32b37945ded03465de1f1f178cb433d7a37c408ee1a0fc83327292e3765",
+    "patched_41pkg_spdx_sha256": "f050a6e085b2c61afa3507cd35e977252f3fcf9836f91148c099189e20009110",
+    "grype_image": "docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4",
+    "grype_version": "0.122.0",
+    "stock_db_checksum": "xxh64:6f9382868327ffaa",
+    "stock_db_sqlite_sha256": "efb6c344f69aebb675b33d7bfd61592226134643fa9db4516d73e77b30911506",
+    "aux_test_db_checksum": "xxh64:da9d32d12ca5d406",
+    "aux_test_db_sqlite_sha256": "fa7123d0774cd8ae88ad884ea86150d027ccd42b762a888b0cdbfd4df32cc9d8",
+    "aux_test_db_source_label": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED"
+  },
+  "control_matrix": {
+    "status": "verified",
+    "patched_product_purl": "pkg:generic/firmdura-reference-patched-qemuarm64-20261118120234@1.0-sha256.92a3d9f9aaf40de580590bff13774d39b51aab8b3494b1e14bea1963e344598d",
+    "auxiliary_test_db_controls": {
+      "baseline_unfiltered": {
+        "file": "sti-113-aux-baseline-unfiltered.json",
+        "sha256": "cc729da825a4f47ebbb856bbf032497bb5979cd8cbd1a89cec856ff6aa20165a",
+        "grype_version": "0.122.0",
+        "db_from": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 154,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [
+          "libwebsockets-evlib-uv",
+          "libwebsockets-testapps",
+          "libwebsockets18"
+        ],
+        "ignored_cve_2026_19773": []
+      },
+      "patched_unfiltered": {
+        "file": "sti-113-aux-patched-unfiltered.json",
+        "sha256": "c127f9f242f1fb1fc4aa36f50d338bb9ce4017edcfff7894f346ffbc127704e6",
+        "grype_version": "0.122.0",
+        "db_from": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 154,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [
+          "libwebsockets-evlib-uv",
+          "libwebsockets-testapps",
+          "libwebsockets18"
+        ],
+        "ignored_cve_2026_19773": []
+      },
+      "patched_with_vex_positive_control": {
+        "file": "sti-113-aux-patched-with-vex.json",
+        "sha256": "82df5c9a789df2e55858f5b01836f0f8d0417c87f79e3bbc9bebb47d822c0948",
+        "grype_version": "0.122.0",
+        "db_from": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 151,
+        "ignored_match_count": 3,
+        "active_cve_2026_19773_packages": [],
+        "ignored_cve_2026_19773": [
+          {
+            "package": "libwebsockets-evlib-uv",
+            "applied_ignore_rules": [
+              {
+                "namespace": "vex",
+                "vex-status": "fixed"
+              }
+            ]
+          },
+          {
+            "package": "libwebsockets-testapps",
+            "applied_ignore_rules": [
+              {
+                "namespace": "vex",
+                "vex-status": "fixed"
+              }
+            ]
+          },
+          {
+            "package": "libwebsockets18",
+            "applied_ignore_rules": [
+              {
+                "namespace": "vex",
+                "vex-status": "fixed"
+              }
+            ]
+          }
+        ]
+      },
+      "baseline_with_patched_vex_negative_control": {
+        "file": "sti-113-aux-baseline-with-patched-vex.json",
+        "sha256": "4f70737405043285184125e1a2d9ba82e21cef55c68a3f8ff225ca6024a5d32a",
+        "grype_version": "0.122.0",
+        "db_from": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 154,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [
+          "libwebsockets-evlib-uv",
+          "libwebsockets-testapps",
+          "libwebsockets18"
+        ],
+        "ignored_cve_2026_19773": []
+      }
+    },
+    "stock_db_scans": {
+      "baseline_unfiltered": {
+        "file": "sti-113-stock-baseline-unfiltered.json",
+        "sha256": "325664cf8de1bfceaa3bf11d288c9dd04b0fe8db958b2ed7c7bc10908750db16",
+        "grype_version": "0.122.0",
+        "db_from": "manual import",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 151,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [],
+        "ignored_cve_2026_19773": []
+      },
+      "patched_unfiltered": {
+        "file": "sti-113-stock-patched-unfiltered.json",
+        "sha256": "7b2501766f74982b93bf23456add988e048eaf06a014e9b3fee9a8c35b4eacdd",
+        "grype_version": "0.122.0",
+        "db_from": "manual import",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 151,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [],
+        "ignored_cve_2026_19773": []
+      },
+      "patched_with_vex": {
+        "file": "sti-113-stock-patched-with-vex.json",
+        "sha256": "465dcd2c91eeb8a0602c69431ceaebd25b935e63fa1b9e815c8e3a765e4101e8",
+        "grype_version": "0.122.0",
+        "db_from": "manual import",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 151,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [],
+        "ignored_cve_2026_19773": []
+      },
+      "baseline_with_patched_vex": {
+        "file": "sti-113-stock-baseline-with-patched-vex.json",
+        "sha256": "ffcf4c0108132d8625d141bd24dafaecd52722edc5a7fe917002a9bc3e9fa576",
+        "grype_version": "0.122.0",
+        "db_from": "manual import",
+        "db_built": "2026-11-18T06:21:08Z",
+        "active_match_count": 151,
+        "ignored_match_count": 0,
+        "active_cve_2026_19773_packages": [],
+        "ignored_cve_2026_19773": []
+      }
+    }
+  },
+  "osv_git_provenance_pair": {
+    "baseline_41pkg": {
+      "status": "affected",
+      "unfiltered_match_count": 3,
+      "installed_packages": [
+        "libwebsockets-evlib-uv",
+        "libwebsockets-testapps",
+        "libwebsockets18"
+      ],
+      "verified_backports": [],
+      "report_uri": "local://firmdura-kirkstone/artifacts/20261118-sti113-openvex/osv-git-baseline-41pkg.json",
+      "report_sha256": "5c5f520fa0fc7e3019fb057114ddc7ed6aa5d96d4b4370042c9e25be638ee79c"
+    },
+    "patched_41pkg": {
+      "status": "fixed_by_verified_backport",
+      "unfiltered_match_count": 0,
+      "installed_packages": [
+        "libwebsockets-evlib-uv",
+        "libwebsockets-testapps",
+        "libwebsockets18"
+      ],
+      "verified_backports": [
+        "CVE-2026-19773-1.patch"
+      ],
+      "report_uri": "local://firmdura-kirkstone/artifacts/20261118-sti113-openvex/osv-git-patched-41pkg.json",
+      "report_sha256": "01a29f29312f1957421b36c58587bba46965e76dc9055805ca4b89151b202f08"
+    }
+  },
+  "commands": [
+    {
+      "label": "sti-113-generate-openvex",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:18.598961+00:00",
+      "finished_at": "2026-11-18T14:59:18.636720+00:00",
+      "elapsed_seconds": 0.03758858307264745,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-generate-openvex.log",
+      "log_sha256": "dc126f495ba08ff54aace530c4647a625bdf043b2e640f75ac4ec6bf26e743b0",
+      "log_size": 601
+    },
+    {
+      "label": "sti-113-osv-git-baseline-41pkg",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:18.671660+00:00",
+      "finished_at": "2026-11-18T14:59:20.583052+00:00",
+      "elapsed_seconds": 1.9112605000846088,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-osv-git-baseline-41pkg.log",
+      "log_sha256": "9621c0d64484cb7b3b3d5bff82eff7107b2c3d9268d576df0a6455d49b277461",
+      "log_size": 199
+    },
+    {
+      "label": "sti-113-osv-git-patched-41pkg",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:20.618761+00:00",
+      "finished_at": "2026-11-18T14:59:22.244841+00:00",
+      "elapsed_seconds": 1.6259445410687476,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-osv-git-patched-41pkg.log",
+      "log_sha256": "03455fbeba5dc6c5054c8425aa437f973d77815037252128cc5f5000e6270b90",
+      "log_size": 249
+    },
+    {
+      "label": "sti-113-aux-baseline-unfiltered",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:22.681152+00:00",
+      "finished_at": "2026-11-18T14:59:24.906598+00:00",
+      "elapsed_seconds": 2.2252977918833494,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-aux-baseline-unfiltered.log",
+      "log_sha256": "cc729da825a4f47ebbb856bbf032497bb5979cd8cbd1a89cec856ff6aa20165a",
+      "log_size": 412714
+    },
+    {
+      "label": "sti-113-aux-patched-unfiltered",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:24.949454+00:00",
+      "finished_at": "2026-11-18T14:59:26.273983+00:00",
+      "elapsed_seconds": 1.324341416824609,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-aux-patched-unfiltered.log",
+      "log_sha256": "c127f9f242f1fb1fc4aa36f50d338bb9ce4017edcfff7894f346ffbc127704e6",
+      "log_size": 412713
+    },
+    {
+      "label": "sti-113-aux-patched-with-vex",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:26.309616+00:00",
+      "finished_at": "2026-11-18T14:59:27.548523+00:00",
+      "elapsed_seconds": 1.238697832915932,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-aux-patched-with-vex.log",
+      "log_sha256": "82df5c9a789df2e55858f5b01836f0f8d0417c87f79e3bbc9bebb47d822c0948",
+      "log_size": 413467
+    },
+    {
+      "label": "sti-113-aux-baseline-with-patched-vex",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:27.587162+00:00",
+      "finished_at": "2026-11-18T14:59:28.831356+00:00",
+      "elapsed_seconds": 1.244016582844779,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-aux-baseline-with-patched-vex.log",
+      "log_sha256": "4f70737405043285184125e1a2d9ba82e21cef55c68a3f8ff225ca6024a5d32a",
+      "log_size": 413257
+    },
+    {
+      "label": "sti-113-stock-baseline-unfiltered",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:28.869411+00:00",
+      "finished_at": "2026-11-18T14:59:31.042801+00:00",
+      "elapsed_seconds": 2.1731972920242697,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-stock-baseline-unfiltered.log",
+      "log_sha256": "325664cf8de1bfceaa3bf11d288c9dd04b0fe8db958b2ed7c7bc10908750db16",
+      "log_size": 406300
+    },
+    {
+      "label": "sti-113-stock-patched-unfiltered",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:31.084046+00:00",
+      "finished_at": "2026-11-18T14:59:32.210224+00:00",
+      "elapsed_seconds": 1.1259800419211388,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-stock-patched-unfiltered.log",
+      "log_sha256": "7b2501766f74982b93bf23456add988e048eaf06a014e9b3fee9a8c35b4eacdd",
+      "log_size": 406299
+    },
+    {
+      "label": "sti-113-stock-patched-with-vex",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:32.246343+00:00",
+      "finished_at": "2026-11-18T14:59:33.368655+00:00",
+      "elapsed_seconds": 1.1221781249623746,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-stock-patched-with-vex.log",
+      "log_sha256": "465dcd2c91eeb8a0602c69431ceaebd25b935e63fa1b9e815c8e3a765e4101e8",
+      "log_size": 406842
+    },
+    {
+      "label": "sti-113-stock-baseline-with-patched-vex",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T14:59:33.406330+00:00",
+      "finished_at": "2026-11-18T14:59:34.488738+00:00",
+      "elapsed_seconds": 1.0822591250762343,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-stock-baseline-with-patched-vex.log",
+      "log_sha256": "ffcf4c0108132d8625d141bd24dafaecd52722edc5a7fe917002a9bc3e9fa576",
+      "log_size": 406843
+    },
+    {
+      "label": "sti-113-vex-unit-tests-v2",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T15:02:16.451496+00:00",
+      "finished_at": "2026-11-18T15:02:16.542075+00:00",
+      "elapsed_seconds": 0.0903557080309838,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-vex-unit-tests-v2.log",
+      "log_sha256": "c84ab63935167f58b674a53793432bb08cf34ba26cc79838351619d5d5378a3f",
+      "log_size": 330
+    },
+    {
+      "label": "sti-113-verify-control-matrix-v2",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T15:02:16.584351+00:00",
+      "finished_at": "2026-11-18T15:02:16.646477+00:00",
+      "elapsed_seconds": 0.06199579196982086,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-113-verify-control-matrix-v2.log",
+      "log_sha256": "a630e037c16425b61e3da618b7c3e797d97b3c3d83c0d1b79e78c83d37457f20",
+      "log_size": 196
+    }
+  ]
+}

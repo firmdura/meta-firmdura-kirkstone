@@ -61,10 +61,13 @@ traffic. The reviewed `baseline` and `patched` image pair is frozen for
 evaluation-bundle packaging.
 
 Full-image SPDX 2.2 consolidation lets pinned Grype catalog all installed
-target packages offline, while upstream vulnerability feeds still lack CPE
-applicability configurations for `CVE-2026-19773`; see the
-[testing guide](docs/testing.md) and [scanner guide](docs/scanner.md) for
-measured results and open publication gates.
+target packages offline, and the artifact-scoped OpenVEX statement
+([`vex/firmdura-kirkstone-cve-2026-19773.openvex.json`](vex/firmdura-kirkstone-cve-2026-19773.openvex.json))
+passes paired positive and negative Grype `0.122.0` consumer controls alongside
+offline OSV Git-provenance checks while upstream NVD CPE configurations remain
+pending; see the [testing guide](docs/testing.md),
+[scanner guide](docs/scanner.md), and [OpenVEX guide](docs/vex.md) for measured
+results and open publication gates.
 
 Results apply only to this reference configuration. Compatibility with other
 Kirkstone BSPs, physical boards or customer firmware has not been validated.
