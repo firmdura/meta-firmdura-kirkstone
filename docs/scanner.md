@@ -14,17 +14,16 @@ exact image rootfs SHA-256 and evaluates full-image vulnerability matches
 offline without fabricating packages, versions, PURLs, CPEs, or OS/distro
 identities.
 
-The STI-119 release gate itself remains **blocked** on external upstream
+The release gate for scanner matching remains **blocked** on external upstream
 vulnerability feed data: as of `2026-11-18T09:02:21Z`, unfiltered scans with the
 newer Grype database snapshot (`v6.1.10`, built `2026-11-18T06:21:08Z`) report
 **151 matches (68 unique CVEs)** across the 39-package baseline image, including
 Win32-only `CVE-2025-1866` on the three installed `libwebsockets` binary
 packages, and **0 matches** for `CVE-2026-19773`. Historical baseline artifacts
 and [`evidence/20261117-sti108-baseline/run.json`](../evidence/20261117-sti108-baseline/run.json)
-remain untouched. Per [the build contract](build.md), runtime reproduction and
-repair (`STI-109`/`STI-110`) and signing (`STI-111`) continue independently,
-while VEX acceptance (`STI-113`), replay (`STI-115`), and publication
-(`STI-116`) remain gated.
+remain untouched. Per [the build contract](build.md), runtime reproduction,
+repair, and signing preparation proceed independently, while OpenVEX consumer
+acceptance, candidate replay, and public release remain gated.
 
 ## SPDX 2.2 consolidation contract (`scripts/vex/normalize_spdx.py`)
 
@@ -77,7 +76,7 @@ python3 scripts/vex/normalize_spdx.py \
   missing packaged-file SHA-256 digest, or `RUNTIME_DEPENDENCY_OF` edge pointing
   outside the installed package set.
 
-### Exact normalizations and STI-113 OpenVEX product handoff
+### Exact normalizations and OpenVEX product identity
 
 No packages, versions, CPE locators, PURLs, OS/distro fields, or vulnerability
 mappings are invented:
@@ -99,7 +98,7 @@ mappings are invented:
    `GENERATED_FROM` edges intact for SPDX provenance. Any build-traceable `purl`
    external references are preserved verbatim; none are emitted by Yocto
    Kirkstone `create-spdx.bbclass`.
-3. **Artifact-specific root source identity for STI-113**: The image container
+3. **Artifact-specific root source identity**: The image container
    element is emitted as `SPDXRef-DocumentRoot-File-<image-name>` linked via
    `SPDXRef-DOCUMENT DESCRIBES ...`, with `versionInfo` set to
    `<image-version>-sha256.<rootfs_ext4_sha256>` and the `.rootfs.ext4`
@@ -109,14 +108,13 @@ mappings are invented:
    [Grype `0.122.0`'s OpenVEX processor](https://github.com/anchore/grype/blob/4419483072181b643c3efde0fd15b9113d88887f/grype/vex/openvex/implementation.go#L67)
    derives the deterministic image-hash-bound OpenVEX product PURL:
    `pkg:generic/firmdura-reference-baseline-qemuarm64-20261117213416@1.0-sha256.07e2abd01189da6a977eb0ae0c07136079d3a67f260e2c27aef2bb8d311a5e83`.
-   STI-113 can run `normalize_spdx.py` unchanged on both `baseline` and
-   `patched` `deploy.tar` archives to obtain distinct rootfs-SHA-256-bound
-   product PURLs (`grype_openvex_product_purl` in `--manifest-out`). Because
-   Grype `0.122.0` matches OpenVEX `subcomponents` only via package PURLs (CPE
-   subcomponent matching is unimplemented in `grype/vex/openvex`) and Yocto
-   Kirkstone emits no PURLs, STI-113 OpenVEX statements targeting Grype
-   `0.122.0` must scope `products` to the exact image-hash product PURL without
-   inventing subcomponent PURLs.
+   Running `normalize_spdx.py` unchanged on both `baseline` and `patched`
+   `deploy.tar` archives yields distinct rootfs-SHA-256-bound product PURLs
+   (`grype_openvex_product_purl` in `--manifest-out`). Because Grype `0.122.0`
+   matches OpenVEX `subcomponents` only via package PURLs (CPE subcomponent
+   matching is unimplemented in `grype/vex/openvex`) and Yocto Kirkstone emits
+   no PURLs, OpenVEX statements targeting Grype `0.122.0` must scope `products`
+   to the exact image-hash product PURL without inventing subcomponent PURLs.
 
 ### Baseline normalization audit summary
 
@@ -140,8 +138,8 @@ mappings are invented:
   `4419483072181b643c3efde0fd15b9113d88887f`, embedded Syft **`v1.57.2`**,
   ARM64 image
   `docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04ebc242f8b41c40322d2a56b7e880f1e641b4`).
-- Newer Grype v6 database snapshot imported into isolated STI-119 storage
-  (leaving STI-108's `2026-11-17T06:20:58Z` snapshot untouched):
+- Newer Grype v6 database snapshot imported into isolated run storage
+  (leaving the earlier `2026-11-17T06:20:58Z` snapshot untouched):
   - Schema **`v6.1.10`**, built **`2026-11-18T06:21:08Z`**.
   - Archive `vulnerability-db_v6.1.10_2026-11-18T00:21:05Z_1794982868.tar.zst`
     (`203,412,394` bytes), SHA-256
@@ -209,10 +207,11 @@ Single bounded query snapshot retained at
   `type: "unreviewed"` with `vulnerabilities: []` (zero ecosystem/package
   ranges).
 
-## External change or owner decision required to close STI-119
+## External feed requirements for scanner and OpenVEX acceptance
 
-Per the STI-119 stopping rule, polling was not performed and STI-119 remains
-open. Unblocking `STI-113` -> `STI-115` -> `STI-116` requires **one** of:
+Continuous feed polling was not performed, and the scanner release gate remains
+open. Unblocking unfiltered target detection and downstream OpenVEX matching
+requires **one** of:
 
 1. **External feed enrichment (no contract change)**: NVD completes CPE
    applicability analysis for `CVE-2026-19773` (adding a `libwebsockets` CPE
@@ -221,13 +220,13 @@ open. Unblocking `STI-113` -> `STI-115` -> `STI-116` requires **one** of:
    `affected_cpe_handles` row. Re-running Grype offline against
    `baseline-consolidated-normalized.spdx.json` will then match `libwebsockets18`
    without modifying `scripts/vex/normalize_spdx.py`.
-2. **Owner-approved consumer or acceptance adjustment**: If NVD remains
-   `Awaiting Analysis` after runtime reproduction and repair (`STI-109` /
-   `STI-110`) finish, the owner must explicitly decide whether to:
+2. **Explicitly reviewed consumer or scope change**: If NVD remains
+   `Awaiting Analysis` after runtime reproduction and repair finish:
    - hold release publication until NVD/Grype DB enrichment lands;
-   - authorize a commit-/signature-aware companion consumer (for example OSV git
-     commit/Vanir matching or Yocto `cve-check`) or an explicitly labelled
-     auxiliary vulnerability feed for OpenVEX consumer-mechanics verification; or
+   - evaluate an explicitly reviewed commit- or signature-aware companion
+     consumer (for example OSV git commit/Vanir matching or Yocto `cve-check`)
+     or an explicitly labelled auxiliary vulnerability feed for OpenVEX
+     consumer-mechanics verification; or
    - select a different Linux-applicable Kirkstone CVE candidate with active
      non-distro CPE coverage in Grype DB v6 (`CVE-2025-1866` is Win32-only and
      remains ineligible).
