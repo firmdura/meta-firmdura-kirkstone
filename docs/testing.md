@@ -119,7 +119,7 @@ CVE-2025-1866 is explicitly **Win32-only** in its advisory/database
 description. Its version-only match is retained as unresolved scanner output,
 not accepted as a replacement Linux case or removed through VEX.
 
-STI-108 remains blocked. The owner must reassess whether to hold this case
-pending suitable scanner data/integration or authorize another single
-applicable case within the original constraints. Do not begin STI-109,
-remove existing fixes, weaken acceptance silently, or publish a release.
+On 2026-11-18, the owner chose to hold CVE-2026-19773 pending suitable scanner
+data/integration. STI-108 remains blocked; no replacement case or acceptance
+waiver is authorized. STI-111 signing work is independently ready, but do not
+begin STI-109, remove existing fixes, weaken acceptance, or publish a release.

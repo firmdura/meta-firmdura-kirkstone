@@ -66,10 +66,12 @@ This sample does not require building a general orchestration platform.
 ## Scope and next milestone
 
 The baseline now builds and boots, including the intended shared library and
-HTTP/2 configuration. The next gate is owner reassessment of the selected case
-and its scanner coverage, not repair work. STI-108 is not Done while that
-preflight remains blocked. Security comparison, repair integration, release
-assembly, and internal clean-environment replay remain unverified.
+HTTP/2 configuration. On 2026-11-18, the owner chose to hold CVE-2026-19773
+pending suitable scanner data/integration. No replacement case or acceptance
+waiver is authorized. STI-108 is not Done and the repair path remains paused;
+STI-111 signing work is independently ready. Security comparison, repair
+integration, release assembly, and internal clean-environment replay remain
+unverified.
 
 Customer participation, external replay, physical-board qualification, and community PR acceptance are not prerequisites for publishing this sample.
 
