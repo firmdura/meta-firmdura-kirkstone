@@ -1,0 +1,31 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+set -u
+
+overall=0
+
+if /usr/bin/firmdura-h2-cve-2026-19773 --mode normal-only >/tmp/firmdura-h2-normal.json 2>/tmp/firmdura-h2-normal.err; then
+    echo "PASS: firmdura-h2-normal-controls"
+else
+    rc=$?
+    echo "FAIL: firmdura-h2-normal-controls (exit=$rc)"
+    cat /tmp/firmdura-h2-normal.err >&2
+    cat /tmp/firmdura-h2-normal.json >&2
+    exit 1
+fi
+
+/usr/bin/firmdura-h2-cve-2026-19773 --mode security-only >/tmp/firmdura-h2-security.json 2>/tmp/firmdura-h2-security.err
+sec_rc=$?
+if [ "$sec_rc" -eq 0 ]; then
+    echo "PASS: firmdura-cve-2026-19773-bounds-enforced"
+elif [ "$sec_rc" -eq 1 ]; then
+    echo "FAIL: firmdura-cve-2026-19773-bounds-enforced (expected-vulnerable-oob-reproduced)"
+    overall=1
+else
+    echo "ERROR: firmdura-cve-2026-19773-bounds-enforced (harness-error exit=$sec_rc)"
+    cat /tmp/firmdura-h2-security.err >&2
+    cat /tmp/firmdura-h2-security.json >&2
+    exit 2
+fi
+
+exit "$overall"
