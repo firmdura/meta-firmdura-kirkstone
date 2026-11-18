@@ -47,9 +47,11 @@ does not prove that a vulnerability has been reproduced or fixed.
 ## Current security work
 
 The target case is [CVE-2026-19773](https://www.zerodayinitiative.com/advisories/ZDI-26-590/).
-The pinned Grype scanner and database do not report this CVE for the actual
-build, so work on the case is paused pending suitable scanner data or
-integration. This is not evidence that the component is unaffected.
+The baseline is ready for runtime reproduction and repair work, but neither
+has been demonstrated yet. The pinned Grype scanner and database do not
+report this CVE for the actual build. Scanner interoperability is a separate
+unresolved requirement for VEX and publication, not evidence that the component
+is unaffected.
 
 See [testing and scanner limitations](docs/testing.md) for the findings and
 what the existing checks do and do not establish.

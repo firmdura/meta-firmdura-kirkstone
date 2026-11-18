@@ -1,9 +1,13 @@
 # Baseline checks and scanner preflight
 
-The STI-108 [run record](../evidence/20261117-sti108-baseline/run.json) is a
-blocked baseline checkpoint, not a completed vulnerability reproduction.
-The clean image build and boot/library checks passed. No repair, security
-regression result, paired-image freeze, VEX statement or release is claimed.
+The clean image build, boot/library checks and retained inventory are verified.
+The [handoff review](../evidence/20261118-sti108-handoff/run.json) rechecked
+their identities, logs and canonical archive contents. The historical
+[run record](../evidence/20261117-sti108-baseline/run.json) remains unchanged:
+its `blocked` status describes the original combined build/scanner gate.
+Scanner interoperability is now separate from runtime reproduction and repair.
+No vulnerability reproduction, repair, security regression result, paired-image
+freeze, VEX statement or release is claimed.
 
 ## Boot and identify the actual library
 
@@ -119,7 +123,14 @@ CVE-2025-1866 is explicitly **Win32-only** in its advisory/database
 description. Its version-only match is retained as unresolved scanner output,
 not accepted as a replacement Linux case or removed through VEX.
 
-On 2026-11-18, the owner chose to hold CVE-2026-19773 pending suitable scanner
-data/integration. STI-108 remains blocked; no replacement case or acceptance
-waiver is authorized. STI-111 signing work is independently ready, but do not
-begin STI-109, remove existing fixes, weaken acceptance, or publish a release.
+The earlier scanner-only hold was superseded on 2026-11-18 by an approved
+separation of the runtime and scanner work. The verified baseline can be used
+for target reproduction and repair without waiting for a scanner match.
+The selected case has not changed, and applicability still requires actual
+target evidence; never remove an existing fix or weaken the test.
+
+The scanner blocker remains open in STI-119. It prevents VEX acceptance and
+publication, not runtime work. A new supported normalization or database check
+must retain new inputs and results rather than overwrite this snapshot.
+Signing preparation is independent. Human engineering/release review, genuine
+scanner findings and the paired-artifact VEX controls remain mandatory.
