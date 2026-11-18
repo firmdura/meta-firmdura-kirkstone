@@ -321,6 +321,41 @@ class ReleaseTests(unittest.TestCase):
         self.assertIn("--paginate", run.call_args.args[0])
         self.assertIn("--slurp", run.call_args.args[0])
 
+    def test_draft_stage_download_accepts_single_unsigned_draft_and_rejects_signed_or_published(self):
+        snapshot = self.github_candidate()
+        (self.root / verify.BUNDLE).unlink()
+        del snapshot["assets"][verify.BUNDLE]
+        dest = self.base / "staged"
+        with patch.object(verify, "draft_release_snapshot", return_value=snapshot):
+            with patch.object(verify.subprocess, "run", side_effect=lambda *a, **k:
+                              shutil.copytree(self.root, dest)):
+                doc = verify.stage_download(dest, **self.expected)
+        self.assertEqual(doc["release"]["id"], "v0.0.0-test")
+
+        signed_snapshot = copy.deepcopy(snapshot)
+        signed_snapshot["assets"][verify.BUNDLE] = {"id": 77, "size": 12}
+        with patch.object(verify, "draft_release_snapshot", return_value=signed_snapshot):
+            with self.assertRaisesRegex(verify.InvalidRelease, "must not already contain a signature bundle"):
+                verify.stage_download(self.base / "staged-signed", **self.expected)
+
+        published_pages = [[{"id": 123, "tag_name": "v0.0.0-test", "draft": False}]]
+        with patch.object(verify.subprocess, "run", return_value=subprocess.CompletedProcess(
+            [], 0, json.dumps(published_pages),
+        )):
+            with self.assertRaisesRegex(verify.InvalidRelease, "unpublished draft release"):
+                verify.draft_release_snapshot("v0.0.0-test")
+
+    def test_verify_draft_release_verifies_complete_signed_draft_before_publication(self):
+        snapshot = self.github_candidate()
+        dest = self.base / "draft-verified"
+        with patch.object(verify, "draft_release_snapshot", return_value=snapshot):
+            with patch.object(verify.subprocess, "run", side_effect=lambda *a, **k:
+                              shutil.copytree(self.root, dest)):
+                with patch.object(verify, "verify_assets", return_value={"release": {"id": "v0.0.0-test"}}) as va:
+                    doc = verify.verify_draft_release(dest, **self.expected)
+        self.assertEqual(doc["release"]["id"], "v0.0.0-test")
+        va.assert_called_once()
+
 
 class ApprovalTests(unittest.TestCase):
     def policy(self):

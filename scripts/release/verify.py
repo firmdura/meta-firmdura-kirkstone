@@ -203,15 +203,7 @@ def verify_assets(root, cosign="cosign", **expected):
     return check_assets(root, signed=True, **expected)
 
 
-def release_snapshot(release_id):
-    require(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", release_id) is not None,
-            "invalid release id")
-    release = subprocess.run(
-        ["gh", "api", f"repos/{REPOSITORY}/releases/tags/{release_id}"],
-        check=True, capture_output=True, text=True)
-    release_data = json.loads(release.stdout)
-    require(release_data["tag_name"] == release_id and release_data["draft"] is False,
-            "expected a published release with the exact tag")
+def _assets_for_release(release_data):
     pages = subprocess.run(
         ["gh", "api", "--paginate", "--slurp",
          f"repos/{REPOSITORY}/releases/{release_data['id']}/assets?per_page=100"],
@@ -226,6 +218,76 @@ def release_snapshot(release_id):
         "assets": {asset["name"]: {key: asset.get(key) for key in
                    ("id", "size", "updated_at", "digest")} for asset in assets},
     }
+
+
+def release_snapshot(release_id):
+    require(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", release_id) is not None,
+            "invalid release id")
+    release = subprocess.run(
+        ["gh", "api", f"repos/{REPOSITORY}/releases/tags/{release_id}"],
+        check=True, capture_output=True, text=True)
+    release_data = json.loads(release.stdout)
+    require(release_data["tag_name"] == release_id and release_data["draft"] is False,
+            "expected a published release with the exact tag")
+    return _assets_for_release(release_data)
+
+
+def draft_release_snapshot(release_id):
+    require(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", release_id) is not None,
+            "invalid release id")
+    pages = subprocess.run(
+        ["gh", "api", "--paginate", "--slurp",
+         f"repos/{REPOSITORY}/releases?per_page=100"],
+        check=True, capture_output=True, text=True)
+    matches = [
+        rel for page in json.loads(pages.stdout) for rel in page
+        if rel.get("tag_name") == release_id
+    ]
+    require(len(matches) == 1 and matches[0].get("draft") is True,
+            "expected a single unpublished draft release with the exact tag")
+    return _assets_for_release(matches[0])
+
+
+def stage_download(root, **expected):
+    require(not root.exists() and not root.is_symlink(), "download destination must not exist")
+    require(expected["kind"] == "release", "staged draft download does not accept fixtures")
+    before = draft_release_snapshot(expected["release_id"])
+    require(BUNDLE not in before["assets"],
+            "staged unsigned draft must not already contain a signature bundle")
+    subprocess.run([
+        "gh", "release", "download", expected["release_id"], "--repo", REPOSITORY,
+        "--dir", str(root),
+    ], check=True)
+    files, directories = inventory(root)
+    require(files == set(before["assets"]) and not directories,
+            "download does not match the complete draft GitHub asset set")
+    for name, metadata in before["assets"].items():
+        require((root / name).stat().st_size == metadata["size"],
+                f"GitHub draft asset size mismatch: {name}")
+    document = check_assets(root, signed=False, **expected)
+    require(draft_release_snapshot(expected["release_id"]) == before,
+            "GitHub draft release asset set changed during stage download")
+    return document
+
+
+def verify_draft_release(root, cosign="cosign", **expected):
+    require(not root.exists() and not root.is_symlink(), "download destination must not exist")
+    require(expected["kind"] == "release", "draft release verification does not accept fixtures")
+    before = draft_release_snapshot(expected["release_id"])
+    subprocess.run([
+        "gh", "release", "download", expected["release_id"], "--repo", REPOSITORY,
+        "--dir", str(root),
+    ], check=True)
+    files, directories = inventory(root)
+    require(files == set(before["assets"]) and not directories,
+            "download does not match the complete draft GitHub asset set")
+    for name, metadata in before["assets"].items():
+        require((root / name).stat().st_size == metadata["size"],
+                f"GitHub draft asset size mismatch: {name}")
+    document = verify_assets(root, cosign, **expected)
+    require(draft_release_snapshot(expected["release_id"]) == before,
+            "GitHub draft release asset set changed during verification")
+    return document
 
 
 def verify_github_release(root, cosign="cosign", **expected):
@@ -305,11 +367,11 @@ def expected_from(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("check", "verify", "unpack", "github-release"):
+    for name in ("check", "verify", "unpack", "stage-download", "draft-release", "github-release"):
         command = commands.add_parser(name)
         command.add_argument("--assets", required=True, type=Path)
         expectation_arguments(command)
-        if name in ("verify", "github-release"):
+        if name in ("verify", "draft-release", "github-release"):
             command.add_argument("--cosign", default="cosign")
         if name == "unpack":
             command.add_argument("--archive", required=True, type=Path)
@@ -318,8 +380,12 @@ def main():
     try:
         if args.command == "verify":
             document = verify_assets(args.assets, args.cosign, **expected)
+        elif args.command == "draft-release":
+            document = verify_draft_release(args.assets, args.cosign, **expected)
         elif args.command == "github-release":
             document = verify_github_release(args.assets, args.cosign, **expected)
+        elif args.command == "stage-download":
+            document = stage_download(args.assets, **expected)
         elif args.command == "unpack":
             document = unpack(args.archive, args.assets, **expected)
         else:
@@ -328,7 +394,7 @@ def main():
             subprocess.CalledProcessError) as error:
         print(f"release verification failed: {error}", file=sys.stderr)
         return 1
-    authenticated = args.command in ("verify", "github-release")
+    authenticated = args.command in ("verify", "draft-release", "github-release")
     print(json.dumps({
         "status": "verified" if authenticated else "payloads-checked-no-signature",
         "release": document["release"], "source": document["source"],
