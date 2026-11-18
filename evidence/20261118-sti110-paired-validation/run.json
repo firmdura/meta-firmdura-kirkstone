@@ -2,8 +2,8 @@
   "schema_version": 1,
   "run_id": "20261118-sti110-paired-validation",
   "issue": "STI-110",
-  "status": "candidate-validated-awaiting-human-review",
-  "scope": "Scoped libwebsockets 4.2.2 CVE-2026-19773 repair layer, paired baseline and patched Yocto Kirkstone qemuarm64 builds, system-mode QEMU security/normal/ptest/upstream regressions, compiled incomplete-fix controls, canonical deploy archives, and consolidated 41-package SPDX SBOMs; awaiting human engineering review before declaring pair frozen.",
+  "status": "verified",
+  "scope": "Scoped libwebsockets 4.2.2 CVE-2026-19773 repair layer, paired baseline and patched Yocto Kirkstone qemuarm64 builds, system-mode QEMU security/normal/ptest/upstream regressions, compiled incomplete-fix controls, canonical deploy archives, consolidated 41-package SPDX SBOMs, and human-reviewed frozen image-pair handoff.",
   "started_at": "2026-11-18T11:53:18.884090+00:00",
   "finished_at": "2026-11-18T12:49:29.531811+00:00",
   "inputs": {
@@ -1509,8 +1509,13 @@
       "symlinks": 52,
       "logical_file_bytes": 2045781
     },
-    "human_engineering_review": "pending",
-    "paired_image_freeze": "awaiting_human_engineering_review",
+    "human_engineering_review": {
+      "status": "approved",
+      "reviewer": "human engineering reviewer",
+      "reviewed_at": "2026-11-18",
+      "scope": "Confirmed patch completeness (CVE-2026-19773-1.patch 824151862 + CVE-2026-19773-2.patch 0c6cef092), paired test expectations, incomplete-fix controls, and evidence limits; authorized freezing the baseline and patched image pair."
+    },
+    "paired_image_freeze": "frozen",
     "release": "not_published"
   },
   "timing": {
@@ -1524,7 +1529,7 @@
     "method": "Prospective, manually bracketed supervised assistant-session wall time; not human labor or CPU time. Explicit command/build/user waits are excluded from active intervals. Historical effort remains unknown."
   },
   "limitations": [
-    "Human engineering review must record patch completeness, test expectations, and evidence limits before this candidate image pair is declared frozen for STI-112/STI-113/STI-114.",
+    "Human engineering review is complete for the frozen image pair; exact-release human approval remains separately mandatory before public release publication.",
     "Results apply only to this pinned Poky 4.0.35 / qemuarm64 / libwebsockets 4.2.2 reference configuration, not physical boards or customer firmware.",
     "Upstream NVD CPE applicability for CVE-2026-19773 remains Awaiting Analysis, blocking unfiltered Grype detection and downstream OpenVEX release acceptance."
   ]

@@ -1,15 +1,14 @@
 # Pinned reference build and handoff contract
 
 The bootstrap, baseline build/boot/inventory handoff, target `CVE-2026-19773`
-reproduction, and paired `baseline`/`patched` candidate validation are
+reproduction, and reviewed paired `baseline`/`patched` validation are
 recorded in
 [paired validation evidence](../evidence/20261118-sti110-paired-validation/run.json).
 The [baseline handoff review](../evidence/20261118-sti108-handoff/run.json)
 separates runtime verification from the external scanner feed gap documented in
-[the scanner guide](scanner.md). Human engineering review is required before
-the candidate image pair is declared frozen for redistribution, and OpenVEX
-consumer acceptance plus exact-release human approval remain publication
-requirements.
+[the scanner guide](scanner.md). The tested image pair is frozen for
+read-only consumption by packaging and replay checks, while OpenVEX consumer
+acceptance and exact-release human approval remain publication requirements.
 
 The [bootstrap run record](../evidence/20261117-sti107-bootstrap/run.json)
 records a public-source clean checkout, 2,427 parsed recipes, and an image
