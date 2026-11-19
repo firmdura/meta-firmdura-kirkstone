@@ -266,10 +266,16 @@ Each run's `run.json` must contain:
 - `inputs`: exact source/configuration/test commits (or explicitly identified
   pre-commit tree hashes), external repository URLs/commits, effective
   configuration hashes, tool versions and immutable builder identity;
-- `commands`: argv, working directory, timestamps, expected outcome, actual
-  exit/result, raw-log locator and SHA-256;
+- `commands`: invocation or check description, working directory, timestamps,
+  expected outcome, actual exit/result, raw-log locator and SHA-256;
 - `artifacts`: relative path, role, variant, size, SHA-256 and durable locator;
-- `results` and `limitations`, with measured build and test durations where available.
+- `results` and `limitations`, with measured durations for builds, tests, and
+  scans where available.
+
+Run records on `main` are edited for publication. To verify a historical
+run-record digest, use the file at the revision recorded for that check.
+The signed `v0.1.0` source and evidence archive contains the records as
+published with the [release](release.md).
 
 Unavailable checks are `blocked` or `not_run`, never `passed`. Baseline and
 patched source/image identities must be distinct and traceable. Record the
