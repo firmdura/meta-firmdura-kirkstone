@@ -6,9 +6,9 @@ recorded in
 [paired validation evidence](../evidence/20261118-sti110-paired-validation/run.json).
 The [baseline handoff review](../evidence/20261118-sti108-handoff/run.json)
 separates runtime verification from the external scanner feed gap documented in
-[the scanner guide](scanner.md). The tested image pair is frozen for
-read-only consumption by packaging and replay checks, while OpenVEX consumer
-acceptance and exact-release human approval remain publication requirements.
+[the scanner guide](scanner.md). Packaging and replay used the frozen image pair. The [OpenVEX guide](vex.md)
+records the consumer checks. The [v0.1.0 release record](release.md) documents
+approval and verification of the published files.
 
 The [bootstrap run record](../evidence/20261117-sti107-bootstrap/run.json)
 records a public-source clean checkout, 2,427 parsed recipes, and an image
@@ -28,16 +28,16 @@ and HTTP/2 support, not a vulnerability or repair. See
 ### Historical source identities
 
 A commit-message cleanup changed commit IDs without changing
-their file trees. The handoff review verified these bindings:
+their file trees. The 2026-11-18 review recorded the following pairs:
 
-| Actually built/tested commit | Same-tree commit on current main |
+| Commit used for the run | Same-tree commit recorded on 2026-11-18 |
 |---|---|
 | `209222b2f7fbd6a30257b0e064d3f4df18e23692` | `6799585d26caf7048acd555e4d0d2a74abe5b019` |
 | `b5f1902618e0c23f1be38fac8c690ae91b7aab72` | `d6b528ea5b106f1c26f8f0e26b6fec4ea7728839` |
 
-The original IDs remain reachable through retained topic branches. Historical
-run records still name the revisions actually used, not their later equivalents.
-Neither this metadata cleanup nor the handoff review rebuilt an image.
+The run records identify the commits used for the build and tests. The
+[review record](../evidence/20261118-sti108-handoff/run.json) gives the Git tree
+IDs for both pairs. This source comparison did not rebuild either image.
 
 ## Locked inputs
 
@@ -214,10 +214,9 @@ control host to
 Its `artifacts/<run-id>/`, `logs/`, and `runs/` directories persist across
 sessions. Restrict access to build and review participants; transfer artifacts
 explicitly between accounts rather than creating a world-readable share.
-Retain handoffs until they are explicitly cleared for removal. This is local,
-single-host storage, not off-host backup or a public download service.
-Later release publication must provide durable public assets and corresponding
-source through the separately approved release gate.
+This single-host store holds the original build artifacts. The
+[v0.1.0 release index](release.md) lists the public downloads, including
+the corresponding source and the raw evidence logs.
 
 For isolated system-mode boot, use the built `qemu-system-aarch64` from the
 Yocto native sysroot (or record an explicitly selected emulator version).
@@ -281,7 +280,7 @@ Unavailable checks are `blocked` or `not_run`, never `passed`. Baseline and
 patched source/image identities must be distinct and traceable. Record the
 unmodified upstream content as well as local patch order. Keep raw scanner
 JSON, including unresolved/ignored matches and the database snapshot identity.
-Do not fabricate a finding or silently substitute a scanner.
+If the selected scanner has no match, record that result.
 
 The release manifest interface is a versioned JSON object with release/source
 identities and an `artifacts` array. Every entry has a relative `path`, `role`,

@@ -57,7 +57,7 @@
       "sti107_current_main_commit": "6799585d26caf7048acd555e4d0d2a74abe5b019",
       "sti107_historical_same_tree_commit": "209222b2f7fbd6a30257b0e064d3f4df18e23692",
       "sti108_integrated_main_commit": "44210974feddea19687ea2d7466f99f45d43588b",
-      "verification": "Parent-supplied verified handoff and checked-out main history; no baseline build was repeated."
+      "verification": "Baseline prerequisites were checked against the supplied verification and main history. The baseline build was not repeated."
     },
     "ownership": {
       "lead_session": "cde10eaa-05aa-477c-ade0-fe788d89c09d",
@@ -179,7 +179,7 @@
         "STI-113",
         "STI-116"
       ],
-      "source": "Explicit lead review feedback on PR #6."
+      "source": "Review of PR #6."
     }
   },
   "commands": [
@@ -731,7 +731,7 @@
       "run_url": null,
       "actual_certificate_identity": null,
       "bundle_sha256": null,
-      "reason": "No protected environment; candidate must first be reviewed/integrated on trusted main, then owner-protected/approved."
+      "reason": "The protected signing environment did not exist. The run required a reviewed candidate on main, environment protection and deployment approval."
     },
     "production_signing_and_public_download": {
       "status": "not_run",
@@ -751,20 +751,20 @@
     }
   },
   "limitations": [
-    "STI-111 is not complete. The lead accepted manifest v1; integration and a real human-approved GitHub OIDC fixture run remain required.",
-    "The last read-only GitHub inspection found zero environments. Owner setup of explicit human reviewers, main-only deployment and disabled admin bypass remains necessary; no protection settings were changed.",
+    "When this run ended, manifest v1 had been accepted. Integration and a GitHub OIDC fixture run with human approval were still pending.",
+    "The read-only GitHub inspection found zero environments. The intended signing environment required explicit human reviewers, main-only deployment and disabled admin bypass. This run did not change protection settings.",
     "Prevent self-review is recommended with separate authorized dispatcher/reviewer accounts, not required for the sole human maintainer. Explicit human environment approval remains mandatory.",
     "Unit mocks do not demonstrate keyless cryptography. The real upstream engine check authenticates a Google issuer/public Cosign maintainer, not this repository's GitHub workflow.",
-    "No fixture bundle or certificate was fabricated. Missing prerequisites are explicit failures, not successful skips.",
-    "All uploaded public release assets are checked by the implemented download path; its API/orchestration controls are local mocks because no approved production release was published or available for this task.",
-    "The lead accepted manifest v1, flat release filenames and the exact main-workflow identity on 2026-11-18 for STI-112/113/116 consumption; release ID and producer commit remain independently bound.",
-    "Action artifacts expire after 14 days; STI-116 must retain unchanged candidates/logs in approved durable storage before expiry.",
+    "The GitHub OIDC fixture produced no bundle or certificate in this run. Missing prerequisites fail the checks.",
+    "The download code checks every uploaded public release asset. The API tests used local mocks because a production release was unavailable at the time.",
+    "On 2026-11-18 the lead accepted manifest v1, flat release filenames and the exact main-workflow identity for STI-112/113/116. The contract binds the release ID and producer commit separately.",
+    "Actions artifacts expire after 14 days. STI-116 required the candidate bytes and logs to be copied to durable storage before expiry.",
     "The workflow and helpers do not establish redistribution, scanner, runtime, pair/replay or public-release approval.",
-    "Raw logs are byte-identical in the approved local://firmdura-kirkstone/logs/ store, not in Git. Fixture repository locators resolve at the commit containing this sanitized record; final commit and PR are in the Linear handoff."
+    "Raw logs were kept byte-for-byte at local://firmdura-kirkstone/logs/. Fixture repository locators refer to the commit containing this record."
   ],
   "command_path_aliases": {
     "<checkout>": "Isolated STI-111 checkout; expand this alias to its local path before replay.",
-    "<store>": "Owner-approved local://firmdura-kirkstone/ artifact storage root; expand before replay."
+    "<store>": "Local artifact store at local://firmdura-kirkstone/. Expand this alias before replay."
   },
   "timing": {
     "build_elapsed_seconds": 0,

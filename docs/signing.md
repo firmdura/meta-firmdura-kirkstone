@@ -1,20 +1,19 @@
 # Keyless signing of frozen release assets
 
-The signing workflow, strict manifest v1 verifier, human-gated
-`release-signing` environment, and trusted `kind=fixture` GitHub Actions OIDC
-smoke run are verified in
-[`evidence/20261118-sti111-oidc-fixture/run.json`](../evidence/20261118-sti111-oidc-fixture/run.json)
-(supplementing the initial local preparation record in
-[`evidence/20261118-sti111-keyless-signing/run.json`](../evidence/20261118-sti111-keyless-signing/run.json)).
-Fixture signatures are **not** production release evidence: exact-release human
-approval, `kind=release` signing over the final frozen candidate assets,
-publication, and public-download verification remain separately required.
+The [v0.1.0 release record](release.md) documents human approval, keyless
+signing of the frozen release assets and verification of public downloads.
+
+Before publication, the [local signing checks](../evidence/20261118-sti111-keyless-signing/run.json)
+exercised the manifest v1 verifier. The
+[OIDC fixture run](../evidence/20261118-sti111-oidc-fixture/run.json) tested
+the `release-signing` environment and GitHub Actions identity with a
+`kind=fixture` manifest.
 
 ## Frozen manifest v1
 
 The [build and evidence contract](build.md#ownership-and-evidence-interface)
-remains authoritative. The concrete interface below was reviewed on 2026-11-18
-for release packaging, VEX integration and publication:
+defines the files packaged for signing. The manifest format reviewed on
+2026-11-18 is:
 
 - `schema_version`: integer `1`.
 - `release`: exactly `kind` (`release` or `fixture`) and `id` (the planned release
@@ -57,9 +56,8 @@ already frozen files. The workflow neither builds nor regenerates a manifest,
 tar, SBOM, VEX, licence file, or other payload.
 
 The [unsigned labelled fixture](../tests/release-fixtures/unsigned/manifest.json)
-contains one harmless text payload. Its source field names the starting commit
-for this schema exercise, **not a firmware build from that commit**. There is
-deliberately no fabricated signature bundle in Git.
+contains one text payload. Its source field identifies the revision used to
+test the schema. The fixture is distributed unsigned.
 
 ## Trust and human approval
 

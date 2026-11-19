@@ -93,8 +93,8 @@
     }
   },
   "command_path_aliases": {
-    "<checkout>": "Sample checkout on the approved control host",
-    "<store>": "Owner-approved local://firmdura-kirkstone/ storage root",
+    "<checkout>": "Sample repository checkout on the control host",
+    "<store>": "Local artifact store at local://firmdura-kirkstone/",
     "<monitor-workspace>": "Build monitor workspace; resource monitoring only, not an image/test runtime dependency",
     "note": "Only host-specific paths are sanitized. Command argv, dates, exit codes and hashes retain the measured results; expand aliases before replay."
   },
@@ -3137,7 +3137,7 @@
     }
   ],
   "limitations": [
-    "STI-108 is not Done: required scanner finding is absent. Owner reassessment is required before STI-109.",
+    "The scanner did not report the required finding. Baseline acceptance remained blocked pending review.",
     "Library configuration and source inspection do not prove runtime CVE applicability; no vulnerability test or repair has run.",
     "The native image SPDX root is not a flattened Grype inventory. The component-only diagnostic is not full-image SBOM/VEX integration.",
     "libwebsockets package 4.2.2-r0 has upstream runtime/header version 4.2.1-v4.2.2; both identities are preserved.",

@@ -1,9 +1,16 @@
-# Published release `v0.1.0` index and verification record
+# Release files and verification for v0.1.0
 
-This document indexes the human-approved, keyless-Cosign-signed public release
-[`v0.1.0`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0)
-and its pre- and post-publication verification recorded in
-[`evidence/20261118-sti116-release/run.json`](../evidence/20261118-sti116-release/run.json).
+Firmdura published [v0.1.0](https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0)
+on November 18, 2026. The signed manifest lists 11 files. The manifest itself
+and its Sigstore bundle bring the download count to 13. The
+[verification record](../evidence/20261118-sti116-release/run.json) includes
+the approval, signing run, and download checks. That record lists the manifest
+as 2,489 bytes. The published file is 2,757 bytes and matches the SHA-256
+recorded there.
+
+For the run records as shipped, use the
+[evidence directory at the signed source revision](https://github.com/firmdura/meta-firmdura-kirkstone/tree/4e15e71a54e32e63bfafaf3b79c99d8bbe6a0e35/evidence).
+The default branch includes later reviews and editorial changes.
 
 ## Release, source, and cryptographic identities
 
@@ -14,7 +21,7 @@ and its pre- and post-publication verification recorded in
 | Paired image build commit (`baseline` & `patched`) | `a8a2adb0a299221d6f246f7c95e0912e4babd419` |
 | Frozen target test harness commit | `6e3e70b94281c8f75f52f90e77152deba7372c83` |
 | Protected OIDC signing workflow run | [`44372975734`](https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44372975734) (`release-signing` human deployment `7892852402`, staged artifact `14460645429` from run [`44372854449`](https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44372854449)) |
-| Signed `manifest.json` (`2,489` B) SHA-256 | `ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3` |
+| Signed `manifest.json` (`2,757` B) SHA-256 | `ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3` |
 | Sigstore bundle `manifest.sigstore.json` (`11,063` B) SHA-256 | `952746a316c0892c8cded527f60b77ba4ab59edb0caf67111a5f15b3ad7100fc` |
 | Fulcio leaf X.509 DER SHA-256 | `6b955b5a82a982cb958d1fab4b19e49b294d2e625ddd6b63addd227642b7d43b` |
 | Certificate SAN (`--certificate-identity`) | `https://github.com/firmdura/meta-firmdura-kirkstone/.github/workflows/release.yml@refs/heads/main` |
@@ -27,7 +34,7 @@ All files below are publicly downloadable under
 
 | Asset | Role / variant | Size (bytes) | SHA-256 |
 |---|---|---:|---|
-| [`manifest.json`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/manifest.json) | Signed manifest v1 | `2,489` | `ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3` |
+| [`manifest.json`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/manifest.json) | Signed manifest v1 | `2,757` | `ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3` |
 | [`manifest.sigstore.json`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/manifest.sigstore.json) | Keyless Cosign Sigstore bundle | `11,063` | `952746a316c0892c8cded527f60b77ba4ab59edb0caf67111a5f15b3ad7100fc` |
 | [`firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-baseline-eval-bundle.tar.gz) | `qemu-bundle` (`baseline`) | `16,416,902` | `ca423ae7d57f411c44916651413b6d6f3ad45d39aac4abb70498800ecd8891b0` |
 | [`firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-qemuarm64-patched-eval-bundle.tar.gz) | `qemu-bundle` (`patched`) | `16,419,741` | `aa04251544a1ff48e690620591255f029ca361871acc48af63ee785b462c8678` |

@@ -3,7 +3,7 @@
   "run_id": "20261118-sti119-dual-track",
   "issue": "STI-119",
   "status": "verified",
-  "scope": "Owner-approved dual-track baseline scanner resolution: preserves truthful stock offline Grype 0.122.0 results (0 stock CPE matches while NVD is Awaiting Analysis), adds offline OSV CVE-2026-19773 Git/source provenance detection reporting 3 unfiltered baseline matches, and adds isolated test-only auxiliary Grype v6 CPE fixture DB verification for STI-113 OpenVEX consumer testing.",
+  "scope": "Baseline scans with offline Grype 0.122.0 returned 0 stock CPE matches for CVE-2026-19773 while NVD listed it as Awaiting Analysis. Offline OSV Git/source provenance checks reported 3 unfiltered baseline matches for CVE-2026-19773. A separate test-only Grype v6 CPE fixture was verified for the STI-113 OpenVEX consumer tests.",
   "started_at": "2026-11-18T14:06:31.677124+00:00",
   "finished_at": "2026-11-18T14:47:02.487581+00:00",
   "inputs": {

@@ -65,8 +65,8 @@
     }
   },
   "command_path_aliases": {
-    "<checkout>": "Isolated STI-114 Git worktree on the approved control host",
-    "<store>": "Owner-approved local://firmdura-kirkstone/ durable storage root",
+    "<checkout>": "Isolated STI-114 Git worktree on the control host",
+    "<store>": "Local artifact store at local://firmdura-kirkstone/",
     "<workspace>": "Disposable isolated workspace outside <checkout> used to clone garmin/meta-lts-collab and run requirements-dev.txt linters; removed after archiving format-patch"
   },
   "commands": [

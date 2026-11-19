@@ -20,11 +20,11 @@ pair) from a single deterministic SPDX 2.2 document bound to the exact image
 rootfs SHA-256 without fabricating packages, versions, PURLs, CPEs, or OS/distro
 identities.
 
-Because NIST NVD still lists `CVE-2026-19773` as `Awaiting Analysis` (`0` CPE
-rows in stock Grype DB `v6.1.10`), unfiltered stock-DB scans report **151
-matches (68 unique CVEs)** across the 39-package baseline image and **0 stock
-CPE matches** for `CVE-2026-19773`. Rather than falsify distro metadata,
-dual-track detection preserves the truthful stock Grype output alongside:
+On 2026-11-18, NVD listed `CVE-2026-19773` as `Awaiting Analysis`. The
+stock Grype database (`v6.1.10`) had no CPE rows for it. The unfiltered scan of
+the 39-package baseline reported **151 matches (68 unique CVEs)**, including
+**0 CPE matches for CVE-2026-19773**. Two additional checks used the same
+build's package identities:
 
 1. **Offline OSV Git/source provenance detection** (`osv_git_provenance.py`),
    which evaluates the retained official OSV `CVE-2026-19773` `GIT` fix commit
@@ -276,8 +276,7 @@ stock matches plus `CVE-2026-19773` on `libwebsockets18`,
 `libwebsockets-evlib-uv`, and `libwebsockets-testapps`) while embedding
 `"from": "TEST-ONLY-AUXILIARY-CPE-FIXTURE-NOT-OFFICIAL-ANCHORE-FEED"` in the
 raw JSON descriptor. This auxiliary database is strictly an isolated test
-fixture and is never distributed as an official vulnerability feed. Once NIST
-NVD adds CPE configurations for `CVE-2026-19773`, stock Anchore database
-snapshots will match the same consolidated SPDX documents without changing
-`normalize_spdx.py` or the shipped OpenVEX product PURLs; see
-[the OpenVEX guide](vex.md) for paired positive and negative consumer verification.
+fixture. The stock results above apply to the database snapshot used on
+2026-11-18. A later stock database can be checked against the same published
+SPDX documents and OpenVEX product PURLs. The [OpenVEX guide](vex.md)
+records the positive and negative controls.

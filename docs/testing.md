@@ -7,13 +7,13 @@ recorded in
 The [handoff review](../evidence/20261118-sti108-handoff/run.json) rechecked
 the initial build/boot identities, and the
 [target reproduction record](../evidence/20261118-sti109-reproduction/run.json)
-froze the target security and normal-path HTTP/2 test contract. The historical
-[baseline run record](../evidence/20261117-sti108-baseline/run.json) remains
-unchanged: its `blocked` status describes the original combined build/scanner
-gate. Scanner interoperability is tracked in [the scanner guide](scanner.md).
-Human engineering review confirmed patch completeness, test expectations, and
-evidence limits on 2026-11-18, freezing the `baseline` and `patched` image pair
-for bundle packaging. No OpenVEX statement or public release is claimed here.
+froze the target security and normal-path HTTP/2 test contract. The
+[baseline run](../evidence/20261117-sti108-baseline/run.json) recorded
+`blocked` for the combined build and scanner checks. The image built and
+booted, but scanner preflight was incomplete.
+On November 18, 2026, engineering review confirmed the patch scope, expected
+test outcomes, and limits of the evidence. The two images reviewed that day
+were frozen for packaging.
 
 ## Boot and identify the actual library
 
@@ -129,12 +129,10 @@ CVE-2025-1866 is explicitly **Win32-only** in its advisory/database
 description. Its version-only match is retained as unresolved scanner output,
 not accepted as a replacement Linux case or removed through VEX.
 
-The earlier scanner-only hold was superseded on 2026-11-18 by separating
-runtime verification from scanner feed coverage. Full-image SPDX 2.2 graph
-consolidation and the bounded 2026-11-18 Grype feed check are documented in
-[the scanner guide](scanner.md). External vulnerability feed gaps still gate
-OpenVEX consumer acceptance and public release, while target reproduction and
-repair verification proceed on the built image.
+On November 18, the stock Grype database still had no match for this CVE.
+A separate test database was used to check how Grype applied the OpenVEX
+statement. The [scanner guide](scanner.md) records both results. The stock
+feed limitation was documented in the [v0.1.0 release](release.md).
 
 ## Target reproduction and frozen test contract (`CVE-2026-19773`)
 

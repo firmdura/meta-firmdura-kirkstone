@@ -140,7 +140,7 @@
   },
   "limitations": [
     "Experimental isolated evaluation sample for qemuarm64 on Poky 4.0.35 (debug-tweaks enabled); not production firmware.",
-    "NIST NVD still lists CVE-2026-19773 as Awaiting Analysis (0 stock Anchore CPE rows in DB v6.1.10); bridged truthfully via offline OSV Git provenance and isolated labelled CPE test DB.",
+    "At release time, NVD listed CVE-2026-19773 as Awaiting Analysis. Stock Anchore DB v6.1.10 contained 0 CPE rows for the CVE. Separate checks used offline OSV Git provenance and a labelled CPE test database.",
     "Upstream PR garmin/meta-lts-collab#283 remains open awaiting maintainer review/CI workflow approval."
   ],
   "commands": [

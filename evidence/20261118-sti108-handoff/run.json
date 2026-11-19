@@ -3,7 +3,7 @@
   "run_id": "20261118-sti108-handoff",
   "issue": "STI-108",
   "status": "verified",
-  "scope": "Revised baseline build/boot/identity/inventory handoff; not scanner acceptance or a new runtime run.",
+  "scope": "Recheck of the existing baseline build, boot, library identity and package inventory. No new runtime or scanner test was performed.",
   "started_at": "2026-11-18T07:14:39.770783+00:00",
   "finished_at": "2026-11-18T07:19:25.267867+00:00",
   "inputs": {
@@ -51,7 +51,7 @@
   },
   "command_path_aliases": {
     "<checkout>": "Successor checkout at the reviewed main source; historical build/test files remain unchanged.",
-    "<store>": "Owner-approved local://firmdura-kirkstone/ storage root. Expand aliases in argv before replay."
+    "<store>": "Local artifact store at local://firmdura-kirkstone/. Expand aliases in argv before replay."
   },
   "commands": [
     {
@@ -144,7 +144,7 @@
     "baseline_gate": "verified",
     "retained_evidence": {
       "status": "verified",
-      "scope": "Existing baseline handoff consistency in the successor checkout; no new build or runtime run",
+      "scope": "Cross-checked the retained baseline evidence in the successor checkout. No new build or runtime test was performed.",
       "evidence_sha256": "e9dc9d736f1bc7e7b7e67877b8b32cfcafa15518bbe3ea3fc86921545e4fa585",
       "commands": 61,
       "artifacts": 37,
@@ -197,7 +197,7 @@
     },
     "historical_record_and_payloads_unchanged": true,
     "build_and_boot": "Reused verified historical runs; no rebuild or new boot claimed.",
-    "scanner_preflight": "blocked; owned by STI-119, not the runtime dependency path",
+    "scanner_preflight": "Blocked at this point. STI-119 tracked the scanner finding separately from runtime validation.",
     "cve_reproduction": "not_run",
     "repair": "not_applied",
     "paired_image_freeze": "not_done",
@@ -209,7 +209,7 @@
     "The narrowed baseline gate does not establish vulnerability applicability, a repair or scanner/VEX acceptance.",
     "Canonical tar archives retain case-sensitive names and original absolute alias bindings; do not extract on a case-insensitive filesystem or assume relocatability.",
     "The approved artifact store is local single-host storage, not a public release or off-host backup.",
-    "Human engineering review, exact-release approval and downstream gates remain required."
+    "Engineering review, downstream validation and approval of the exact release were still pending at this point."
   ],
   "timing": {
     "new_image_build_seconds": 0,

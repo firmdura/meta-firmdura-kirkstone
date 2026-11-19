@@ -5,121 +5,108 @@ This review covers the build, validation, and publication of the signed
 [build measurements](../evidence/20261118-sti117-cycle-review/run.json)
 include per-phase build times and builder resources.
 
-## Timeline and milestone dates
+## Release timeline
 
-| Milestone | Recorded UTC timestamp | Primary artifact / record |
+| Event | Time (UTC) | Record |
 |---|---|---|
 | Upstream `CVE-2026-19773` NVD entry last modified (`Awaiting Analysis`) | `2026-09-18T19:10:46Z` | [ZDI-26-590](https://www.zerodayinitiative.com/advisories/ZDI-26-590/), [upstream fix `824151862f`](https://github.com/warmcat/libwebsockets/commit/824151862f37bc72f46d9a3e01d5b9408d313a0b) |
 | Upstream OSV `CVE-2026-19773` record modified (`GIT` range only) | `2026-10-28T10:50:35Z` | [`docs/scanner.md`](scanner.md) |
-| Bootstrap & locked-layer parse started | `2026-11-17T20:59:10Z` | [`evidence/20261117-sti107-bootstrap/run.json`](../evidence/20261117-sti107-bootstrap/run.json) |
-| Cold clean `baseline` image build & QEMU smoke completed | `2026-11-18T00:24:25Z` | [`evidence/20261117-sti108-baseline/run.json`](../evidence/20261117-sti108-baseline/run.json) |
-| Target `CVE-2026-19773` `qemuarm64` reproduction completed | `2026-11-18T11:50:49Z` | [`evidence/20261118-sti109-reproduction/run.json`](../evidence/20261118-sti109-reproduction/run.json) |
-| Paired `baseline`/`patched` repair & regression freeze completed | `2026-11-18T12:49:29Z` | [`evidence/20261118-sti110-paired-validation/run.json`](../evidence/20261118-sti110-paired-validation/run.json) |
-| Evaluation, corresponding-source & licence bundles packaged | `2026-11-18T13:52:44Z` | [`evidence/20261118-sti112-bundles/run.json`](../evidence/20261118-sti112-bundles/run.json) |
-| Trusted GitHub Actions OIDC fixture smoke verified | `2026-11-18T14:04:03Z` | [`evidence/20261118-sti111-oidc-fixture/run.json`](../evidence/20261118-sti111-oidc-fixture/run.json) |
-| Upstream contribution [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283) submitted | `2026-11-18T14:13:01Z` | [`evidence/20261118-sti114-contribution/run.json`](../evidence/20261118-sti114-contribution/run.json) |
-| Dual-track scanner & OpenVEX positive/negative controls verified | `2026-11-18T15:13:06Z` | [`evidence/20261118-sti113-openvex/run.json`](../evidence/20261118-sti113-openvex/run.json) |
-| Independent clean-volume source rebuild & candidate replay completed | `2026-11-18T16:30:59Z` | [`evidence/20261118-sti115-replay/run.json`](../evidence/20261118-sti115-replay/run.json) |
-| Keyless-Cosign-signed GitHub Release [`v0.1.0`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0) published & verified | `2026-11-18T18:52:09Z` | [`evidence/20261118-sti116-release/run.json`](../evidence/20261118-sti116-release/run.json) |
+| Started builder setup and parsed the locked layers | `2026-11-17T20:59:10Z` | [Run record](../evidence/20261117-sti107-bootstrap/run.json) |
+| Completed the cold baseline build and QEMU boot check | `2026-11-18T00:24:25Z` | [Run record](../evidence/20261117-sti108-baseline/run.json) |
+| Confirmed CVE-2026-19773 on the baseline `qemuarm64` image | `2026-11-18T11:50:49Z` | [Run record](../evidence/20261118-sti109-reproduction/run.json) |
+| Completed the baseline and patched regression tests | `2026-11-18T12:49:29Z` | [Run record](../evidence/20261118-sti110-paired-validation/run.json) |
+| Packaged evaluation bundles, corresponding source and licences | `2026-11-18T13:52:44Z` | [Run record](../evidence/20261118-sti112-bundles/run.json) |
+| Verified GitHub Actions OIDC signing with a test fixture | `2026-11-18T14:04:03Z` | [Run record](../evidence/20261118-sti111-oidc-fixture/run.json) |
+| Upstream contribution [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283) submitted | `2026-11-18T14:13:01Z` | [Run record](../evidence/20261118-sti114-contribution/run.json) |
+| Checked scanner and OpenVEX positive and negative controls | `2026-11-18T15:13:06Z` | [Run record](../evidence/20261118-sti113-openvex/run.json) |
+| Rebuilt the source on a fresh volume and replayed the candidate tests | `2026-11-18T16:30:59Z` | [Run record](../evidence/20261118-sti115-replay/run.json) |
+| Public download verification completed for [`v0.1.0`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0) | `2026-11-18T18:52:09Z` | [Run record](../evidence/20261118-sti116-release/run.json) |
 
-## Build duration
+## Build time and resources
 
-- **Total BitBake image build time (`6` builds)**: **`5,826.392 s` (`1.618 h`)**
-  (`92.1%` spent in the single initial cold build `5,366.709 s`; subsequent
-  warm-base-sstate builds took `114.99 s`–`155.53 s`).
+Six BitBake image builds took 5,826.392 seconds in total (1.618 hours). The
+cold build took 5,366.709 seconds, or 92.1% of that time. The five later builds
+had different inputs and amounts of reusable state:
 
-## Builder resources, storage, and infrastructure cost
+| Build | Seconds |
+|---|---:|
+| Incremental baseline image | 30.06 |
+| Paired validation, baseline | 7.99 |
+| Paired validation, patched | 114.99 |
+| Clean target rebuild with cached dependencies, baseline | 155.53 |
+| Clean target rebuild with cached dependencies, patched | 151.12 |
 
-- **Builder compute**: Dedicated local Colima Linux ARM64 VM (`firmdura-kirkstone`,
-  Ubuntu 24.04 LTS, `4` vCPUs, `8 GiB` RAM, `55 GiB` data disk, `10 GiB` root
-  disk) on an Apple Silicon control host (`95 GiB` free host disk).
-- **Container & volume storage**: `2` pinned container images (`1.582 GB`:
-  `ghcr.io/siemens/kas/kas:4.8` and `anchore/grype:0.122.0`) and `7` local
-  Docker volumes totaling **`39.84 GB`** (`firmdura-kirkstone-baseline` `22.9 GB`,
-  `firmdura-kirkstone-vex-db` `6.98 GB`, `firmdura-kirkstone-sti115-replay`
-  `4.2 GB` after `tmp` cleanup, `firmdura-kirkstone-scanner` `3.48 GB`, plus
-  bootstrap volumes).
-- **Host durable artifact & log store (`local://firmdura-kirkstone/`)**:
-  **`19,775,819,776` bytes (`18.42 GiB`)**.
-- **Infrastructure cost**: **`$0.00` incremental dedicated cloud VM or signing
-  spend** (builds ran on existing local hardware; public-repository GitHub
-  Actions `ubuntu-24.04` workflow runs and public Sigstore Fulcio/Rekor keyless
-  signing incurred zero separate cloud charges). The figure excludes workstation
-  depreciation, electricity, and software subscriptions.
+The builder ran Ubuntu 24.04 LTS in a local ARM64 Colima VM on Apple Silicon.
+It had 4 vCPUs, 8 GiB of RAM, a 55 GiB data disk, and a 10 GiB root disk. The
+host had 95 GiB free.
 
-## Demonstrated scope, failures encountered, and open items
+The kas 4.8 and Grype 0.122.0 images occupied 1.582 GB together. Seven Docker
+volumes used 39.84 GB, including 22.9 GB for the baseline build, 6.98 GB for
+the VEX database, 4.2 GB for the replay volume after cleanup, and 3.48 GB for
+the scanner. The local artifact and log store held 19,775,819,776 bytes (18.42 GiB).
 
-### What was demonstrated
+Incremental cloud VM and signing charges were $0.00. Builds used existing
+hardware, GitHub Actions used public `ubuntu-24.04` runners, and signing used
+public Sigstore Fulcio and Rekor. The figure excludes workstation depreciation,
+electricity, and software subscriptions.
 
-- A minimal, separately consumable Yocto Kirkstone `bbappend`
-  ([`recipes-connectivity/libwebsockets/`](../recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend))
-  repairing `CVE-2026-19773` in `libwebsockets` `4.2.2` (`qemuarm64`, Poky
-  `4.0.35`, `PACKAGECONFIG = "libuv client server http2 ssl"`), verified by
-  target OOB reproduction on `baseline`, bounds enforcement + post-attack HTTP/2
-  service + `ptest` on `patched`, compiled incomplete-fix controls, and
-  independent clean-volume source rebuilds producing byte-identical ELF binaries.
-- Deterministic `179`-document Yocto SPDX 2.2 consolidation, rootfs-SHA-256
-  OpenVEX v0.2.0 scoping (`fixed` on `patched` only), paired positive/negative
-  offline Grype `0.122.0` consumer controls, complete corresponding-source and
-  case-preserving licence redistribution (`436.65 MB`), and human-gated keyless
-  Cosign release signing (`v0.1.0`).
+## Validation scope
 
-### What was NOT demonstrated
+The [layer recipe](../recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend)
+repairs CVE-2026-19773 in `libwebsockets` 4.2.2 for the pinned Poky 4.0.35
+`qemuarm64` image with `PACKAGECONFIG = "libuv client server http2 ssl"`. The
+baseline exhibited the defect. On the patched image, the bounds checks held,
+HTTP/2 continued serving, and `ptest` passed. Tests also distinguished incomplete
+repairs. Independent builds on a clean volume produced byte-identical ELF files.
 
-- Compatibility with physical ARM64 boards, vendor BSP layers, other
-  `PACKAGECONFIG` combinations, or production-hardened images (`debug-tweaks` is
-  enabled solely for unattended QEMU evaluation).
-- Stock Anchore Grype CPE detection of `CVE-2026-19773` prior to NIST NVD
-  populating CPE configurations, or upstream maintainer merge of
-  [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283).
+The release consolidates 179 Yocto SPDX 2.2 documents. Its OpenVEX v0.2.0
+statement identifies the patched root filesystem by SHA-256. Offline Grype
+0.122.0 checks covered both images with and without the statement. The release
+includes corresponding source and licences (436.65 MB), preserves licence
+filename case, and was signed with Cosign after deployment approval.
 
-### Technical failures encountered and resolved during the cycle
+Testing covered the reference image with `debug-tweaks` enabled for unattended
+QEMU use. Physical boards, vendor BSP layers, other `PACKAGECONFIG` values, and
+production-hardened images were outside this run. At release time, the stock
+Grype database had no CPE match for this CVE. The timeline records the upstream
+submission date. The [upstream pull request](https://github.com/garmin/meta-lts-collab/pull/283)
+tracks its status.
 
-1. **Raw Yocto SPDX root-document blindness (`0` Grype packages)**: Yocto emits
-   `179` split JSON files with `http://spdx.org/rdf/references/cpe23Type` URIs on
-   `SPDXRef-Recipe-*` nodes skipped by Syft; solved deterministically in
-   [`scripts/vex/normalize_spdx.py`](../scripts/vex/normalize_spdx.py).
-2. **Upstream NVD `Awaiting Analysis` gap (`0` stock CPE rows)**: Bridged without
-   falsifying stock Grype output or Poky distro identity via offline OSV Git
-   provenance ([`scripts/vex/osv_git_provenance.py`](../scripts/vex/osv_git_provenance.py))
-   plus an isolated, explicitly labelled test-only CPE SQLite fixture
-   ([`scripts/vex/build_aux_grype_db.py`](../scripts/vex/build_aux_grype_db.py)).
-3. **Single-maintainer `prevent_self_review` deadlock**: Adjusted
-   [`scripts/release/approval.py`](../scripts/release/approval.py) so a
-   single-owner repository still enforces explicit human deployment approval on
-   `release-signing` (`can_admins_bypass: false`, `main`-only branch policy)
-   without deadlocking when dispatcher and reviewer are the same human account.
-4. **Yocto `glibc-2.35` `shared-source` archiver omission**: `archiver.bbclass`
-   emits `0` tarballs under `deploy/sources/.../glibc-*` because `glibc` builds
-   from `work-shared`; [`scripts/bundle/package_bundles.py`](../scripts/bundle/package_bundles.py)
-   exports and checksum-verifies the exact `glibc-2.35` Git archive
-   (`bb59339d...`) so corresponding source has zero gaps.
-5. **GitHub REST API draft-release visibility in `release.yml`**: Initial
-   `kind=release` signing run [`44370405253`](https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44370405253)
-   failed closed in `0.4 s` because `contents: read` tokens cannot list
-   `draft: true` releases. Added non-OIDC `main`-only
-   [`stage-candidate.yml`](../.github/workflows/stage-candidate.yml) (run
-   `44372854449`, immutable `artifact_id=14460645429`) so `release.yml` remained
-   strictly read-only in run `44372975734` with zero changes to the approved
-   candidate bytes.
+## Problems encountered
 
-## Bottlenecks and capacity observations for follow-up planning
+1. **Grype reported zero packages from the SPDX root document.** The image SBOM
+   was split over 179 files. Syft skipped the CPE references on `SPDXRef-Recipe-*`
+   nodes. The [normalizer](../scripts/vex/normalize_spdx.py) consolidates those
+   documents and maps the references for scanning.
+2. **The stock database lacked a CPE record for this CVE.** NVD listed it as
+   `Awaiting Analysis`. The stock Grype result was kept. The [OSV Git check](../scripts/vex/osv_git_provenance.py)
+   compared upstream revisions, and a [separate test database](../scripts/vex/build_aux_grype_db.py)
+   supplied the CPE match for the VEX controls. The reference image kept its original Poky
+   distribution identity.
+3. **The repository owner could not approve a signing run they started.** The
+   `prevent_self_review` setting blocked approval in the single-maintainer repo.
+   The [`release-signing` check](../scripts/release/approval.py) allows the
+   dispatcher to approve explicitly. Deployments still require approval, use
+   `main` only, and prohibit admin bypass.
+4. **The Yocto archiver omitted glibc.** glibc 2.35 builds from `work-shared`,
+   so `archiver.bbclass` emitted no tarballs under `deploy/sources/.../glibc-*`.
+   The [packager](../scripts/bundle/package_bundles.py) exported and checked the
+   corresponding source archive from Git revision `bb59339d...`.
+5. **The signing job could not see the draft release.** The [first signing run](https://github.com/firmdura/meta-firmdura-kirkstone/actions/runs/44370405253)
+   stopped after 0.4 seconds because its `contents: read` token could not list
+   draft releases. The [staging workflow](../.github/workflows/stage-candidate.yml)
+   on `main` (run `44372854449`) supplied artifact `14460645429` without OIDC.
+   The read-only signing workflow used the same approved bytes in run `44372975734`.
 
-1. **Reusable infrastructure lowers marginal per-CVE effort**: Cold Yocto
-   bootstrap + base `sstate-cache` (`5,367 s`), SPDX consolidation, OpenVEX
-   tooling, bundle/redistribution packaging, and keyless signing workflows are
-   now reusable; warm-base-sstate clean-target rebuilds took **`151`–`156 s`**
-   per variant.
-2. **Primary remaining per-CVE engineering cost is custom C reproduction and
-   root-cause verification**: Writing a deterministic target C harness covering
-   upstream edge cases (such as `==` vs `>=` and `?` vs `;` URI-argument splits)
-   remains bespoke engineering work for each vulnerability.
-3. **Storage & bandwidth constraints**: A `55 GiB` builder disk requires
-   `rm_work` and sequential `tmp` cleanup (`~14 GiB` headroom remaining), and
-   redistributing a `436.65 MB` full-image corresponding-source archive per
-   release consumes ~`6.5` minutes per upload on residential bandwidth unless
-   unchanged base-image source archives are deduplicated across point releases.
-4. **Human review & NVD feed latency**: Human approval checkpoints (`release-signing`
-   and pair freeze) are essential trust gates that bound turnaround to reviewer
-   availability, and newly disclosed CVEs frequently lack NVD CPE rows for days
-   or weeks after upstream Git fixes land.
+## Limits on repeat builds
+
+The cached build state, SBOM tooling, packaging, and signing workflow can be
+reused. The clean target rebuilds took 151 to 156 seconds per variant. The
+regression tests were specific to this defect and required separate engineering
+work. Release timing also depended on review of the image pair and approval for
+signing. The stock scanner still lacked CPE data when this release shipped.
+
+On the 55 GiB builder disk, using `rm_work` and clearing `tmp` between builds
+left about 14 GiB free. Uploading the 436.65 MB corresponding-source archive
+took about 6.5 minutes on the connection used for this release. Reusing unchanged
+base-image source archives across releases would reduce future uploads.

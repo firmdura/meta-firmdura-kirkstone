@@ -39,7 +39,7 @@ rules) with pinned `docker.io/anchore/grype@sha256:68205d0d11c88aec5999c3139b04e
 | Auxiliary CPE test DB | `patched-41pkg-consolidated.spdx.json` | None | `154` | **`3`** (`libwebsockets18`, `libwebsockets-evlib-uv`, `libwebsockets-testapps`) | `0` | Unfiltered patched CPE finding established prior to VEX |
 | Auxiliary CPE test DB (**Positive control**) | `patched-41pkg-consolidated.spdx.json` | `firmdura-kirkstone-cve-2026-19773.openvex.json` | `151` | **`0`** | **`3`** (`namespace: "vex"`, `vex-status: "fixed"`) | Repaired image receives `fixed` disposition; all `151` unrelated matches remain visible |
 | Auxiliary CPE test DB (**Mandatory negative control**) | `baseline-41pkg-consolidated.spdx.json` | **Same** `firmdura-kirkstone-cve-2026-19773.openvex.json` | `154` | **`3`** | **`0`** | Patched OpenVEX does **not** suppress the vulnerable baseline's finding |
-| Stock Anchore DB `v6.1.10` (`2026-11-18T06:21:08Z`) | `baseline` & `patched` (`41` packages) | None and `--vex` | `151` | `0` (NVD `Awaiting Analysis`) | `0` | Stock feed output preserved truthfully; `--vex` ingests cleanly without altering stock matches |
+| Stock Anchore DB `v6.1.10` (`2026-11-18T06:21:08Z`) | `baseline` & `patched` (`41` packages) | None and `--vex` | `151` | `0` (NVD `Awaiting Analysis`) | `0` | Grype reported the same 151 matches with and without OpenVEX. |
 | Companion OSV Git/source provenance (`osv_git_provenance.py`) | `baseline` vs `patched` canonical `deploy.tar` | None | — | `3` (`baseline`) vs `0` (`patched`) | — | `affected` on `baseline` vs `fixed_by_verified_backport` (`CVE-2026-19773-1.patch`) on `patched` |
 
 ## Regeneration and replay commands

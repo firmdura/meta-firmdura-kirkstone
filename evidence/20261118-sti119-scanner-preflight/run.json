@@ -93,8 +93,8 @@
     }
   },
   "command_path_aliases": {
-    "<checkout>": "Isolated STI-119 Git worktree on the approved control host",
-    "<store>": "Owner-approved local://firmdura-kirkstone/ durable storage root"
+    "<checkout>": "Isolated STI-119 Git worktree on the control host",
+    "<store>": "Local artifact store at local://firmdura-kirkstone/"
   },
   "commands": [
     {
@@ -766,7 +766,7 @@
       },
       "unblock_requirements": [
         "External feed enrichment: NVD adds CPE 2.3 applicability configurations for CVE-2026-19773 covering libwebsockets 4.2.2 and Anchore publishes a Grype v6 DB snapshot ingesting that affected_cpe_handles row.",
-        "Or explicit owner decision: hold release publication until NVD/Grype DB enrichment lands, authorize a Git-commit/Vanir companion consumer or explicitly labelled auxiliary feed for OpenVEX mechanics verification, or approve an alternate Linux-applicable Kirkstone CVE candidate with active non-distro CPE coverage."
+        "Alternatives considered at the time were waiting for NVD and Grype enrichment, using a Git-commit/Vanir companion or labelled auxiliary feed to test OpenVEX handling, or selecting another Linux-applicable Kirkstone CVE with non-distro CPE coverage."
       ]
     },
     "historical_baseline_immutability": {
@@ -805,10 +805,10 @@
     }
   ],
   "limitations": [
-    "STI-119 remains open and blocked on external upstream vulnerability feed metadata: unfiltered Grype 0.122.0 + DB v6.1.10 (2026-11-18T06:21:08Z) reports 0 matches for CVE-2026-19773.",
+    "STI-119 was blocked on upstream feed metadata at this point. Unfiltered Grype 0.122.0 with DB v6.1.10 (2026-11-18T06:21:08Z) reported 0 matches for CVE-2026-19773.",
     "The 151 full-image CPE matches (including Win32-only CVE-2025-1866 on libwebsockets18, libwebsockets-evlib-uv, and libwebsockets-testapps) are version/CPE scanner candidates, not proof of runtime exploitability on this minimal Poky configuration.",
     "Grype 0.122.0 OpenVEX subcomponent matching supports package PURLs only; because Yocto Kirkstone create-spdx.bbclass emits CPEs without PURLs and normalize_spdx.py does not fabricate PURLs, STI-113 OpenVEX statements must bind to the rootfs-SHA-256-qualified image product PURL.",
-    "This pass consumed the baseline deploy.tar read-only and did not certify the unbuilt patched image artifact; STI-113 must run normalize_spdx.py and positive/negative VEX controls on the actual frozen STI-110 image pair once unblocked.",
+    "This pass used the baseline deploy.tar read-only. The patched image had not been built. Normalization and positive/negative VEX controls on the frozen STI-110 image pair were still pending under STI-113.",
     "Durable artifacts reside on the approved single-host local store, not an off-host backup or public release asset."
   ],
   "timing": {

@@ -1,41 +1,31 @@
 # Firmdura Kirkstone reference sample
 
-A reproducible **Yocto Kirkstone (`4.0.35`, `qemuarm64`)** reference sample showing
-how a security backport in **libwebsockets `4.2.2`** can be delivered, tested on an
-emulated ARM64 target, tracked in vulnerability scanners without hiding unpatched
-builds, and redistributed with complete source and licences.
+This Yocto Kirkstone reference layer backports a security fix to
+`libwebsockets` 4.2.2 on Poky 4.0.35 for `qemuarm64`. Both the baseline
+and patched images report the same upstream package version. Their root
+filesystem digests distinguish the two builds.
 
-When maintaining a long-lived Yocto Kirkstone system, backporting an upstream C fix
-typically leaves the package version (`4.2.2`) unchanged—so version-based scanners
-either keep flagging the repaired image or miss newly disclosed CVEs entirely, and
-claims of "fixed" are hard to trust without a target test that actually fails
-before the patch and passes after it.
-
-Published release
-[`v0.1.0`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0)
-demonstrates the full workflow end to end for
-[`CVE-2026-19773`](https://www.zerodayinitiative.com/advisories/ZDI-26-590/)
-(an out-of-bounds heap write in `libwebsockets`' HTTP/2 HPACK `:path` parser):
+Release [`v0.1.0`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0)
+covers [CVE-2026-19773](https://www.zerodayinitiative.com/advisories/ZDI-26-590/)
+and includes:
 
 - **Standalone Yocto repair layer**
   ([`recipes-connectivity/libwebsockets/`](recipes-connectivity/libwebsockets/libwebsockets_4.2.2.bbappend))
   backporting the two upstream fix commits onto `libwebsockets` `4.2.2` with
   HTTP/2, TLS, `libuv`, client, and server support enabled.
-- **Paired `baseline` and `patched` ARM64 QEMU bundles** signed via keyless
-  GitHub Actions Cosign OIDC, so you can watch the exploit crash/corrupt the
-  unpatched library and verify clean rejection on the patched library in ~2 minutes.
+- **Baseline and patched ARM64 QEMU bundles.** The release manifest records
+  both bundles' SHA-256 digests and is signed with Cosign through GitHub Actions.
 - **Consolidated SPDX 2.2 SBOMs and image-hash-scoped OpenVEX**
   ([`vex/firmdura-kirkstone-cve-2026-19773.openvex.json`](vex/firmdura-kirkstone-cve-2026-19773.openvex.json))
-  verified with Grype `0.122.0` so only the repaired rootfs digest is marked
-  `fixed` while the vulnerable `baseline` image continues to report the finding.
+  for the two root filesystems. With the labelled test database, Grype
+  `0.122.0` applied the `fixed` statement only to the patched image. The
+  stock database snapshot had no match for this CVE on either image.
 - **Upstream community contribution** submitted to Garmin's Kirkstone LTS layer at
   [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283),
   plus complete corresponding source (`436.6 MB`) and licence archives.
 
-> **Experimental evaluation sample:** The reference images enable Yocto
-> `debug-tweaks` for unattended local QEMU testing and target a single
-> emulated `qemuarm64` configuration. Use them for isolated technical evaluation,
-> not as production firmware.
+> Both images enable Yocto `debug-tweaks` for unattended boot tests. Use
+> them only in an isolated QEMU environment.
 
 ## Try the prebuilt demo (~2 minutes)
 
@@ -107,27 +97,24 @@ sh kas/run patched build
 
 ## Upstream community contribution
 
-Rather than keeping the backport only in this sample repository, the same
-Kirkstone `libwebsockets` `4.2.2` patch series has been submitted upstream to
-Garmin's community LTS maintenance layer at
+Firmdura submitted the two-patch backport to Garmin's Kirkstone LTS layer in
 [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283).
-As of `v0.1.0`, the pull request is **open and awaiting maintainer review and
-first-time contributor CI approval** (it has not yet been merged upstream); local
-`oelint-adv`, `ruff`, and `yamllint` checks and provenance details are documented
-in [the contribution record](docs/contribution.md).
+At the time of the release, maintainer review and approval for first-time
+contributor CI were pending. The [contribution record](docs/contribution.md)
+lists the local `oelint-adv`, `ruff`, and `yamllint` checks.
 
 ## Guides and raw evidence
 
 - [Release `v0.1.0` index](docs/release.md) — direct download links and SHA-256
-  digests for all `13` signed release assets, including
+  digests for all 13 release files, including
   [`firmdura-kirkstone-v0.1.0-raw-evidence-logs.tar.gz`](https://github.com/firmdura/meta-firmdura-kirkstone/releases/download/v0.1.0/firmdura-kirkstone-v0.1.0-raw-evidence-logs.tar.gz)
   (`227` raw BitBake, QEMU serial, `ptest`, SPDX, and Grype JSON logs).
 - [Evaluation guide](docs/evaluation.md) and [testing guide](docs/testing.md) —
   QEMU boot procedure, C HTTP/2 boundary harness design, and incomplete-fix
   regression controls.
 - [Scanner guide](docs/scanner.md) and [OpenVEX guide](docs/vex.md) — why raw
-  Yocto SPDX needs graph consolidation for Grype, why stock NVD feeds currently
-  miss `CVE-2026-19773`, and how positive/negative OpenVEX matching is verified.
+  Yocto SPDX needs graph consolidation for Grype, why the November 18 stock Grype snapshot
+  returned no match for this CVE, and how positive/negative OpenVEX matching is verified.
 - [Signing guide](docs/signing.md) — protected GitHub Actions keyless Cosign
   signing and `manifest.json` v1 verification rules.
 - [Independent replay review](docs/replay-review.md),
@@ -142,13 +129,12 @@ in [the contribution record](docs/contribution.md).
   `meta-lts-collab` `e127ed67e7...`). Compatibility with other Kirkstone BSPs,
   physical boards, different `PACKAGECONFIG` flags, or customer firmware has not
   been tested.
-- Stock Anchore Grype DB `v6.1.10` still has zero CPE rows for `CVE-2026-19773`
-  until NIST NVD completes analysis; once NVD adds `libwebsockets <= 4.2.2` CPE
-  configurations, stock Grype databases will match the published SPDX SBOMs and
-  OpenVEX product PURLs without regenerating them.
-- Published as a completed single-case (`v0.1.0`) reference sample with no
-  implied SLA, recurring update schedule, or open-ended Kirkstone EOL commitment;
-  see [the release scope and package audit](docs/maintenance-decision.md).
+- On November 18, 2026, the stock Anchore Grype database had no CPE rows for
+  this CVE. The OpenVEX matching result above used a separate, labelled test
+  database.
+- `v0.1.0` covers one case. It carries no SLA or recurring update schedule.
+  The [package audit](docs/maintenance-decision.md) records the findings for
+  the other packages in this image.
 
 ## Licensing and corresponding source
 

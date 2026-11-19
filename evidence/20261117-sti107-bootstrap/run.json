@@ -453,7 +453,7 @@
     "No image or target test result exists; a successful dry-run is not a build.",
     "The repair layer is empty. The patched configuration name is only an interface reservation.",
     "CVE applicability and Grype interoperability still require STI-108/109 evidence.",
-    "Raw artifacts are in owner-approved durable local storage, not yet public release assets or off-host backup.",
+    "At the time of this run, raw artifacts were retained on the local host. No public release assets or off-host backup existed.",
     "The constrained local builder has not yet demonstrated sufficient disk capacity for the full image build.",
     "Original-file MIT approval does not establish third-party binary redistribution completeness.",
     "Human review of repair evidence and approval of the exact release remain outstanding and mandatory."

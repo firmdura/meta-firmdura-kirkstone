@@ -1,14 +1,12 @@
 # Community contribution to `meta-lts-collab` (`kirkstone`)
 
-This document records the upstream maintenance-layer contribution of the
-validated `libwebsockets` `4.2.2` `CVE-2026-19773` backport to Garmin's
-[`meta-lts-collab`](https://github.com/garmin/meta-lts-collab/tree/kirkstone)
-`kirkstone` branch, together with the pre-submission coverage check, local
-layer validation, community CI scope, and pin-management rules. Command logs,
-digests, and timestamps are indexed in the
-[contribution run record](../evidence/20261118-sti114-contribution/run.json);
-paired `qemuarm64` build and runtime proof remains anchored in the
-[paired validation evidence](../evidence/20261118-sti110-paired-validation/run.json).
+On 2026-11-18, Firmdura submitted the `CVE-2026-19773` backport for
+`libwebsockets` 4.2.2 to the `kirkstone` branch of Garmin's
+[`meta-lts-collab`](https://github.com/garmin/meta-lts-collab/tree/kirkstone).
+The [contribution record](../evidence/20261118-sti114-contribution/run.json)
+indexes the command logs, digests and timestamps. The
+[paired validation record](../evidence/20261118-sti110-paired-validation/run.json)
+covers the `qemuarm64` builds and runtime checks.
 
 The contributed patches backport existing upstream `libwebsockets` commits fixing
 [`CVE-2026-19773`](https://www.zerodayinitiative.com/advisories/ZDI-26-590/)
@@ -142,15 +140,11 @@ pipeline (`.github/workflows/pull-request.yml` -> `_common.yml`):
    `CORE_IMAGE_EXTRA_INSTALL = "libwebsockets"`, and executes
    `bitbake -c testimage core-image-minimal` (`TEST_SUITES = "ping ssh ptest"`).
 
-Two validation boundaries apply:
-
-- **Upstream CI awaits maintainer approval**: Because `firmdura/meta-lts-collab`
-  is a first-time external fork contribution and `garmin/meta-lts-collab` uses
-  self-hosted build runners, GitHub Actions placed workflow run
-  [`44317715424`](https://github.com/garmin/meta-lts-collab/actions/runs/44317715424)
-  in `action_required` pending maintainer approval. Upstream CI execution is
-  therefore recorded as `blocked` on maintainer workflow approval rather than
-  `passed`.
+- **Upstream CI at submission (2026-11-18)**: GitHub Actions marked
+  [run `44317715424`](https://github.com/garmin/meta-lts-collab/actions/runs/44317715424)
+  as `action_required`. The first contribution from this fork needed maintainer
+  approval to run on Garmin's self-hosted runners. The contribution record
+  therefore lists upstream CI as `blocked`.
 - **Architecture and test-depth separation**: `meta-openembedded`'s
   `libwebsockets_4.2.2.bb` does not inherit `ptest`, so `meta-lts-collab`'s
   `qemux86-64` `do_testimage` verifies `qemux86-64` compilation, zero-fuzz
@@ -171,8 +165,8 @@ remains locked to `garmin/meta-lts-collab` commit
 `e127ed67e74ca6b7e0fdc6cbda572302886c00a0` so the reviewed `baseline` and
 `patched` `qemuarm64` image pair stays reproducible and unchanged.
 
-If [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
-merges upstream in the future:
+When considering a newer pin, check whether it already includes
+[`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283):
 
 - Do **not** silently advance the `meta-lts-collab` commit in
   [`kas/common.yml`](../kas/common.yml) while keeping

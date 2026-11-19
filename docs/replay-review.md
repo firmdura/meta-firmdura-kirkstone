@@ -239,17 +239,17 @@ QEMU (`-nic none`) via [`tests/run-cve-2026-19773.py`](../tests/run-cve-2026-197
      undisclosed private build prerequisites. All `44` repository unit tests
      (`python3 -m unittest discover -s tests -p '*_test.py' -v`) passed.
 
-## Remaining boundaries and publication gates
+<a id="remaining-boundaries-and-publication-gates"></a>
 
-- **Upstream NVD CPE feed status**: Stock Anchore Grype DB `v6.1.10` still
-  contains zero CPE rows for `CVE-2026-19773` while NIST NVD lists the CVE as
-  `Awaiting Analysis`; offline OSV Git provenance and the isolated auxiliary CPE
-  test database bridge verification without falsifying stock scanner results.
-- **Upstream community CI**: Pull request
-  [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
-  remains open with first-time fork workflow approval pending; see
-  [the contribution record](contribution.md).
-- **Evaluation scope and release signing**: Validation applies solely to this
-  isolated `qemuarm64` Poky `4.0.35` configuration (`debug-tweaks` enabled, not
-  production firmware), and public release publication still requires the
-  human-approved keyless signing workflow documented in [the signing guide](signing.md).
+## Release status at the time of the review
+
+- The November 18 stock Anchore Grype snapshot (`v6.1.10`) contained no CPE
+  rows for this CVE. NVD listed it as `Awaiting Analysis`. The review also
+  used offline OSV Git provenance and a separate test database. Their results
+  are recorded separately from the stock scan.
+- When the review ran, [the upstream pull request](https://github.com/garmin/meta-lts-collab/pull/283)
+  was awaiting first-time contributor CI approval. The [contribution record](contribution.md)
+  lists the checks that ran locally.
+- The review covered the isolated `qemuarm64` Poky 4.0.35 configuration with
+  `debug-tweaks` enabled. Signing followed the review. The [release record](release.md)
+  identifies the approved signing run and the manifest published for v0.1.0.
