@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "run_id": "20261118-sti117-cycle-review",
+  "issue": "STI-117",
+  "status": "completed",
+  "started_at": "2026-11-18T19:09:00.212452+00:00",
+  "finished_at": "2026-11-18T19:14:43.610138+00:00",
+  "release_reference": {
+    "tag": "v0.1.0",
+    "url": "https://github.com/firmdura/meta-firmdura-kirkstone/releases/tag/v0.1.0",
+    "source_commit": "4e15e71a54e32e63bfafaf3b79c99d8bbe6a0e35",
+    "paired_build_commit": "a8a2adb0a299221d6f246f7c95e0912e4babd419",
+    "manifest_sha256": "ca8ec949fbdb8d04f6ecd91a89efffbfaff7f17af86c6ac6e61e2d68346d7ac3",
+    "sigstore_bundle_sha256": "952746a316c0892c8cded527f60b77ba4ab59edb0caf67111a5f15b3ad7100fc",
+    "upstream_contribution_pr": "https://github.com/garmin/meta-lts-collab/pull/283",
+    "upstream_contribution_disposition": "open_awaiting_maintainer_review"
+  },
+  "reconciled_metrics": {
+    "end_to_end_calendar_span_seconds": 78779.44,
+    "end_to_end_calendar_span_hours": 21.883,
+    "total_bitbake_image_build_seconds": 5826.392258,
+    "total_bitbake_image_build_hours": 1.6184,
+    "builder_vm": {
+      "profile": "colima-firmdura-kirkstone",
+      "arch": "aarch64",
+      "vcpus": 4,
+      "ram_gib": 8,
+      "data_disk_gib": 55,
+      "docker_images_gb": 1.582,
+      "docker_volumes_gb": 39.84
+    },
+    "durable_store_bytes": 19775819776,
+    "incremental_cloud_infrastructure_usd": 0.0,
+    "workstation_and_subscription_amortization_usd": null
+  },
+  "phases": [
+    {
+      "run_id": "20261117-sti107-bootstrap",
+      "issue": "STI-107",
+      "record": "evidence/20261117-sti107-bootstrap/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261117-sti108-baseline",
+      "issue": "STI-108",
+      "record": "evidence/20261117-sti108-baseline/run.json",
+      "bitbake_build_seconds": 5366.709314
+    },
+    {
+      "run_id": "20261118-sti108-handoff",
+      "issue": "STI-108",
+      "record": "evidence/20261118-sti108-handoff/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti111-keyless-signing",
+      "issue": "STI-111",
+      "record": "evidence/20261118-sti111-keyless-signing/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti119-scanner-preflight",
+      "issue": "STI-119",
+      "record": "evidence/20261118-sti119-scanner-preflight/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti109-reproduction",
+      "issue": "STI-109",
+      "record": "evidence/20261118-sti109-reproduction/run.json",
+      "bitbake_build_seconds": 30.05686291703023
+    },
+    {
+      "run_id": "20261118-sti110-paired-validation",
+      "issue": "STI-110",
+      "record": "evidence/20261118-sti110-paired-validation/run.json",
+      "bitbake_build_seconds": 122.98021304118446
+    },
+    {
+      "run_id": "20261118-sti112-bundles",
+      "issue": "STI-112",
+      "record": "evidence/20261118-sti112-bundles/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti114-contribution",
+      "issue": "STI-114",
+      "record": "evidence/20261118-sti114-contribution/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti111-oidc-fixture",
+      "issue": "STI-111",
+      "record": "evidence/20261118-sti111-oidc-fixture/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti119-dual-track",
+      "issue": "STI-119",
+      "record": "evidence/20261118-sti119-dual-track/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti113-openvex",
+      "issue": "STI-113",
+      "record": "evidence/20261118-sti113-openvex/run.json",
+      "bitbake_build_seconds": 0.0
+    },
+    {
+      "run_id": "20261118-sti115-replay",
+      "issue": "STI-115",
+      "record": "evidence/20261118-sti115-replay/run.json",
+      "bitbake_build_seconds": 306.6458683330566
+    },
+    {
+      "run_id": "20261118-sti116-release",
+      "issue": "STI-116",
+      "record": "evidence/20261118-sti116-release/run.json",
+      "bitbake_build_seconds": 0.0
+    }
+  ],
+  "commands": [
+    {
+      "label": "sti-117-verify-cycle-links-and-tests",
+      "cwd": "<checkout>",
+      "environment": {
+        "DOCKER_CONTEXT": "colima-firmdura-kirkstone"
+      },
+      "started_at": "2026-11-18T19:14:43.364588+00:00",
+      "finished_at": "2026-11-18T19:14:43.575766+00:00",
+      "elapsed_seconds": 0.2109888750128448,
+      "exit_code": 0,
+      "log": "local://firmdura-kirkstone/logs/sti-117-verify-cycle-links-and-tests.log",
+      "log_sha256": "fc7a44441e39bdd83a1eb8c2ef2d49c0b504175a3dc3d3e4acab5852aff47376",
+      "log_size": 6842
+    }
+  ]
+}
