@@ -247,9 +247,10 @@ QEMU (`-nic none`) via [`tests/run-cve-2026-19773.py`](../tests/run-cve-2026-197
   rows for this CVE. NVD listed it as `Awaiting Analysis`. The review also
   used offline OSV Git provenance and a separate test database. Their results
   are recorded separately from the stock scan.
-- When the review ran, [the upstream pull request](https://github.com/garmin/meta-lts-collab/pull/283)
-  was awaiting first-time contributor CI approval. The [contribution record](contribution.md)
-  lists the checks that ran locally.
+- When the review ran on November 18, 2026, [the upstream pull request](https://github.com/garmin/meta-lts-collab/pull/283)
+  was awaiting first-time contributor CI approval; it passed upstream CI and was
+  merged into `kirkstone` on November 20, 2026. The [contribution record](contribution.md)
+  lists both the local checks and the upstream merge provenance.
 - The review covered the isolated `qemuarm64` Poky 4.0.35 configuration with
   `debug-tweaks` enabled. Signing followed the review. The [release record](release.md)
   identifies the approved signing run and the manifest published for v0.1.0.

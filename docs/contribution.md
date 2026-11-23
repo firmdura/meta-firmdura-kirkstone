@@ -2,9 +2,12 @@
 
 On 2026-11-18, Firmdura submitted the `CVE-2026-19773` backport for
 `libwebsockets` 4.2.2 to the `kirkstone` branch of Garmin's
-[`meta-lts-collab`](https://github.com/garmin/meta-lts-collab/tree/kirkstone).
+[`meta-lts-collab`](https://github.com/garmin/meta-lts-collab/tree/kirkstone)
+in [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283);
+after upstream `PR Validation` passed, a maintainer merged it on 2026-11-20 as
+[`c1af58126047932d50ffac47e925d1399c162aa3`](https://github.com/garmin/meta-lts-collab/commit/c1af58126047932d50ffac47e925d1399c162aa3).
 The [contribution record](../evidence/20261118-sti114-contribution/run.json)
-indexes the command logs, digests and timestamps. The
+indexes the 2026-11-18 submission command logs, digests and timestamps. The
 [paired validation record](../evidence/20261118-sti110-paired-validation/run.json)
 covers the `qemuarm64` builds and runtime checks.
 
@@ -49,6 +52,8 @@ was present or queued, a minimal backport pull request was submitted.
 | Commit authentication | GitHub-verified SSH `ED25519` signature and DCO `Signed-off-by` |
 | Initial PR status (`2026-11-18T13:50:28Z`) | `OPEN` (`reviewDecision: REVIEW_REQUIRED`, `0` review comments) |
 | Initial CI workflow run | [`actions/runs/44317715424`](https://github.com/garmin/meta-lts-collab/actions/runs/44317715424) (`PR Validation`: `action_required`, awaiting maintainer approval for first-time external fork PR) |
+| Upstream CI completion (`2026-11-20T22:24:53Z`) | [`actions/runs/44317715424`](https://github.com/garmin/meta-lts-collab/actions/runs/44317715424) (`PR Validation`: `SUCCESS` across `Lint`, `Check layer`, `Build (systemd=true)`, `Build (systemd=false)`, and `Required checks pass`) |
+| Upstream merge (`2026-11-20T22:30:20Z`) | `MERGED` into `kirkstone` as [`c1af58126047932d50ffac47e925d1399c162aa3`](https://github.com/garmin/meta-lts-collab/commit/c1af58126047932d50ffac47e925d1399c162aa3) (`reviewDecision: APPROVED`) |
 
 ### Layer placement, metadata rules, and patch provenance
 
@@ -143,8 +148,15 @@ pipeline (`.github/workflows/pull-request.yml` -> `_common.yml`):
 - **Upstream CI at submission (2026-11-18)**: GitHub Actions marked
   [run `44317715424`](https://github.com/garmin/meta-lts-collab/actions/runs/44317715424)
   as `action_required`. The first contribution from this fork needed maintainer
-  approval to run on Garmin's self-hosted runners. The contribution record
-  therefore lists upstream CI as `blocked`.
+  approval to run on Garmin's self-hosted runners. The 2026-11-18 contribution
+  record therefore lists upstream CI as `blocked` at submission time.
+- **Upstream CI and merge (2026-11-20)**: After maintainer approval ran
+  [run `44317715424`](https://github.com/garmin/meta-lts-collab/actions/runs/44317715424),
+  all five required checks (`Lint`, `Check layer`, `Build (systemd=true)`,
+  `Build (systemd=false)`, and `Required checks pass`) completed with `SUCCESS`,
+  and [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
+  was approved and merged into `kirkstone` at `2026-11-20T22:30:20Z`
+  ([`c1af58126047932d50ffac47e925d1399c162aa3`](https://github.com/garmin/meta-lts-collab/commit/c1af58126047932d50ffac47e925d1399c162aa3)).
 - **Architecture and test-depth separation**: `meta-openembedded`'s
   `libwebsockets_4.2.2.bb` does not inherit `ptest`, so `meta-lts-collab`'s
   `qemux86-64` `do_testimage` verifies `qemux86-64` compilation, zero-fuzz
@@ -165,8 +177,11 @@ remains locked to `garmin/meta-lts-collab` commit
 `e127ed67e74ca6b7e0fdc6cbda572302886c00a0` so the reviewed `baseline` and
 `patched` `qemuarm64` image pair stays reproducible and unchanged.
 
-When considering a newer pin, check whether it already includes
-[`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283):
+Because `garmin/meta-lts-collab` `kirkstone` includes
+[`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
+starting at merge commit
+[`c1af58126047932d50ffac47e925d1399c162aa3`](https://github.com/garmin/meta-lts-collab/commit/c1af58126047932d50ffac47e925d1399c162aa3)
+(`2026-11-20`):
 
 - Do **not** silently advance the `meta-lts-collab` commit in
   [`kas/common.yml`](../kas/common.yml) while keeping

@@ -20,9 +20,10 @@ and includes:
   for the two root filesystems. With the labelled test database, Grype
   `0.122.0` applied the `fixed` statement only to the patched image. The
   stock database snapshot had no match for this CVE on either image.
-- **Upstream community contribution** submitted to Garmin's Kirkstone LTS layer at
-  [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283),
-  plus complete corresponding source (`436.6 MB`) and licence archives.
+- **Upstream community contribution** submitted to Garmin's Kirkstone LTS layer in
+  [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
+  (merged into `kirkstone` on 20 November 2026), plus complete corresponding source
+  (`436.6 MB`) and licence archives.
 
 > Both images enable Yocto `debug-tweaks` for unattended boot tests. Use
 > them only in an isolated QEMU environment.
@@ -98,10 +99,17 @@ sh kas/run patched build
 ## Upstream community contribution
 
 Firmdura submitted the two-patch backport to Garmin's Kirkstone LTS layer in
-[`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283).
-At the time of the release, maintainer review and approval for first-time
-contributor CI were pending. The [contribution record](docs/contribution.md)
-lists the local `oelint-adv`, `ruff`, and `yamllint` checks.
+[`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
+on 18 November 2026. After maintainer approval ran the repository's `PR Validation`
+workflow (`Lint`, `Check layer`, and `qemux86-64` builds with `systemd=true` and
+`systemd=false`), the pull request was merged into `kirkstone` on 20 November 2026
+as commit [`c1af581260`](https://github.com/garmin/meta-lts-collab/commit/c1af58126047932d50ffac47e925d1399c162aa3).
+When `v0.1.0` shipped on 18 November 2026, maintainer review and first-time
+contributor CI approval were still pending; `kas/common.yml` remains pinned to the
+pre-merge `meta-lts-collab` revision (`e127ed67e7...`) so the signed `v0.1.0`
+`baseline` and `patched` image pair stays reproducible. The
+[contribution record](docs/contribution.md) lists both the local checks and the
+upstream merge provenance.
 
 ## Guides and raw evidence
 

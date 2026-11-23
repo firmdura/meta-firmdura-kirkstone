@@ -69,8 +69,10 @@ Testing covered the reference image with `debug-tweaks` enabled for unattended
 QEMU use. Physical boards, vendor BSP layers, other `PACKAGECONFIG` values, and
 production-hardened images were outside this run. At release time, the stock
 Grype database had no CPE match for this CVE. The timeline records the upstream
-submission date. The [upstream pull request](https://github.com/garmin/meta-lts-collab/pull/283)
-tracks its status.
+submission date (`2026-11-18`); a `meta-lts-collab` maintainer subsequently
+approved CI and merged [`garmin/meta-lts-collab#283`](https://github.com/garmin/meta-lts-collab/pull/283)
+into `kirkstone` on `2026-11-20`
+([`c1af581260`](https://github.com/garmin/meta-lts-collab/commit/c1af58126047932d50ffac47e925d1399c162aa3)).
 
 ## Problems encountered
 
